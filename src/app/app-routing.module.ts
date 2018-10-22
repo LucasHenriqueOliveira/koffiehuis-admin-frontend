@@ -7,8 +7,14 @@ import { RequestResetComponent } from './components/password/request-reset/reque
 import { ResponseResetComponent } from './components/password/response-reset/response-reset.component';
 import { BeforeLoginService } from './services/before-login.service';
 import { AfterLoginService } from './services/after-login.service';
+import { CrawlerComponent } from './components/crawler/crawler.component';
 
 const appRoutes: Routes = [
+  {
+    path: 'crawler',
+    component: CrawlerComponent,
+    canActivate: [BeforeLoginService]
+  },
   {
     path: 'login',
     component: LoginComponent,
