@@ -1,0 +1,56 @@
+<fieldset class="fieldset">
+	<legend>Plano de Manutenção Programada</legend>
+	<p>
+		Insira o item, além do intervalo de quilometragem (Km) e tempo (meses).
+	</p>
+	<form [formGroup]="manualForm" (ngSubmit)="onSubmit()">
+		<div class="form-row">
+			<div class="form-group col-md-6">
+				<input type="text" class="form-control" id="item" placeholder="Informe o item" formControlName="item" required>
+			</div>
+			<div class="form-group col-md-2">
+				<input type="number" class="form-control" id="km" placeholder="Km" formControlName="km" required>
+			</div>
+			<div class="form-group col-md-2">
+				<input type="number" class="form-control" id="meses" placeholder="Meses" formControlName="meses" required>
+			</div>
+			<div class="form-group col-md-2">
+				<button class="btn btn-primary" [disabled]="!checkButton()">Salvar</button>
+			</div>
+		</div>
+	</form>
+</fieldset>
+<div class="table-responsive">
+	<table class="table table-striped">
+		<thead>
+			<tr>
+			<th>Item</th>
+			<th class="text-center">Km</th>
+			<th class="text-center">Tempo</th>
+			<th class="text-center">Ação</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>Substituição do óleo do motor</td>
+				<td class="text-center">{{ 12000 | number }}</td>
+				<td class="text-center">12</td>
+				<td class="text-center">@mdo</td>
+			</tr>
+			<tr>
+				<td>Substituição de filtro de óleo do motor</td>
+				<td class="text-center">{{ 12000 | number }}</td>
+				<td class="text-center">12</td>
+				<td class="text-center">@fat</td>
+			</tr>
+			<tr>
+				<td>Substituição do filtro de combustível</td>
+				<td class="text-center">{{ 12000 | number }}</td>
+				<td class="text-center">12</td>
+				<td class="text-center">@twitter</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div [ngClass]="{'loading': loading}"></div>
+	
