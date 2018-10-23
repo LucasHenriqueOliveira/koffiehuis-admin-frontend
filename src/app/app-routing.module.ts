@@ -8,13 +8,10 @@ import { ResponseResetComponent } from './components/password/response-reset/res
 import { BeforeLoginService } from './services/before-login.service';
 import { AfterLoginService } from './services/after-login.service';
 import { CrawlerComponent } from './components/crawler/crawler.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { ManualComponent } from './manual/manual.component';
 
 const appRoutes: Routes = [
-  {
-    path: 'crawler',
-    component: CrawlerComponent,
-    canActivate: [BeforeLoginService]
-  },
   {
     path: 'login',
     component: LoginComponent,
@@ -28,6 +25,21 @@ const appRoutes: Routes = [
   {
     path: 'profile',
     component: ProfileComponent,
+    canActivate: [AfterLoginService]
+  },
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    canActivate: [AfterLoginService]
+  },
+  {
+    path: 'manual',
+    component: ManualComponent,
+    canActivate: [AfterLoginService]
+  },
+  {
+    path: 'crawler',
+    component: CrawlerComponent,
     canActivate: [AfterLoginService]
   },
   {

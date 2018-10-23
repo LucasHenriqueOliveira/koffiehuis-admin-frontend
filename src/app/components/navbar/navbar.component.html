@@ -1,8 +1,36 @@
-<nav class="navbar navbar-light bg-light justify-content-between">
-	<a class="navbar-brand">Navbar</a>
-	<div>
-		<a class="navbar-brand" routerLink="login" *ngIf="!loggedIn">Login</a>
-		<a class="navbar-brand" href="#" (click)="logout($event)" *ngIf="loggedIn">Logout</a>
-		<a class="navbar-brand" routerLink="profile" *ngIf="loggedIn">Profile</a>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	<a class="navbar-brand">Herbie</a>
+
+	<button class="navbar-toggler" type="button" (click)="toggleNavbar()">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+
+	<div class="collapse navbar-collapse" [ngClass]="{ 'show': navbarOpen }">
+		<ul class="navbar-nav ml-auto">
+			<li class="nav-item">
+				<a class="nav-link" href="#">Dashboard</a>
+			</li>
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" data-target="#" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					Manutenção
+				</a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+					<a class="dropdown-item" href="#">Marcas e Modelos</a>
+					<a class="dropdown-item" href="#">Plano de Manutenção</a>
+					<a class="dropdown-item" href="#">Lista de Manutenções</a>
+					<a class="dropdown-item" href="#">Condições de Uso</a>
+					<a class="dropdown-item" href="#">Status</a>
+				</div>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#">Usuários</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#">Carros</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#" (click)="logout($event)" *ngIf="loggedIn">Sair</a>
+			</li>
+		</ul>
 	</div>
 </nav>

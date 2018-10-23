@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -20,6 +20,12 @@ import { SnotifyModule, SnotifyService, ToastDefaults } from 'ng-snotify';
 import { CrawlerComponent } from './components/crawler/crawler.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CrawlerService } from './services/crawler.service';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { ManualComponent } from './manual/manual.component';
+
+import { registerLocaleData } from '@angular/common';
+import ptBr from '@angular/common/locales/pt';
+registerLocaleData(ptBr);
 
 @NgModule({
   declarations: [
@@ -30,7 +36,9 @@ import { CrawlerService } from './services/crawler.service';
     ProfileComponent,
     RequestResetComponent,
     ResponseResetComponent,
-    CrawlerComponent
+    CrawlerComponent,
+    DashboardComponent,
+    ManualComponent
   ],
   imports: [
     BrowserModule,
@@ -48,7 +56,8 @@ import { CrawlerService } from './services/crawler.service';
     AfterLoginService,
     { provide: 'SnotifyToastConfig', useValue: ToastDefaults},
     SnotifyService,
-    CrawlerService
+    CrawlerService,
+    { provide: LOCALE_ID, useValue: 'pt-PT' },
   ],
   bootstrap: [AppComponent]
 })

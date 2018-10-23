@@ -17,20 +17,25 @@ export class LoginComponent implements OnInit {
   };
 
   public error = null;
+  loading = false;
 
   constructor(private User: UserService, private Token: TokenService, private router: Router, private Auth: AuthService) { }
 
   onSubmit() {
+    this.loading = true;
     this.User.login(this.form).subscribe(
       data => this.handleResponse(data),
-      error => this.handleError(error)
+      error => {
+        this.loading = false;
+        this.handleError(error);
+      }
     );
   }
 
   handleResponse(data) {
     this.Token.handle(data.access_token);
     this.Auth.changeAuthStatus(true);
-    this.router.navigateByUrl('/profile');
+    this.router.navigateByUrl('/dashboard');
   }
 
   handleError(error) {
