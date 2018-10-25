@@ -12,6 +12,7 @@ export class NavbarComponent implements OnInit {
 
   public loggedIn: boolean;
   navbarOpen = false;
+  manutencaoOpen = false;
 
   constructor(private Auth: AuthService, private router: Router, private Token: TokenService) { }
 
@@ -28,6 +29,10 @@ export class NavbarComponent implements OnInit {
     this.Token.remove();
     this.Auth.changeAuthStatus(false);
     this.router.navigateByUrl('/login');
+  }
+
+  toggleManutencao() {
+    this.manutencaoOpen = !this.manutencaoOpen;
   }
 
 }

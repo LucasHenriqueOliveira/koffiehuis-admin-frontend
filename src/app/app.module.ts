@@ -25,7 +25,9 @@ import { ManualComponent } from './manual/manual.component';
 
 import { registerLocaleData } from '@angular/common';
 import ptBr from '@angular/common/locales/pt';
+import { VeiculoService } from './services/veiculo.service';
 registerLocaleData(ptBr);
+
 
 @NgModule({
   declarations: [
@@ -57,6 +59,7 @@ registerLocaleData(ptBr);
     { provide: 'SnotifyToastConfig', useValue: ToastDefaults},
     SnotifyService,
     CrawlerService,
+    VeiculoService,
     { provide: LOCALE_ID, useValue: 'pt-PT' },
   ],
   bootstrap: [AppComponent]
