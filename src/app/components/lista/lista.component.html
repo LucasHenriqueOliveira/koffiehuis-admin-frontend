@@ -1,0 +1,15 @@
+<fieldset class="fieldset">
+	<legend>Lista de Manutenções</legend>
+	<p>
+		Insira o item e associe a um item do manual.
+	</p>
+	<form [formGroup]="listaForm" (ngSubmit)="onSubmit()">
+		<div class="form-group">
+			
+		</div>
+		<div class="form-group">
+			<button class="btn btn-primary" [disabled]="!this.listaForm.value.crawler">Executar</button>
+		</div>
+	</form>
+</fieldset>
+<div [ngClass]="{'loading': loading}"></div>
