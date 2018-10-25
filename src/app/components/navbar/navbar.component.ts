@@ -34,5 +34,4 @@ export class NavbarComponent implements OnInit {
   toggleManutencao() {
     this.manutencaoOpen = !this.manutencaoOpen;
   }
-
 }

@@ -10,6 +10,9 @@ import { AfterLoginService } from './services/after-login.service';
 import { CrawlerComponent } from './components/crawler/crawler.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ManualComponent } from './manual/manual.component';
+import { ListaComponent } from './components/lista/lista.component';
+import { StatusComponent } from './components/status/status.component';
+import { UsoComponent } from './components/uso/uso.component';
 
 const appRoutes: Routes = [
   {
@@ -40,6 +43,21 @@ const appRoutes: Routes = [
   {
     path: 'crawler',
     component: CrawlerComponent,
+    canActivate: [AfterLoginService]
+  },
+  {
+    path: 'lista',
+    component: ListaComponent,
+    canActivate: [AfterLoginService]
+  },
+  {
+    path: 'uso',
+    component: UsoComponent,
+    canActivate: [AfterLoginService]
+  },
+  {
+    path: 'status',
+    component: StatusComponent,
     canActivate: [AfterLoginService]
   },
   {

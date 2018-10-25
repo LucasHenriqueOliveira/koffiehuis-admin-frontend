@@ -8,7 +8,7 @@ import { TokenService } from './services/token.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'frontend';
+  title = 'Herbie';
 
   constructor(private Token: TokenService) { }
 

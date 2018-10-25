@@ -26,6 +26,11 @@ import { ManualComponent } from './manual/manual.component';
 import { registerLocaleData } from '@angular/common';
 import ptBr from '@angular/common/locales/pt';
 import { VeiculoService } from './services/veiculo.service';
+import { ListaComponent } from './components/lista/lista.component';
+import { UsoComponent } from './components/uso/uso.component';
+import { StatusComponent } from './components/status/status.component';
+import { StatusService } from './services/status.service';
+import { UsoService } from './services/uso.service';
 registerLocaleData(ptBr);
 
 
@@ -40,7 +45,10 @@ registerLocaleData(ptBr);
     ResponseResetComponent,
     CrawlerComponent,
     DashboardComponent,
-    ManualComponent
+    ManualComponent,
+    ListaComponent,
+    UsoComponent,
+    StatusComponent
   ],
   imports: [
     BrowserModule,
@@ -60,6 +68,8 @@ registerLocaleData(ptBr);
     SnotifyService,
     CrawlerService,
     VeiculoService,
+    StatusService,
+    UsoService,
     { provide: LOCALE_ID, useValue: 'pt-PT' },
   ],
   bootstrap: [AppComponent]
