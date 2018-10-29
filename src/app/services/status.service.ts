@@ -17,4 +17,12 @@ export class StatusService {
   save(data) {
     return this.http.post(`${this.baseUrl}/status`, data);
   }
+
+  remove(id) {
+    return this.http.delete(`${this.baseUrl}/status/${id}`);
+  }
+
+  edit(data) {
+    return this.http.put(`${this.baseUrl}/status`, data);
+  }
 }

@@ -27,10 +27,12 @@ import { registerLocaleData } from '@angular/common';
 import ptBr from '@angular/common/locales/pt';
 import { VeiculoService } from './services/veiculo.service';
 import { ListaComponent } from './components/lista/lista.component';
-import { UsoComponent } from './components/uso/uso.component';
-import { StatusComponent } from './components/status/status.component';
+import { UsoComponent, ModalUsoEditComponent } from './components/uso/uso.component';
+import { StatusComponent, ModalStatusEditComponent } from './components/status/status.component';
 import { StatusService } from './services/status.service';
 import { UsoService } from './services/uso.service';
+import { NgbModule, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { DataTablesModule } from 'angular-datatables';
 registerLocaleData(ptBr);
 
 
@@ -48,7 +50,9 @@ registerLocaleData(ptBr);
     ManualComponent,
     ListaComponent,
     UsoComponent,
-    StatusComponent
+    StatusComponent,
+    ModalUsoEditComponent,
+    ModalStatusEditComponent
   ],
   imports: [
     BrowserModule,
@@ -56,7 +60,9 @@ registerLocaleData(ptBr);
     FormsModule,
     HttpClientModule,
     SnotifyModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgbModule,
+    DataTablesModule
   ],
   providers: [
     UserService,
@@ -71,7 +77,12 @@ registerLocaleData(ptBr);
     StatusService,
     UsoService,
     { provide: LOCALE_ID, useValue: 'pt-PT' },
+    NgbActiveModal
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    ModalUsoEditComponent,
+    ModalStatusEditComponent,
+  ]
 })
 export class AppModule { }

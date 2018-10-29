@@ -6,7 +6,7 @@
 	<form [formGroup]="usoForm" (ngSubmit)="onSubmit()">
 		<div class="form-row">
 			<div class="form-group col-md-12">
-				<input type="text" class="form-control" id="pergunta" placeholder="Pergunta" formControlName="pergunta" required>
+				<textarea class="form-control" formControlName="pergunta" required></textarea>
 			</div>
 			<div class="form-group col-md-2">
 				<button class="btn btn-primary" [disabled]="!this.usoForm.value.pergunta">Salvar</button>
@@ -26,8 +26,10 @@
 			<tr *ngFor="let item of arrItems">
 				<td>{{ item.pergunta }}</td>
 				<td class="text-center">
-					<i class="fa fa-pencil" aria-hidden="true"></i>
-					<a href="" data-toggle="modal" data-target="#exampleModal">
+					<a (click)="openEdit(item.id, item.pergunta)">
+						<i class="fa fa-pencil" aria-hidden="true"></i>
+					</a>
+					<a (click)="openRemove(content, item.id)">
 						<i class="fa fa-trash" aria-hidden="true"></i>
 					</a>
 				</td>
@@ -36,4 +38,20 @@
 	</table>
 </div>
 <div [ngClass]="{'loading': loading}"></div>
-		
+
+<ng-template #content let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title">Deletar condição de uso</h4>
+		<button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+		<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	<div class="modal-body">
+		<p>Você deseja apagar a condição de uso? <br />
+			<b>Essa operação não poderá ser desfeita.</b></p>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-light" (click)="modal.dismiss('cancel click')">Não</button>
+		<button type="button" class="btn btn-danger" ngbAutofocus (click)="remove()">Sim</button>
+	</div>
+</ng-template>

@@ -17,4 +17,12 @@ export class UsoService {
   save(data) {
     return this.http.post(`${this.baseUrl}/uso`, data);
   }
+
+  remove(id) {
+    return this.http.delete(`${this.baseUrl}/uso/${id}`);
+  }
+
+  edit(data) {
+    return this.http.put(`${this.baseUrl}/uso`, data);
+  }
 }
