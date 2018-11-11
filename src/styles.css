@@ -2,6 +2,7 @@
 @import "~bootstrap/dist/css/bootstrap.css";
 @import "~ng-snotify/styles/material.css";
 @import "~font-awesome/css/font-awesome.css";
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
 
 .ng-invalid:not(form){
     border-left:2px solid red;
@@ -9,6 +10,39 @@
 
 .ng-valid:not(form){
     border-left:2px solid green;
+}
+
+.bg-herbie {
+    background-color: #114889;
+    background-image: -moz-radial-gradient(center, ellipse cover, #1C5DC1 1%, #114889 100%);
+    background-image: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(1%,#1C5DC1), color-stop(100%,#114889));
+    background-image: -webkit-radial-gradient(center, ellipse cover, #1C5DC1 1%,#114889 100%);
+    background-image: -o-radial-gradient(center, ellipse cover, #1C5DC1 1%,#114889 100%);
+    background-image: -ms-radial-gradient(center, ellipse cover, #1C5DC1 1%,#114889 100%);
+    background-image: radial-gradient(ellipse at center, #1C5DC1 1%,#114889 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1C5DC1', endColorstr='#114889',GradientType=1 );
+    color: #fff;
+}
+
+.navbar-toggler i {
+    color: #fff;
+}
+
+.navbar-light .navbar-toggler {
+    border-color: #fff;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: #fff;
+}
+
+.navbar-light .navbar-nav .nav-link:hover, .navbar-light .navbar-nav .nav-link:focus {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.dropdown-item:hover, .dropdown-item:focus {
+    background-color: #114889;
+    color: #fff;
 }
 
 .container {
@@ -168,5 +202,9 @@ legend {
 }
 
 .dropdown-toggle {
+    cursor: pointer;
+}
+
+a i {
     cursor: pointer;
 }

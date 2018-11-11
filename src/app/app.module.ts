@@ -21,18 +21,22 @@ import { CrawlerComponent } from './components/crawler/crawler.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CrawlerService } from './services/crawler.service';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { ManualComponent } from './manual/manual.component';
+import { ManualComponent, ModalManualEditComponent } from './components/manual/manual.component';
 
 import { registerLocaleData } from '@angular/common';
 import ptBr from '@angular/common/locales/pt';
 import { VeiculoService } from './services/veiculo.service';
-import { ListaComponent } from './components/lista/lista.component';
+import { ListaComponent, ModalListaEditComponent } from './components/lista/lista.component';
 import { UsoComponent, ModalUsoEditComponent } from './components/uso/uso.component';
 import { StatusComponent, ModalStatusEditComponent } from './components/status/status.component';
 import { StatusService } from './services/status.service';
 import { UsoService } from './services/uso.service';
 import { NgbModule, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataTablesModule } from 'angular-datatables';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatFormFieldModule, MatInputModule, MatAutocompleteModule, MatButtonModule, MatProgressSpinnerModule } from '@angular/material';
+import { UsuariosComponent } from './components/usuarios/usuarios.component';
+import { CarrosComponent } from './components/carros/carros.component';
 registerLocaleData(ptBr);
 
 
@@ -52,7 +56,11 @@ registerLocaleData(ptBr);
     UsoComponent,
     StatusComponent,
     ModalUsoEditComponent,
-    ModalStatusEditComponent
+    ModalStatusEditComponent,
+    ModalListaEditComponent,
+    ModalManualEditComponent,
+    UsuariosComponent,
+    CarrosComponent
   ],
   imports: [
     BrowserModule,
@@ -62,7 +70,13 @@ registerLocaleData(ptBr);
     SnotifyModule,
     ReactiveFormsModule,
     NgbModule,
-    DataTablesModule
+    DataTablesModule,
+    BrowserAnimationsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatAutocompleteModule,
+    MatButtonModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     UserService,
@@ -83,6 +97,8 @@ registerLocaleData(ptBr);
   entryComponents: [
     ModalUsoEditComponent,
     ModalStatusEditComponent,
+    ModalListaEditComponent,
+    ModalManualEditComponent
   ]
 })
 export class AppModule { }

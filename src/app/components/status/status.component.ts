@@ -125,10 +125,10 @@ export class StatusComponent implements OnInit {
         this.arrItems = result['data'];
         this.notify.success(result['message'], {timeout: 2000, showProgressBar: false });
       },
-      error => {
+      err => {
         this.loading = false;
         this.statusForm.reset();
-        this.notify.error(error.error, {timeout: 3000, showProgressBar: false });
+        this.notify.error(err.error.error, {timeout: 3000, showProgressBar: false });
       }
     );
   }
@@ -141,10 +141,10 @@ export class StatusComponent implements OnInit {
         this.modalService.dismissAll();
         this.notify.success(result['message'], {timeout: 2000, showProgressBar: false });
       },
-      error => {
+      err => {
         this.loading = false;
         this.modalService.dismissAll();
-        this.notify.error(error.error, {timeout: 3000, showProgressBar: false });
+        this.notify.error(err.error.error, {timeout: 3000, showProgressBar: false });
       }
     );
   }
