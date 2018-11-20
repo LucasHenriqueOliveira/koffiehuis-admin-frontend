@@ -1,0 +1,57 @@
+<fieldset class="fieldset">
+	<legend>Item do Manual</legend>
+	<p>
+		Insira o item do manual.
+	</p>
+	<form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
+		<div class="form-row">
+			<div class="form-group col-md-10">
+				<input type="text" class="form-control" id="item" placeholder="Item" formControlName="item" required>
+			</div>
+			<div class="form-group col-md-2">
+				<button class="btn btn-primary" [disabled]="!checkButton()">Salvar</button>
+			</div>
+		</div>
+	</form>
+</fieldset>
+<div class="table-responsive">
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>Item</th>
+				<th class="text-center">Ações</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let item of arrItems">
+				<td>{{ item.item }}</td>
+				<td class="text-center">
+					<a (click)="openEdit(item.id, item.item)">
+						<i class="fa fa-pencil" aria-hidden="true"></i>
+					</a>
+					<a (click)="openRemove(content, item.id)">
+						<i class="fa fa-trash" aria-hidden="true"></i>
+					</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div [ngClass]="{'loading': loading}"></div>
+
+<ng-template #content let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title">Deletar item do manual</h4>
+		<button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+		<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	<div class="modal-body">
+		<p>Você deseja apagar o item do manual? <br />
+			<b>Essa operação não poderá ser desfeita.</b></p>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-light" (click)="modal.dismiss('cancel click')">Não</button>
+		<button type="button" class="btn btn-danger" ngbAutofocus (click)="remove()">Sim</button>
+	</div>
+</ng-template>
