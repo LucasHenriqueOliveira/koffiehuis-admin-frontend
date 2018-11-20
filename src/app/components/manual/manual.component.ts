@@ -194,6 +194,16 @@ export class ManualComponent implements OnInit {
     }
   }
 
+  resetForm() {
+    for (let i = 0; i < this.arrayItems.length; i++) {
+      (document.getElementById('km_' + this.arrayItems[i]) as HTMLInputElement).value = '';
+      (document.getElementById('div_km_' + this.arrayItems[i]) as HTMLInputElement).style.display = 'none';
+      (document.getElementById('meses_' + this.arrayItems[i]) as HTMLInputElement).value = '';
+      (document.getElementById('div_meses_' + this.arrayItems[i]) as HTMLInputElement).style.display = 'none';
+      (document.getElementById('check_' + this.arrayItems[i]) as HTMLInputElement).checked = false;
+    }
+  }
+
   onSubmit() {
     const arr = [];
     for (let i = 0; i < this.arrayItems.length; i++) {
@@ -211,6 +221,8 @@ export class ManualComponent implements OnInit {
     this.Manual.save(data).subscribe(
       result => {
         this.getForm();
+        this.resetForm();
+        this.arrayItems = [];
         this.loading = false;
         this.notify.success(result['message'], {timeout: 2000, showProgressBar: false });
       },

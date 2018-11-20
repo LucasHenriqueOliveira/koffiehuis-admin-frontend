@@ -26,11 +26,11 @@
 				<h6>Selecione os itens do manual</h6>
 				<hr>
 			</div>
-			<div class="form-group col-md-12" *ngFor="let item of options;let i=index;">
+			<div class="form-group col-md-12" *ngFor="let item of options">
 				<div class="form-check inline-block">
-					<input type="checkbox" class="form-check-input" name="itens[{{i}}]" id="exampleCheck{{i}}" [value]="item.id"
+					<input type="checkbox" class="form-check-input" name="itens[{{item.id}}]" id="check_{{item.id}}" [value]="item.id"
 					(change)="setItens($event.target.getAttribute('value'), $event.target.checked)">
-					<label class="form-check-label" for="exampleCheck{{i}}">{{ item.item }}</label>
+					<label class="form-check-label" for="check_{{item.id}}">{{ item.item }}</label>
 				</div>
 				<div class="form-group display-none margin-left" id="div_km_{{item.id}}">
 					<input type="number" class="form-control" id="km_{{item.id}}" name="km[{{item.id}}]" value="" placeholder="Km">
