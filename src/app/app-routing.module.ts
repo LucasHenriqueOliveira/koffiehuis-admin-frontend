@@ -15,6 +15,7 @@ import { StatusComponent } from './components/status/status.component';
 import { UsoComponent } from './components/uso/uso.component';
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { CarrosComponent } from './components/carros/carros.component';
+import { ItemComponent } from './components/item/item.component';
 
 const appRoutes: Routes = [
   {
@@ -41,6 +42,11 @@ const appRoutes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
+    canActivate: [AfterLoginService]
+  },
+  {
+    path: 'item',
+    component: ItemComponent,
     canActivate: [AfterLoginService]
   },
   {
