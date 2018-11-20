@@ -33,7 +33,9 @@ export class TokenService {
     if (token) {
       const payload = this.payload(token);
       if (payload) {
-        return Object.values(this.iss).indexOf(payload.iss) > -1 ? true : false;
+        let url = payload.iss.split(':');
+        url = 'https:' + url[1];
+        return Object.values(this.iss).indexOf(url) > -1 ? true : false;
       }
     }
     return false;
