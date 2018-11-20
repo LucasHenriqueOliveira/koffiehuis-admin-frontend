@@ -212,7 +212,7 @@ export class ManualComponent implements OnInit {
       result => {
         this.getForm();
         this.loading = false;
-        this.notify.success(result['data'], {timeout: 2000, showProgressBar: false });
+        this.notify.success(result['message'], {timeout: 2000, showProgressBar: false });
       },
       error => {
         this.loading = false;
