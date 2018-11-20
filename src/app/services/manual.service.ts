@@ -27,6 +27,22 @@ export class ManualService {
     return this.http.get(`${this.constants.api}/manual`);
   }
 
+  itensManual() {
+    return this.http.get(`${this.constants.api}/manual-itens`);
+  }
+
+  saveItensManual(data) {
+    return this.http.post(`${this.constants.api}/manual-itens`, data);
+  }
+
+  removeItensManual(id) {
+    return this.http.delete(`${this.constants.api}/manual-itens/${id}`);
+  }
+
+  editItensManual(data) {
+    return this.http.put(`${this.constants.api}/manual-itens`, data);
+  }
+
   getOptions() {
     return this.http.get(`${this.constants.api}/manual-options`);
   }

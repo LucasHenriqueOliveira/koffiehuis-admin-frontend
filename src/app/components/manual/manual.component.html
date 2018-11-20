@@ -1,7 +1,12 @@
+<div class="form-row">
+	<div class="form-group col-md-12 text-right">
+		<button class="btn btn-primary">Pesquisar</button>
+	</div>
+</div>
 <fieldset class="fieldset">
 	<legend>Plano de Manutenção Programada</legend>
 	<p>
-		Insira o item, além do intervalo de quilometragem (Km) e tempo (meses) para o veículo.
+		Selecione a marca, o modelo e os itens do manual.
 	</p>
 	<form [formGroup]="manualForm" (ngSubmit)="onSubmit()">
 		<div class="form-row">
@@ -17,19 +22,22 @@
 					<option *ngFor="let modelo of arrModelos" [value]="modelo.id">{{modelo.nome}}</option>
 				</select>
 			</div>
-			<div class="form-group col-md-8">
-				<input type="text" class="form-control" placeholder="Informe o item" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
-				<mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-					<mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-					{{ option.item }}
-					</mat-option>
-				</mat-autocomplete>
+			<div class="form-group col-md-12">
+				<h6>Selecione os itens do manual</h6>
+				<hr>
 			</div>
-			<div class="form-group col-md-2">
-				<input type="number" class="form-control" id="km" placeholder="Km" formControlName="km" required>
-			</div>
-			<div class="form-group col-md-2">
-				<input type="number" class="form-control" id="meses" placeholder="Meses" formControlName="meses" required>
+			<div class="form-group col-md-12" *ngFor="let item of options;let i=index;">
+				<div class="form-check inline-block">
+					<input type="checkbox" class="form-check-input" name="itens[{{i}}]" id="exampleCheck{{i}}" [value]="item.id"
+					(change)="setItens($event.target.getAttribute('value'), $event.target.checked)">
+					<label class="form-check-label" for="exampleCheck{{i}}">{{ item.item }}</label>
+				</div>
+				<div class="form-group display-none margin-left" id="div_km_{{item.id}}">
+					<input type="number" class="form-control" id="km_{{item.id}}" name="km[{{item.id}}]" value="" placeholder="Km">
+				</div>
+				<div class="form-group display-none margin-left" id="div_meses_{{item.id}}">
+					<input type="number" class="form-control" id="meses_{{item.id}}" name="meses[{{item.id}}]" value="" placeholder="Meses">
+				</div>
 			</div>
 			<div class="form-group col-md-12 text-center">
 				<button class="btn btn-primary" [disabled]="!checkButton()">Salvar</button>
@@ -37,6 +45,7 @@
 		</div>
 	</form>
 </fieldset>
+<!--
 <div class="table-responsive">
 	<table class="table table-striped">
 		<thead>
@@ -66,6 +75,7 @@
 		</tbody>
 	</table>
 </div>
+-->
 <div [ngClass]="{'loading': loading}"></div>
 
 <ng-template #content let-modal>

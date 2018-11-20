@@ -111,10 +111,13 @@ export class ManualComponent implements OnInit {
   arrMarcas: any;
   arrModelos: any;
   arrItems: any;
+  arrayItems: any = [];
   manualForm: any;
-  myControl: any;
   id: any;
   options: any;
+  itens = {};
+  km = {};
+  meses = {};
   filteredOptions: Observable<string[]>;
 
   constructor(private Veiculo: VeiculoService,
@@ -126,13 +129,9 @@ export class ManualComponent implements OnInit {
 
   getForm() {
     this.manualForm = new FormGroup({
-      km: new FormControl(''),
-      meses: new FormControl(''),
       selectedMarca: new FormControl(0),
       selectedModelo: new FormControl(0)
     });
-
-    this.myControl = new FormControl();
   }
 
   ngOnInit() {
@@ -146,9 +145,7 @@ export class ManualComponent implements OnInit {
       }
     );
 
-    this.getItems();
-
-    this.Manual.getOptions().subscribe(
+    this.Manual.itensManual().subscribe(
       result => {
         this.loading = false;
         this.setOptions(result);
@@ -160,40 +157,8 @@ export class ManualComponent implements OnInit {
     );
   }
 
-  getItems() {
-    this.Manual.items().subscribe(
-      result => {
-        this.arrItems = result;
-      },
-      error => {
-        this.notify.error('Erro ao retornar os itens do manual', {timeout: 3000, showProgressBar: false });
-      }
-    );
-  }
-
   setOptions(options) {
     this.options = options;
-
-    this.filteredOptions = this.myControl.valueChanges
-    .pipe(
-      startWith(''),
-      map(value => this._filter(value))
-    );
-  }
-
-  private _filter(value) {
-    let filterValue = '';
-    if (value && value.hasOwnProperty('item')) {
-      filterValue = value.item.toLowerCase();
-    } else {
-      filterValue = value.toLowerCase();
-    }
-
-    return this.options.filter(option => option.item.toLowerCase().includes(filterValue));
-  }
-
-  displayFn(item) {
-    if (item) { return item.item; }
   }
 
   onChange() {
@@ -211,35 +176,41 @@ export class ManualComponent implements OnInit {
   }
 
   checkButton() {
-    return this.myControl.value && this.manualForm.value.km && this.manualForm.value.meses
-    && !(this.manualForm.value.selectedMarca === 0) && !(this.manualForm.value.selectedModelo === 0);
+    return !(this.manualForm.value.selectedMarca === 0) && !(this.manualForm.value.selectedModelo === 0);
+  }
+
+  setItens(id, checked) {
+    if (checked) {
+      this.arrayItems.push(id);
+      (document.getElementById('div_km_' + id) as HTMLInputElement).style.display = 'inline-block';
+      (document.getElementById('div_meses_' + id) as HTMLInputElement).style.display = 'inline-block';
+    } else {
+      const indexArrayItems = this.arrayItems.indexOf(id);
+      if (indexArrayItems > -1) {
+        this.arrayItems.splice(indexArrayItems, 1);
+      }
+      (document.getElementById('div_km_' + id) as HTMLInputElement).style.display = 'none';
+      (document.getElementById('div_meses_' + id) as HTMLInputElement).style.display = 'none';
+    }
   }
 
   onSubmit() {
-    let item = '';
-    let id = '';
-    if (typeof(this.myControl.value) !== 'object') {
-      item = this.myControl.value;
-      id = null;
-    } else {
-      item = this.myControl.value.item;
-      id = this.myControl.value.id;
+    const arr = [];
+    for (let i = 0; i < this.arrayItems.length; i++) {
+      const km = (document.getElementById('km_' + this.arrayItems[i]) as HTMLInputElement).value;
+      const meses = (document.getElementById('meses_' + this.arrayItems[i]) as HTMLInputElement).value;
+      arr.push({id: this.arrayItems[i], km: km, meses: meses});
     }
-
     const data = {
       selectedModelo: this.manualForm.value.selectedModelo,
       selectedMarca: this.manualForm.value.selectedMarca,
-      km: this.manualForm.value.km,
-      meses: this.manualForm.value.meses,
-      id: id,
-      item: item
+      itens: arr
     };
 
     this.loading = true;
     this.Manual.save(data).subscribe(
       result => {
         this.getForm();
-        this.getItems();
         this.loading = false;
         this.notify.success(result['data'], {timeout: 2000, showProgressBar: false });
       },
