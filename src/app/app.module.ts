@@ -38,6 +38,7 @@ import { MatFormFieldModule, MatInputModule, MatAutocompleteModule, MatButtonMod
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { CarrosComponent } from './components/carros/carros.component';
 import { DashboardService } from './services/dashboard.service';
+import { ItemComponent, ModalManualItemEditComponent } from './components/item/item.component';
 registerLocaleData(ptBr);
 
 
@@ -61,7 +62,9 @@ registerLocaleData(ptBr);
     ModalListaEditComponent,
     ModalManualEditComponent,
     UsuariosComponent,
-    CarrosComponent
+    CarrosComponent,
+    ItemComponent,
+    ModalManualItemEditComponent
   ],
   imports: [
     BrowserModule,
@@ -100,7 +103,8 @@ registerLocaleData(ptBr);
     ModalUsoEditComponent,
     ModalStatusEditComponent,
     ModalListaEditComponent,
-    ModalManualEditComponent
+    ModalManualEditComponent,
+    ModalManualItemEditComponent
   ]
 })
 export class AppModule { }
