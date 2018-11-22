@@ -39,6 +39,8 @@ import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { CarrosComponent } from './components/carros/carros.component';
 import { DashboardService } from './services/dashboard.service';
 import { ItemComponent, ModalManualItemEditComponent } from './components/item/item.component';
+import { PesquisaManualComponent, ModalPesquisaManualEditComponent } from './components/pesquisa-manual/pesquisa-manual.component';
+import { CopiaManualComponent } from './components/copia-manual/copia-manual.component';
 registerLocaleData(ptBr);
 
 
@@ -64,7 +66,10 @@ registerLocaleData(ptBr);
     UsuariosComponent,
     CarrosComponent,
     ItemComponent,
-    ModalManualItemEditComponent
+    ModalManualItemEditComponent,
+    PesquisaManualComponent,
+    ModalPesquisaManualEditComponent,
+    CopiaManualComponent,
   ],
   imports: [
     BrowserModule,
@@ -104,7 +109,8 @@ registerLocaleData(ptBr);
     ModalStatusEditComponent,
     ModalListaEditComponent,
     ModalManualEditComponent,
-    ModalManualItemEditComponent
+    ModalManualItemEditComponent,
+    ModalPesquisaManualEditComponent
   ]
 })
 export class AppModule { }

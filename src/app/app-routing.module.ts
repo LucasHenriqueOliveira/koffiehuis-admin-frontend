@@ -16,6 +16,8 @@ import { UsoComponent } from './components/uso/uso.component';
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { CarrosComponent } from './components/carros/carros.component';
 import { ItemComponent } from './components/item/item.component';
+import { PesquisaManualComponent } from './components/pesquisa-manual/pesquisa-manual.component';
+import { CopiaManualComponent } from './components/copia-manual/copia-manual.component';
 
 const appRoutes: Routes = [
   {
@@ -52,6 +54,16 @@ const appRoutes: Routes = [
   {
     path: 'manual',
     component: ManualComponent,
+    canActivate: [AfterLoginService]
+  },
+  {
+    path: 'pesquisa-manual',
+    component: PesquisaManualComponent,
+    canActivate: [AfterLoginService]
+  },
+  {
+    path: 'copia-manual',
+    component: CopiaManualComponent,
     canActivate: [AfterLoginService]
   },
   {
