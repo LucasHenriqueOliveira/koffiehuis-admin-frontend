@@ -1,0 +1,68 @@
+<fieldset class="fieldset">
+	<legend>Copiar Manual do Veículo</legend>
+	<p>
+		Selecione a marca e o modelo e clique em pesquisar.
+	</p>
+	<form [formGroup]="manualForm" (ngSubmit)="onSubmit()">
+		<div class="form-row">
+			<div class="form-group col-md-4">
+				<select id="inputMarcas" class="form-control" formControlName="selectedMarca" (change)="onChange()">
+					<option selected value="0">Selecione a marca</option>
+					<option *ngFor="let marca of arrMarcas" [value]="marca.id">{{marca.nome}}</option>
+				</select>
+			</div>
+			<div class="form-group col-md-8">
+				<select id="inputModelos" class="form-control" formControlName="selectedModelo">
+					<option selected value="0">Selecione o modelo</option>
+					<option *ngFor="let modelo of arrModelos" [value]="modelo.id">{{modelo.nome}}</option>
+				</select>
+			</div>
+			<div class="form-group col-md-12 text-center">
+				<button class="btn btn-primary" [disabled]="!checkButton()">Pesquisar</button>
+			</div>
+		</div>
+	</form>
+	<form [formGroup]="copiaManualForm" *ngIf="arrItens.length" (ngSubmit)="onSubmit2()">
+		<div class="form-row table-responsive">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+					<th>Item</th>
+					<th class="text-center">Km</th>
+					<th class="text-center">Tempo</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let item of arrItens">
+						<td>{{ item.item }}</td>
+						<td class="text-center">{{ item.km | number }}</td>
+						<td class="text-center">{{ item.tempo }}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<hr />
+		<p>Selecione a marca e o modelo para qual deseja copiar</p>
+		<div class="form-row">
+			<div class="form-group col-md-4">
+				<select id="inputMarcas" class="form-control" formControlName="selectedMarca2" (change)="onChange2()">
+					<option selected value="0">Selecione a marca</option>
+					<option *ngFor="let marca of arrMarcas2" [value]="marca.id">{{marca.nome}}</option>
+				</select>
+			</div>
+			<div class="form-group col-md-8">
+				<select id="inputModelos" class="form-control" formControlName="selectedModelo2">
+					<option selected value="0">Selecione o modelo</option>
+					<option *ngFor="let modelo of arrModelos2" [value]="modelo.id">{{modelo.nome}}</option>
+				</select>
+			</div>
+			<div class="form-group col-md-12 text-center">
+				<button class="btn btn-primary" [disabled]="!checkButton2()">Copiar</button>
+			</div>
+		</div>
+	</form>
+	<div *ngIf="pesquisa && !arrItens.length">
+		<p>Este veículo não possui manual cadastrado.</p>
+	</div>
+</fieldset>
+<div [ngClass]="{'loading': loading}"></div>
