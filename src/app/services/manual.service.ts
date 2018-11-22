@@ -43,6 +43,22 @@ export class ManualService {
     return this.http.put(`${this.constants.api}/manual-itens`, data);
   }
 
+  saveManualCarro(data) {
+    return this.http.post(`${this.constants.api}/manual-carro`, data);
+  }
+
+  manualCarro(modelo) {
+    return this.http.get(`${this.constants.api}/manual-carro/${modelo}`);
+  }
+
+  removeManualCarro(id) {
+    return this.http.delete(`${this.constants.api}/manual-carro/${id}`);
+  }
+
+  editManualCarro(data) {
+    return this.http.put(`${this.constants.api}/manual-carro`, data);
+  }
+
   getOptions() {
     return this.http.get(`${this.constants.api}/manual-options`);
   }
