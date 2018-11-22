@@ -37,6 +37,7 @@ export class ModalListaEditComponent {
   @Input() nome;
   @Input() id_manual;
   @Input() id;
+  @Input() arrManual;
 
   constructor(public activeModal: NgbActiveModal) {}
 

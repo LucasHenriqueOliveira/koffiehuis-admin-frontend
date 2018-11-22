@@ -16,7 +16,7 @@ export class SignupComponent implements OnInit {
     password: null,
     password_confirmation: null
   };
-  public error = [];
+  public error: any = [];
 
   constructor(private User: UserService, private Token: TokenService, private router: Router) { }
 
