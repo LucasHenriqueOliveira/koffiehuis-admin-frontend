@@ -1,5 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light bg-herbie">
-	<a class="navbar-brand">Herbie</a>
+	<a class="navbar-brand">
+		<img src="/assets/images/herbie.svg" width="50px">
+	</a>
 
 	<button class="navbar-toggler" type="button" (click)="toggleNavbar()">
 		<i class="fa fa-bars"></i>
@@ -17,7 +19,9 @@
 				<div class="dropdown-menu" [ngClass]="{ 'show': manutencaoOpen }">
 					<a class="dropdown-item" routerLink="crawler" (click)="toggleManutencao()">Marcas e Modelos</a>
 					<a class="dropdown-item" routerLink="item" (click)="toggleManutencao()">Item do Manual</a>
-					<a class="dropdown-item" routerLink="manual" (click)="toggleManutencao()">Plano de Manutenção</a>
+					<a class="dropdown-item" routerLink="manual" (click)="toggleManutencao()">Inserir Manual</a>
+					<a class="dropdown-item" routerLink="pesquisa-manual" (click)="toggleManutencao()">Pesquisa Manual</a>
+					<a class="dropdown-item" routerLink="copia-manual" (click)="toggleManutencao()">Copiar Manual</a>
 					<a class="dropdown-item" routerLink="lista" (click)="toggleManutencao()" >Lista de Manutenções</a>
 					<a class="dropdown-item" routerLink="uso" (click)="toggleManutencao()">Condições de Uso</a>
 					<a class="dropdown-item" routerLink="status" (click)="toggleManutencao()">Status</a>
