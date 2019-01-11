@@ -19,6 +19,14 @@ export class VeiculoService {
     return this.http.get(`${this.constants.api}/marcas/${data}`);
   }
 
+  anos(data) {
+    return this.http.get(`${this.constants.api}/anos/${data}`);
+  }
+
+  versoes(data) {
+    return this.http.get(`${this.constants.api}/versao/${data}`);
+  }
+
   getCars() {
     return this.http.get(`${this.constants.api}/carro`);
   }

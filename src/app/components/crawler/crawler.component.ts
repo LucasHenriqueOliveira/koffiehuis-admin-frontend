@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
 import { CrawlerService } from 'src/app/services/crawler.service';
 import { SnotifyService } from 'ng-snotify';
+import { VeiculoService } from 'src/app/services/veiculo.service';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-crawler',
@@ -10,14 +11,82 @@ import { SnotifyService } from 'ng-snotify';
 })
 export class CrawlerComponent implements OnInit {
 
-  crawlerForm = new FormGroup({
-    crawler: new FormControl('')
-  });
   loading = false;
+  arrMarcas: any;
+  arrModelos: any;
+  arrAnos: any;
+  arrVersoes: any;
+  crawlerForm: any;
 
-  constructor(private Crawler: CrawlerService, private notify: SnotifyService) { }
+  constructor(private Crawler: CrawlerService, private notify: SnotifyService, private Veiculo: VeiculoService) {
+    this.getForm();
+  }
+
+  getForm() {
+    this.crawlerForm = new FormGroup({
+      selectedMarca: new FormControl(0),
+      selectedModelo: new FormControl(0),
+      selectedAno: new FormControl(0),
+      selectedVersao: new FormControl(0)
+    });
+  }
 
   ngOnInit() {
+    this.loading = true;
+    this.Veiculo.marcas().subscribe(
+      result => {
+        this.arrMarcas = result;
+        this.loading = false;
+      },
+      error => {
+        this.notify.error('Erro ao retornar as marcas dos veículos', {timeout: 3000, showProgressBar: false });
+      }
+    );
+  }
+
+  onChangeMarca() {
+    this.loading = true;
+    this.Veiculo.modelos(this.crawlerForm.value.selectedMarca).subscribe(
+      result => {
+        this.loading = false;
+        this.arrModelos = result;
+        this.crawlerForm.value.selectedAno = 0;
+        this.crawlerForm.value.selectedVersao = 0;
+      },
+      error => {
+        this.loading = false;
+        this.notify.error('Erro ao retornar os modelos dos veículos', {timeout: 3000, showProgressBar: false });
+      }
+    );
+  }
+
+  onChangeModelo() {
+    this.loading = true;
+    this.Veiculo.anos(this.crawlerForm.value.selectedModelo).subscribe(
+      result => {
+        this.loading = false;
+        this.arrAnos = result;
+        this.crawlerForm.value.selectedVersao = 0;
+      },
+      error => {
+        this.loading = false;
+        this.notify.error('Erro ao retornar os anos dos veículos', {timeout: 3000, showProgressBar: false });
+      }
+    );
+  }
+
+  onChangeAno() {
+    this.loading = true;
+    this.Veiculo.versoes(this.crawlerForm.value.selectedAno).subscribe(
+      result => {
+        this.loading = false;
+        this.arrVersoes = result;
+      },
+      error => {
+        this.loading = false;
+        this.notify.error('Erro ao retornar as versões dos veículos', {timeout: 3000, showProgressBar: false });
+      }
+    );
   }
 
   onSubmit() {
