@@ -18,6 +18,9 @@ import { CarrosComponent } from './components/carros/carros.component';
 import { ItemComponent } from './components/item/item.component';
 import { PesquisaManualComponent } from './components/pesquisa-manual/pesquisa-manual.component';
 import { CopiaManualComponent } from './components/copia-manual/copia-manual.component';
+import { TituloComponent } from './components/titulo/titulo.component';
+import { ManualCarroComponent } from './components/manual-carro/manual-carro.component';
+import { ManualFixoComponent } from './components/manual-fixo/manual-fixo.component';
 
 const appRoutes: Routes = [
   {
@@ -52,8 +55,23 @@ const appRoutes: Routes = [
     canActivate: [AfterLoginService]
   },
   {
+    path: 'titulo',
+    component: TituloComponent,
+    canActivate: [AfterLoginService]
+  },
+  {
     path: 'manual',
     component: ManualComponent,
+    canActivate: [AfterLoginService]
+  },
+  {
+    path: 'manual-fixo',
+    component: ManualFixoComponent,
+    canActivate: [AfterLoginService]
+  },
+  {
+    path: 'manual-carro',
+    component: ManualCarroComponent,
     canActivate: [AfterLoginService]
   },
   {
