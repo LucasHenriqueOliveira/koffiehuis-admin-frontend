@@ -31,16 +31,36 @@ export class ManualService {
     return this.http.get(`${this.constants.api}/manual-itens`);
   }
 
+  itensManualFixo() {
+    return this.http.get(`${this.constants.api}/manual-itens-fixo`);
+  }
+
+  itensManualTitulo(id) {
+    return this.http.get(`${this.constants.api}/manual-itens/${id}`);
+  }
+
   saveItensManual(data) {
     return this.http.post(`${this.constants.api}/manual-itens`, data);
+  }
+
+  saveItensManualFixo(data) {
+    return this.http.post(`${this.constants.api}/manual-itens-fixo`, data);
   }
 
   removeItensManual(id) {
     return this.http.delete(`${this.constants.api}/manual-itens/${id}`);
   }
 
+  removeItensManualFixo(id) {
+    return this.http.delete(`${this.constants.api}/manual-itens-fixo/${id}`);
+  }
+
   editItensManual(data) {
     return this.http.put(`${this.constants.api}/manual-itens`, data);
+  }
+
+  editItensManualFixo(data) {
+    return this.http.put(`${this.constants.api}/manual-itens-fixo`, data);
   }
 
   saveManualCarro(data) {
@@ -51,12 +71,20 @@ export class ManualService {
     return this.http.get(`${this.constants.api}/manual-carro/${modelo}`);
   }
 
-  removeManualCarro(id) {
-    return this.http.delete(`${this.constants.api}/manual-carro/${id}`);
+  removeManualCarro(id_marca, id_modelo, ano, id_versao) {
+    return this.http.delete(`${this.constants.api}/manual-carro/${id_marca}/${id_modelo}/${ano}/${id_versao}`);
   }
 
   editManualCarro(data) {
     return this.http.put(`${this.constants.api}/manual-carro`, data);
+  }
+
+  lastManual() {
+    return this.http.get(`${this.constants.api}/last-manual`);
+  }
+
+  listManual(modelo) {
+    return this.http.get(`${this.constants.api}/list-manual/${modelo}`);
   }
 
   getOptions() {
