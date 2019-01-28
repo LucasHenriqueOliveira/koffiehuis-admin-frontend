@@ -208,3 +208,15 @@ legend {
 a i {
     cursor: pointer;
 }
+
+.no-border {
+    border: none !important;
+}
+
+.table tbody + tbody {
+    border: none !important;
+}
+
+.titulo {
+    background-color: #dee2e6;
+}
