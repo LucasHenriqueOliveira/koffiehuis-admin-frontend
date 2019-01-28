@@ -94,7 +94,10 @@ export class PesquisaManualComponent implements OnInit {
   arrMarcas: any;
   arrModelos: any;
   arrItens: any = [];
-  id: any;
+  id_marca: any;
+  id_modelo: any;
+  ano: any;
+  id_versao: any;
   manualForm = new FormGroup({
     selectedMarca: new FormControl(0),
     selectedModelo: new FormControl(0)
@@ -111,10 +114,24 @@ export class PesquisaManualComponent implements OnInit {
     this.Veiculo.marcas().subscribe(
       result => {
         this.arrMarcas = result;
-        this.loading = false;
       },
       error => {
         this.notify.error('Erro ao retornar as marcas dos veículos', {timeout: 3000, showProgressBar: false });
+      }
+    );
+
+    this.lastManual();
+  }
+
+  lastManual() {
+    this.Manual.lastManual().subscribe(
+      result => {
+        this.arrItens = result;
+        this.loading = false;
+      },
+      error => {
+        this.loading = false;
+        this.notify.error(error.error.error, {timeout: 3000, showProgressBar: false });
       }
     );
   }
@@ -139,7 +156,7 @@ export class PesquisaManualComponent implements OnInit {
 
   onSubmit() {
     this.loading = true;
-    this.Manual.manualCarro(this.manualForm.value.selectedModelo).subscribe(
+    this.Manual.listManual(this.manualForm.value.selectedModelo).subscribe(
       result => {
         this.arrItens = result;
         this.loading = false;
@@ -147,21 +164,27 @@ export class PesquisaManualComponent implements OnInit {
       },
       error => {
         this.loading = false;
-        this.notify.error(error.error, {timeout: 3000, showProgressBar: false });
+        this.notify.error(error.error.error, {timeout: 3000, showProgressBar: false });
       }
     );
   }
 
-  openRemove(content, id) {
-    this.id = id;
+  openRemove(content, id_marca, id_modelo, ano, id_versao) {
+    this.id_marca = id_marca;
+    this.id_modelo = id_modelo;
+    this.ano = ano;
+    this.id_versao = id_versao;
     this.modalService.open(content);
   }
 
   remove() {
-    this.Manual.removeManualCarro(this.id).subscribe(
+    this.Manual.removeManualCarro(this.id_marca, this.id_modelo, this.ano, this.id_versao).subscribe(
       result => {
         this.loading = false;
         this.arrItens = result['data'];
+        if (!this.arrItens.length) {
+          this.lastManual();
+        }
         this.modalService.dismissAll();
         this.notify.success(result['message'], {timeout: 2000, showProgressBar: false });
       },

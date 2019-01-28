@@ -3,6 +3,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { SnotifyService } from 'ng-snotify';
 import { ManualService } from 'src/app/services/manual.service';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { TituloService } from 'src/app/services/titulo.service';
 
 @Component({
   selector: 'app-manual-item-edit-modal',
@@ -52,23 +53,36 @@ export class ItemComponent implements OnInit {
 
   itemForm = new FormGroup({
     item: new FormControl(''),
+    selectedTitulo: new FormControl(0)
   });
   loading = false;
   arrItems: any;
+  arrTitulos: any = [];
   id: any;
 
-  constructor(private notify: SnotifyService, private Manual: ManualService, private modalService: NgbModal) { }
+  constructor(private notify: SnotifyService, private Manual: ManualService,
+    private modalService: NgbModal, private Titulo: TituloService) { }
 
   ngOnInit() {
     this.loading = true;
     this.Manual.itensManual().subscribe(
       result => {
-        this.loading = false;
         this.arrItems = result;
       },
       error => {
         this.loading = false;
         this.notify.error('Erro ao retornar os itens do manual', {timeout: 3000, showProgressBar: false });
+      }
+    );
+
+    this.Titulo.titulo().subscribe(
+      result => {
+        this.loading = false;
+        this.arrTitulos = result;
+      },
+      error => {
+        this.loading = false;
+        this.notify.error('Erro ao retornar o título', {timeout: 3000, showProgressBar: false });
       }
     );
   }

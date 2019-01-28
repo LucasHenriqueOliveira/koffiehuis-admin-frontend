@@ -1,76 +1,162 @@
-<fieldset class="fieldset">
-	<legend>Plano de Manutenção Programada</legend>
-	<p>
-		Selecione a marca, o modelo e os itens do manual.
-	</p>
-	<form [formGroup]="manualForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="manualForm" (ngSubmit)="onSubmit()">
+	<fieldset class="fieldset">
+		<legend>Veículo</legend>
+		<p>
+			Selecione a marca, modelo, ano e versão
+		</p>
 		<div class="form-row">
 			<div class="form-group col-md-4">
-				<select id="inputMarcas" class="form-control" formControlName="selectedMarca" (change)="onChange()">
+				<select id="inputMarcas" class="form-control" formControlName="selectedMarca" (change)="onChangeMarca($event)">
 					<option selected value="0">Selecione a marca</option>
-					<option *ngFor="let marca of arrMarcas" [value]="marca.id">{{marca.nome}}</option>
+					<option *ngFor="let marca of arrMarcas" [value]="marca.id">{{marca.marca}}</option>
 				</select>
 			</div>
 			<div class="form-group col-md-8">
-				<select id="inputModelos" class="form-control" formControlName="selectedModelo">
+				<select id="inputModelos" class="form-control" formControlName="selectedModelo" (change)="onChangeModelo($event)">
 					<option selected value="0">Selecione o modelo</option>
-					<option *ngFor="let modelo of arrModelos" [value]="modelo.id">{{modelo.nome}}</option>
+					<option *ngFor="let modelo of arrModelos" [value]="modelo.id">{{modelo.modelo}}</option>
 				</select>
 			</div>
-			<div class="form-group col-md-12">
-				<h6>Selecione os itens do manual</h6>
-				<hr>
+			<div class="form-group col-md-2">
+				<select id="inputAno" class="form-control" formControlName="selectedAno" (change)="onChangeAno($event)">
+					<option selected value="0">Selecione o ano</option>
+					<option *ngFor="let ano of arrAnos" [value]="ano.ano">{{ano.ano}}</option>
+				</select>
+			</div>
+			<div class="form-group col-md-10">
+				<select id="inputVersao" class="form-control" formControlName="selectedVersao" (change)="onChangeVersao($event)">
+					<option selected value="0">Selecione a versão</option>
+					<option *ngFor="let versao of arrVersoes" [value]="versao.id_versao">{{versao.versao}}</option>
+				</select>
+			</div>
+		</div>
+	</fieldset>
+	<fieldset class="fieldset">
+		<legend>Itens do Manual</legend>
+		<p>
+			Selecione o título, marque os itens do manual relacionados e clique em adicionar
+		</p>
+		<div class="form-row">
+			<div class="form-group col-md-2">
+				<select id="inputTitulo" class="form-control" formControlName="selectedTitulo" (change)="onChangeTitulo($event)">
+					<option selected value="0">Selecione o título</option>
+					<option *ngFor="let titulo of arrTitulos" [value]="titulo.id">{{titulo.titulo}}</option>
+				</select>
 			</div>
 			<div class="form-group col-md-12" *ngFor="let item of options">
 				<div class="form-check inline-block">
 					<input type="checkbox" class="form-check-input" name="itens[{{item.id}}]" id="check_{{item.id}}" [value]="item.id"
-					(change)="setItens($event.target.getAttribute('value'), $event.target.checked)">
+					(change)="setItens($event.target.getAttribute('value'), $event.target.checked, item.item, contentItem)">
 					<label class="form-check-label" for="check_{{item.id}}">{{ item.item }}</label>
 				</div>
-				<div class="form-group display-none margin-left" id="div_km_{{item.id}}">
-					<input type="number" class="form-control" id="km_{{item.id}}" name="km[{{item.id}}]" value="" placeholder="Km">
-				</div>
-				<div class="form-group display-none margin-left" id="div_meses_{{item.id}}">
-					<input type="number" class="form-control" id="meses_{{item.id}}" name="meses[{{item.id}}]" value="" placeholder="Meses">
-				</div>
-			</div>
-			<div class="form-group col-md-12 text-center">
-				<button class="btn btn-primary" [disabled]="!checkButton()">Salvar</button>
 			</div>
 		</div>
-	</form>
-</fieldset>
-<!--
-<div class="table-responsive">
-	<table class="table table-striped">
-		<thead>
-			<tr>
-			<th>Item</th>
-			<th>Veículo</th>
-			<th class="text-center">Km</th>
-			<th class="text-center">Tempo</th>
-			<th class="text-center">Ação</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr *ngFor="let item of arrItems">
-				<td>{{ item.item }}</td>
-				<td>{{ item.marca }} - {{ item.modelo }}</td>
-				<td class="text-center">{{ item.km | number }}</td>
-				<td class="text-center">{{ item.tempo }}</td>
-				<td class="text-center">
-					<a (click)="openEdit(item.id_manual_carro, item.item, item.id_marca, item.id_modelo, item.km, item.tempo)">
-						<i class="fa fa-pencil" aria-hidden="true"></i>
-					</a>
-					<a (click)="openRemove(content, item.id_manual_carro)">
-						<i class="fa fa-trash" aria-hidden="true"></i>
-					</a>
-				</td>
-			</tr>
-		</tbody>
-	</table>
-</div>
--->
+	</fieldset>
+	<div>
+		<ul class="list-group list-group-flush">
+			<li *ngIf="txtMarca" class="list-group-item"><b>Marca:</b> {{txtMarca}}</li>
+			<li *ngIf="txtModelo" class="list-group-item"><b>Modelo:</b> {{txtModelo}}</li>
+			<li *ngIf="txtAno" class="list-group-item"><b>Ano:</b> {{txtAno}}</li>
+			<li *ngIf="txtVersao" class="list-group-item"><b>Versão:</b> {{txtVersao}}</li>
+		</ul>
+		<br /><br />
+		<table class="table table-bordered no-border" *ngIf="arrSelectedItems.length">
+			<thead>
+				<tr>
+					<th scope="col" class="no-border"></th>
+					<th scope="col" colspan="3" class="text-center">Ideal</th>
+					<th scope="col" colspan="3" class="text-center">Severo</th>
+				</tr>
+				<tr>
+					<td scope="col" class="no-border"></td>
+					<th scope="col" class="text-center">Km</th>
+					<th scope="col" class="text-center">Meses</th>
+					<th scope="col" class="text-center">Obs</th>
+					<th scope="col" class="text-center">Km</th>
+					<th scope="col" class="text-center">Meses</th>
+					<th scope="col" class="text-center">Obs</th>
+				</tr>
+			</thead>
+			<tbody *ngFor="let options of arrSelectedItems">
+				<tr>
+					<td scope="row" colspan="7" class="titulo" *ngIf="options.items.length">{{options.txtTitulo}}</td>
+				</tr>
+				<tr *ngFor="let item of options.items">
+					<td scope="row">{{item.txtItem}}</td>
+					<td scope="row" class="text-center">{{item.km_ideal}}</td>
+					<td scope="row" class="text-center">{{item.meses_ideal}}</td>
+					<td scope="row" class="text-center">
+						<ng-template #popObservacaoIdeal>{{item.observacao_ideal}}</ng-template>
+						<i class="fa fa-pencil-square-o" *ngIf="item.observacao_ideal" aria-hidden="true" [ngbPopover]="popObservacaoIdeal"
+						triggers="mouseenter:mouseleave" popoverTitle="Observação"></i>
+					</td>
+					<td scope="row" class="text-center">{{item.km_severo}}</td>
+					<td scope="row" class="text-center">{{item.meses_severo}}</td>
+					<td scope="row" class="text-center">
+						<ng-template #popObservacaoSevero>{{item.observacao_severo}}</ng-template>
+						<i class="fa fa-pencil-square-o" *ngIf="item.observacao_severo" aria-hidden="true" [ngbPopover]="popObservacaoSevero"
+						triggers="mouseenter:mouseleave" popoverTitle="Observação"></i>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<br />
+		<table class="table table-bordered no-border" *ngIf="arrSelectedItems.length">
+			<thead>
+				<tr>
+					<th scope="col" class="no-border"></th>
+					<th scope="col" colspan="3" class="text-center">Ideal</th>
+					<th scope="col" colspan="3" class="text-center">Severo</th>
+				</tr>
+				<tr>
+					<td scope="col" class="no-border"></td>
+					<th scope="col" class="text-center">Km</th>
+					<th scope="col" class="text-center">Meses</th>
+					<th scope="col" class="text-center">Obs</th>
+					<th scope="col" class="text-center">Km</th>
+					<th scope="col" class="text-center">Meses</th>
+					<th scope="col" class="text-center">Obs</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td scope="row" colspan="7" class="titulo">Verificar</td>
+				</tr>
+				<tr *ngFor="let item of arrItemsFixo">
+					<td scope="row">{{item.item}}</td>
+					<td scope="row">
+						<input type="text" class="form-control" size="8" id="km_ideal_{{item.id}}">
+					</td>
+					<td scope="row" class="text-center">
+						<input type="text" class="form-control" size="4" id="meses_ideal_{{item.id}}">
+					</td>
+					<td scope="row" class="text-center">
+						<textarea class="form-control" rows="3" id="observacao_ideal_{{item.id}}"></textarea>
+					</td>
+					<td scope="row" class="text-center">
+						<input type="text" class="form-control" size="8" id="km_severo_{{item.id}}">
+					</td>
+					<td scope="row" class="text-center">
+						<input type="text" class="form-control" size="4" id="meses_severo_{{item.id}}">
+					</td>
+					<td scope="row" class="text-center">
+						<textarea class="form-control" rows="3" id="observacao_severo_{{item.id}}"></textarea>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="form-group" *ngIf="arrSelectedItems.length">
+			<label for="observacao">Observação:</label>
+			<textarea class="form-control" rows="5" id="observacao" formControlName="observacao"></textarea>
+		</div>
+	</div>
+	<div class="form-row">
+		<div class="form-group col-md-12 text-center">
+			<button class="btn btn-primary btn-lg" [disabled]="!checkButton()">Salvar</button>
+		</div>
+	</div>
+</form>
+
 <div [ngClass]="{'loading': loading}"></div>
 
 <ng-template #content let-modal>
@@ -87,5 +173,44 @@
 	<div class="modal-footer">
 		<button type="button" class="btn btn-light" (click)="modal.dismiss('cancel click')">Não</button>
 		<button type="button" class="btn btn-danger" ngbAutofocus (click)="remove()">Sim</button>
+	</div>
+</ng-template>
+
+<ng-template #contentItem let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title">{{textItem}}</h4>
+		<button type="button" class="close" aria-label="Close" (click)="closeItem()">
+		<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	<div class="modal-body">
+		<p>Ideal <br /></p>
+		<div class="form-row">
+			<div class="form-group col-sm-6">
+				<input type="number" class="form-control" ngbAutofocus [(ngModel)]="km_ideal" [ngModelOptions]="{standalone: true}" name="km_ideal" value="" placeholder="Km">
+			</div>
+			<div class="form-group col-sm-6">
+				<input type="number" class="form-control" [(ngModel)]="meses_ideal" [ngModelOptions]="{standalone: true}" name="meses_ideal" value="" placeholder="Meses">
+			</div>
+			<div class="form-group col-sm-12">
+				<textarea class="form-control" rows="3" [(ngModel)]="observacao_ideal" [ngModelOptions]="{standalone: true}" placeholder="Observação"></textarea>
+			</div>
+		</div>
+		<p>Severo <br /></p>
+		<div class="form-row">
+			<div class="form-group col-sm-6">
+				<input type="number" class="form-control" [(ngModel)]="km_severo" [ngModelOptions]="{standalone: true}" name="km_severo" value="" placeholder="Km">
+			</div>
+			<div class="form-group col-sm-6">
+				<input type="number" class="form-control" [(ngModel)]="meses_severo" [ngModelOptions]="{standalone: true}" name="meses_severo" value="" placeholder="Meses">
+			</div>
+			<div class="form-group col-sm-12">
+				<textarea class="form-control" rows="3" [(ngModel)]="observacao_severo" [ngModelOptions]="{standalone: true}" placeholder="Observação"></textarea>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-light" (click)="closeItem()">Cancelar</button>
+		<button type="button" class="btn btn-danger" (click)="addItem(km_ideal, meses_ideal, observacao_ideal, km_severo, meses_severo, observacao_severo)">Adicionar</button>
 	</div>
 </ng-template>

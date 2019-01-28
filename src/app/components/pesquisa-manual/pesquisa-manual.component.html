@@ -8,13 +8,13 @@
 			<div class="form-group col-md-4">
 				<select id="inputMarcas" class="form-control" formControlName="selectedMarca" (change)="onChange()">
 					<option selected value="0">Selecione a marca</option>
-					<option *ngFor="let marca of arrMarcas" [value]="marca.id">{{marca.nome}}</option>
+					<option *ngFor="let marca of arrMarcas" [value]="marca.id">{{marca.marca}}</option>
 				</select>
 			</div>
 			<div class="form-group col-md-8">
 				<select id="inputModelos" class="form-control" formControlName="selectedModelo">
 					<option selected value="0">Selecione o modelo</option>
-					<option *ngFor="let modelo of arrModelos" [value]="modelo.id">{{modelo.nome}}</option>
+					<option *ngFor="let modelo of arrModelos" [value]="modelo.id">{{modelo.modelo}}</option>
 				</select>
 			</div>
 			<div class="form-group col-md-12 text-center">
@@ -24,25 +24,28 @@
 	</form>
 </fieldset>
 <div class="table-responsive" *ngIf="arrItens.length">
+	<h5>Últimos cadastrados</h5>
 	<table class="table table-striped">
 		<thead>
 			<tr>
-			<th>Item</th>
-			<th class="text-center">Km</th>
-			<th class="text-center">Tempo</th>
+			<th>Marca</th>
+			<th>Modelo</th>
+			<th class="text-center">Ano</th>
+			<th>Versão</th>
 			<th class="text-center">Ação</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr *ngFor="let item of arrItens">
-				<td>{{ item.item }}</td>
-				<td class="text-center">{{ item.km | number }}</td>
-				<td class="text-center">{{ item.tempo }}</td>
+				<td>{{ item.marca }}</td>
+				<td >{{ item.modelo }}</td>
+				<td class="text-center">{{ item.ano }}</td>
+				<td>{{ item.versao }}</td>
 				<td class="text-center">
 					<a (click)="openEdit(item.id_manual, item.id, item.id_marca, item.id_modelo, item.km, item.tempo)">
 						<i class="fa fa-pencil" aria-hidden="true"></i>
 					</a>
-					<a (click)="openRemove(content, item.id)">
+					<a (click)="openRemove(content, item.id_marca, item.id_modelo, item.ano, item.id_versao)">
 						<i class="fa fa-trash" aria-hidden="true"></i>
 					</a>
 				</td>
@@ -57,13 +60,13 @@
 
 <ng-template #content let-modal>
 	<div class="modal-header">
-		<h4 class="modal-title">Deletar item do manual</h4>
+		<h4 class="modal-title">Deletar manual</h4>
 		<button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
 		<span aria-hidden="true">&times;</span>
 		</button>
 	</div>
 	<div class="modal-body">
-		<p>Você deseja apagar o item do manual? <br />
+		<p>Você deseja deletar o manual do veículo? <br />
 			<b>Essa operação não poderá ser desfeita.</b></p>
 	</div>
 	<div class="modal-footer">

@@ -8,6 +8,7 @@ import { SignupComponent } from './components/signup/signup.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { RequestResetComponent } from './components/password/request-reset/request-reset.component';
 import { ResponseResetComponent } from './components/password/response-reset/response-reset.component';
+import { RouterModule, Routes } from '@angular/router';
 import { AppRoutingModule } from './/app-routing.module';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -41,6 +42,10 @@ import { DashboardService } from './services/dashboard.service';
 import { ItemComponent, ModalManualItemEditComponent } from './components/item/item.component';
 import { PesquisaManualComponent, ModalPesquisaManualEditComponent } from './components/pesquisa-manual/pesquisa-manual.component';
 import { CopiaManualComponent } from './components/copia-manual/copia-manual.component';
+import { TituloComponent, ModalTituloEditComponent } from './components/titulo/titulo.component';
+import { TituloService } from './services/titulo.service';
+import { ManualCarroComponent } from './components/manual-carro/manual-carro.component';
+import { ManualFixoComponent, ModalManualFixoItemEditComponent } from './components/manual-fixo/manual-fixo.component';
 registerLocaleData(ptBr);
 
 
@@ -70,6 +75,11 @@ registerLocaleData(ptBr);
     PesquisaManualComponent,
     ModalPesquisaManualEditComponent,
     CopiaManualComponent,
+    TituloComponent,
+    ModalTituloEditComponent,
+    ManualCarroComponent,
+    ManualFixoComponent,
+    ModalManualFixoItemEditComponent
   ],
   imports: [
     BrowserModule,
@@ -101,7 +111,8 @@ registerLocaleData(ptBr);
     UsoService,
     { provide: LOCALE_ID, useValue: 'pt-PT' },
     NgbActiveModal,
-    DashboardService
+    DashboardService,
+    TituloService
   ],
   bootstrap: [AppComponent],
   entryComponents: [
@@ -110,7 +121,9 @@ registerLocaleData(ptBr);
     ModalListaEditComponent,
     ModalManualEditComponent,
     ModalManualItemEditComponent,
-    ModalPesquisaManualEditComponent
+    ModalPesquisaManualEditComponent,
+    ModalTituloEditComponent,
+    ModalManualFixoItemEditComponent
   ]
 })
 export class AppModule { }
