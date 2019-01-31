@@ -8,8 +8,30 @@ import { Constants } from '../../app/app-constants';
 export class ManualService {
 
   constants: any = Constants;
+  marca: any;
+  modelo: any;
+  ano: any;
+  versao: any;
 
   constructor(private http: HttpClient) { }
+
+  setLocal(marca, modelo, ano, versao) {
+    this.marca = marca;
+    this.modelo = modelo;
+    this.ano = ano;
+    this.versao = versao;
+  }
+
+  getLocal() {
+    const arr = [];
+
+    arr['marca'] = this.marca;
+    arr['modelo'] = this.modelo;
+    arr['ano'] = this.ano;
+    arr['versao'] = this.versao;
+
+    return arr;
+  }
 
   save(data) {
     return this.http.post(`${this.constants.api}/manual`, data);
@@ -67,8 +89,8 @@ export class ManualService {
     return this.http.post(`${this.constants.api}/manual-carro`, data);
   }
 
-  manualCarro(modelo) {
-    return this.http.get(`${this.constants.api}/manual-carro/${modelo}`);
+  manualCarro(id_marca, id_modelo, ano, id_versao) {
+    return this.http.get(`${this.constants.api}/manual-carro/${id_marca}/${id_modelo}/${ano}/${id_versao}`);
   }
 
   removeManualCarro(id_marca, id_modelo, ano, id_versao) {
