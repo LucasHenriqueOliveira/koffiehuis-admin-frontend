@@ -220,3 +220,8 @@ a i {
 .titulo {
     background-color: #dee2e6;
 }
+
+.fieldset ul {
+    list-style-type: none;
+    margin-bottom: 0;
+}
