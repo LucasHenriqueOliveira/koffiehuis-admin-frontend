@@ -22,7 +22,7 @@ import { CrawlerComponent } from './components/crawler/crawler.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CrawlerService } from './services/crawler.service';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { ManualComponent, ModalManualEditComponent } from './components/manual/manual.component';
+import { ManualComponent } from './components/manual/manual.component';
 
 import { registerLocaleData } from '@angular/common';
 import ptBr from '@angular/common/locales/pt';
@@ -40,7 +40,7 @@ import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { CarrosComponent } from './components/carros/carros.component';
 import { DashboardService } from './services/dashboard.service';
 import { ItemComponent, ModalManualItemEditComponent } from './components/item/item.component';
-import { PesquisaManualComponent, ModalPesquisaManualEditComponent } from './components/pesquisa-manual/pesquisa-manual.component';
+import { PesquisaManualComponent } from './components/pesquisa-manual/pesquisa-manual.component';
 import { CopiaManualComponent } from './components/copia-manual/copia-manual.component';
 import { TituloComponent, ModalTituloEditComponent } from './components/titulo/titulo.component';
 import { TituloService } from './services/titulo.service';
@@ -67,13 +67,11 @@ registerLocaleData(ptBr);
     ModalUsoEditComponent,
     ModalStatusEditComponent,
     ModalListaEditComponent,
-    ModalManualEditComponent,
     UsuariosComponent,
     CarrosComponent,
     ItemComponent,
     ModalManualItemEditComponent,
     PesquisaManualComponent,
-    ModalPesquisaManualEditComponent,
     CopiaManualComponent,
     TituloComponent,
     ModalTituloEditComponent,
@@ -119,9 +117,7 @@ registerLocaleData(ptBr);
     ModalUsoEditComponent,
     ModalStatusEditComponent,
     ModalListaEditComponent,
-    ModalManualEditComponent,
     ModalManualItemEditComponent,
-    ModalPesquisaManualEditComponent,
     ModalTituloEditComponent,
     ModalManualFixoItemEditComponent
   ]
