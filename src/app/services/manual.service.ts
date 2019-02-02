@@ -85,10 +85,6 @@ export class ManualService {
     return this.http.put(`${this.constants.api}/manual-itens-fixo`, data);
   }
 
-  saveManualCarro(data) {
-    return this.http.post(`${this.constants.api}/manual-carro`, data);
-  }
-
   manualCarro(id_marca, id_modelo, ano, id_versao) {
     return this.http.get(`${this.constants.api}/manual-carro/${id_marca}/${id_modelo}/${ano}/${id_versao}`);
   }
