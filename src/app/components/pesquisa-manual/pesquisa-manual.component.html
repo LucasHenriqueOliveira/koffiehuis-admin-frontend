@@ -42,7 +42,7 @@
 				<td class="text-center">{{ item.ano }}</td>
 				<td>{{ item.versao }}</td>
 				<td class="text-center">
-					<a (click)="openEdit(item.id_manual, item.id, item.id_marca, item.id_modelo, item.km, item.tempo)">
+					<a (click)="openEdit(item.id_marca, item.marca, item.id_modelo, item.modelo, item.ano, item.id_versao, item.versao)">
 						<i class="fa fa-pencil" aria-hidden="true"></i>
 					</a>
 					<a (click)="openRemove(content, item.id_marca, item.id_modelo, item.ano, item.id_versao)">

@@ -2,85 +2,9 @@ import { Component, OnInit, Input } from '@angular/core';
 import { SnotifyService } from 'ng-snotify';
 import { VeiculoService } from '../../services/veiculo.service';
 import { ManualService } from '../../services/manual.service';
-import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormControl } from '@angular/forms';
-
-@Component({
-  selector: 'app-pesquisa-manual-edit-modal',
-  template: `
-  <form>
-    <div class="modal-header">
-      <h4 class="modal-title">Editar Item do Manual</h4>
-      <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
-      <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <div class="form-row">
-        <div class="form-group col-md-8">
-          <select id="inputItens" class="form-control" [(ngModel)]="id_manual" [ngModelOptions]="{standalone: true}" required>
-            <option *ngFor="let item of arrItensManual" [value]="item.id">{{item.item}}</option>
-          </select>
-        </div>
-        <div class="form-group col-md-2">
-          <input type="number" class="form-control" id="km" placeholder="Km"
-            [(ngModel)]="km" [ngModelOptions]="{standalone: true}" required>
-        </div>
-        <div class="form-group col-md-2">
-          <input type="number" class="form-control" id="meses" placeholder="Meses"
-            [(ngModel)]="tempo" [ngModelOptions]="{standalone: true}" required>
-        </div>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-light" (click)="activeModal.dismiss('cancel click')">Cancelar</button>
-      <button type="button" (click)="edit(id_manual, km, tempo)" class="btn btn-danger" ngbAutofocus>Editar</button>
-    </div>
-  </form>
-  <div [ngClass]="{'loading': loading}"></div>
-  `
-})
-export class ModalPesquisaManualEditComponent {
-  @Input() id_marca;
-  @Input() id_modelo;
-  @Input() id;
-  @Input() tempo;
-  @Input() km;
-  @Input() id_manual;
-  loading = false;
-  arrItensManual: any;
-
-  constructor(public activeModal: NgbActiveModal, private Manual: ManualService,
-    private notify: SnotifyService) {}
-
-  // tslint:disable-next-line:use-life-cycle-interface
-  ngAfterViewInit() {
-    this.arrItensManual = this.getItensManual();
-  }
-
-  edit(id_manual, km, tempo) {
-    const data = {
-      id: this.id,
-      id_marca: this.id_marca,
-      id_modelo: this.id_modelo,
-      id_manual: id_manual,
-      km: km,
-      tempo: tempo
-    };
-    this.activeModal.close(data);
-  }
-
-  getItensManual() {
-    this.Manual.itensManual().subscribe(
-      result => {
-        this.arrItensManual = result;
-      },
-      error => {
-        this.notify.error('Erro ao retornar os itens do manual', {timeout: 3000, showProgressBar: false });
-      }
-    );
-  }
-}
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-pesquisa-manual',
@@ -106,7 +30,8 @@ export class PesquisaManualComponent implements OnInit {
   constructor(private Veiculo: VeiculoService,
     private notify: SnotifyService,
     private Manual: ManualService,
-    private modalService: NgbModal) {
+    private modalService: NgbModal,
+    private router: Router) {
     }
 
   ngOnInit() {
@@ -196,19 +121,10 @@ export class PesquisaManualComponent implements OnInit {
     );
   }
 
-  openEdit(id_manual, id, id_marca, id_modelo, km, tempo) {
-    const modalRef = this.modalService.open(ModalPesquisaManualEditComponent, { size: 'lg' });
-    modalRef.componentInstance.id_marca = id_marca;
-    modalRef.componentInstance.id_modelo = id_modelo;
-    modalRef.componentInstance.km = km;
-    modalRef.componentInstance.tempo = tempo;
-    modalRef.componentInstance.id = id;
-    modalRef.componentInstance.id_manual = id_manual;
-
-    modalRef.result.then((result) => {
-      this.edit(result);
-    }).catch((error) => {
-    });
+  openEdit(id_marca, marca, id_modelo, modelo, ano, id_versao, versao) {
+    this.Manual.setLocal(marca, modelo, ano, versao);
+    this.router.navigate(['/manual-carro'],  { queryParams: { id_marca: id_marca,
+      id_modelo: id_modelo, ano: ano, id_versao: id_versao} });
   }
 
   edit(data) {
