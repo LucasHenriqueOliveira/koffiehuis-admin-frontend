@@ -54,9 +54,10 @@ export class UsoComponent implements OnInit {
     pergunta: new FormControl('')
   });
   usoEditForm: any;
-
+  opcao: any;
   loading = false;
   arrItems: any;
+  arrOpcoes: any = [];
   id: any;
 
   constructor(private notify: SnotifyService, private Uso: UsoService, private modalService: NgbModal) { }
@@ -93,10 +94,16 @@ export class UsoComponent implements OnInit {
 
   onSubmit() {
     this.loading = true;
-    this.Uso.save(this.usoForm.value).subscribe(
+    const data = {
+      pergunta: this.usoForm.value.pergunta,
+      opcoes: this.arrOpcoes,
+    };
+
+    this.Uso.save(data).subscribe(
       result => {
         this.loading = false;
         this.usoForm.reset();
+        this.arrOpcoes = [];
         this.arrItems = result['data'];
         this.notify.success(result['message'], {timeout: 2000, showProgressBar: false });
       },
@@ -138,5 +145,14 @@ export class UsoComponent implements OnInit {
         this.notify.error(error.error, {timeout: 3000, showProgressBar: false });
       }
     );
+  }
+
+  addOpcao(opcao) {
+    this.arrOpcoes.push(opcao);
+    this.opcao = '';
+  }
+
+  removeOpcao(opcao) {
+    this.arrOpcoes.splice(this.arrOpcoes.indexOf(opcao), 1);
   }
 }

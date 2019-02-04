@@ -3,13 +3,42 @@
 	<p>
 		Insira a pergunta da condição de uso.
 	</p>
-	<form [formGroup]="usoForm" (ngSubmit)="onSubmit()">
+	<form [formGroup]="usoForm">
 		<div class="form-row">
 			<div class="form-group col-md-12">
 				<textarea class="form-control" formControlName="pergunta" required></textarea>
 			</div>
-			<div class="form-group col-md-2">
-				<button class="btn btn-primary" [disabled]="!this.usoForm.value.pergunta">Salvar</button>
+			<div class="form-group col-md-12">
+				Insira as opções de escolha (Se não adicionar, será criado automaticamente uma lista de opções de 0 a 30)
+			</div>
+			<div class="input-group col-md-12">
+				<input type="text" class="form-control" [(ngModel)]="opcao" [ngModelOptions]="{standalone: true}">
+				<div class="input-group-prepend">
+					<button class="btn btn-primary" (click)="addOpcao(opcao)">Add</button>
+				</div>
+			</div>
+			<div class="input-group col-md-12">
+				<table class="table no-border" *ngIf="arrOpcoes.length">
+					<thead>
+						<tr>
+							<th scope="col">Opção</th>
+							<th scope="col"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngFor="let opcao of arrOpcoes">
+							<td scope="row">{{opcao}}</td>
+							<td scope="row" class="text-right">
+								<a (click)="removeOpcao(opcao)">
+									<i class="fa fa-trash" aria-hidden="true"></i>
+								</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="form-group col-md-12 text-center padding-top-30">
+				<button class="btn btn-primary" (click)="onSubmit()" [disabled]="!this.usoForm.value.pergunta">Salvar</button>
 			</div>
 		</div>
 	</form>
@@ -19,12 +48,18 @@
 		<thead>
 			<tr>
 				<th>Pergunta</th>
+				<th>Opções</th>
 				<th class="text-center">Ações</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr *ngFor="let item of arrItems">
 				<td>{{ item.pergunta }}</td>
+				<td>
+					<ul>
+						<li *ngFor="let opcao of item.opcoes">{{opcao.opcao}}</li>
+					</ul>
+				</td>
 				<td class="text-center">
 					<a (click)="openEdit(item.id, item.pergunta)">
 						<i class="fa fa-pencil" aria-hidden="true"></i>
