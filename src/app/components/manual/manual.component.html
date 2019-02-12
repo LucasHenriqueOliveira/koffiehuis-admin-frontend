@@ -20,7 +20,7 @@
 			<div class="form-group col-md-2">
 				<select id="inputAno" class="form-control" formControlName="selectedAno" (change)="onChangeAno($event)">
 					<option selected value="0">Selecione o ano</option>
-					<option *ngFor="let ano of arrAnos" [value]="ano.ano">{{ano.ano}}</option>
+					<option *ngFor="let ano of arrAnos" [value]="ano.id">{{ano.ano}}</option>
 				</select>
 			</div>
 			<div class="form-group col-md-10">
