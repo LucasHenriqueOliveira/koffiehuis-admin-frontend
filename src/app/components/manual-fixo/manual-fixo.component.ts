@@ -3,7 +3,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { SnotifyService } from 'ng-snotify';
 import { ManualService } from 'src/app/services/manual.service';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { TituloService } from 'src/app/services/titulo.service';
+import { TituloFixoService } from 'src/app/services/titulo-fixo.service';
 
 @Component({
   selector: 'app-manual-fixo-item-edit-modal',
@@ -20,25 +20,68 @@ import { TituloService } from 'src/app/services/titulo.service';
         <div class="form-group col-md-12">
           <input type="text" class="form-control" [(ngModel)]="item" [ngModelOptions]="{standalone: true}">
         </div>
+        <div class="form-group col-sm-12">
+          <span>Ideal</span>
+        </div>
+        <div class="form-group col-sm-6">
+          <input type="number" class="form-control" ngbAutofocus [(ngModel)]="km_ideal"
+          [ngModelOptions]="{standalone: true}" name="km_ideal" value="" placeholder="Km">
+        </div>
+        <div class="form-group col-sm-6">
+          <input type="number" class="form-control" [(ngModel)]="meses_ideal"
+          [ngModelOptions]="{standalone: true}" name="meses_ideal" value="" placeholder="Meses">
+        </div>
+        <div class="form-group col-sm-12">
+          <textarea class="form-control" rows="3" [(ngModel)]="observacao_ideal"
+          [ngModelOptions]="{standalone: true}" placeholder="Observação"></textarea>
+        </div>
+        <div class="form-group col-sm-12">
+          <span>Severo</span>
+        </div>
+        <div class="form-group col-sm-6">
+          <input type="number" class="form-control" [(ngModel)]="km_severo"
+          [ngModelOptions]="{standalone: true}" name="km_severo" value="" placeholder="Km">
+        </div>
+        <div class="form-group col-sm-6">
+          <input type="number" class="form-control" [(ngModel)]="meses_severo"
+          [ngModelOptions]="{standalone: true}" name="meses_severo" value="" placeholder="Meses">
+        </div>
+        <div class="form-group col-sm-12">
+          <textarea class="form-control" rows="3" [(ngModel)]="observacao_severo"
+          [ngModelOptions]="{standalone: true}" placeholder="Observação"></textarea>
+        </div>
       </div>
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-light" (click)="activeModal.dismiss('cancel click')">Cancelar</button>
-      <button type="button" (click)="edit(item)" class="btn btn-danger" ngbAutofocus>Editar</button>
+      <button type="button" (click)="edit(item, km_ideal, meses_ideal, observacao_ideal,
+        km_severo, meses_severo, observacao_severo)" class="btn btn-danger" ngbAutofocus>Editar</button>
     </div>
   </form>
   `
 })
 export class ModalManualFixoItemEditComponent {
   @Input() item;
+  @Input() km_ideal;
+  @Input() meses_ideal;
+  @Input() observacao_ideal;
+  @Input() km_severo;
+  @Input() meses_severo;
+  @Input() observacao_severo;
   @Input() id;
 
   constructor(public activeModal: NgbActiveModal) {}
 
-  edit(item) {
+  edit(item, km_ideal, meses_ideal, observacao_ideal, km_severo, meses_severo, observacao_severo) {
     const data = {
       id: this.id,
-      item: item
+      item: item,
+      km_ideal: km_ideal,
+      meses_ideal: meses_ideal,
+      observacao_ideal: observacao_ideal,
+      km_severo: km_severo,
+      meses_severo: meses_severo,
+      observacao_severo: observacao_severo
     };
     this.activeModal.close(data);
   }
@@ -53,7 +96,13 @@ export class ManualFixoComponent implements OnInit {
 
   itemForm = new FormGroup({
     item: new FormControl(''),
-    selectedTitulo: new FormControl(0)
+    selectedTitulo: new FormControl(0),
+    km_ideal: new FormControl(''),
+    meses_ideal: new FormControl(''),
+    observacao_ideal: new FormControl(''),
+    km_severo: new FormControl(''),
+    meses_severo: new FormControl(''),
+    observacao_severo: new FormControl(''),
   });
   loading = false;
   arrItems: any;
@@ -61,18 +110,28 @@ export class ManualFixoComponent implements OnInit {
   id: any;
 
   constructor(private notify: SnotifyService, private Manual: ManualService,
-    private modalService: NgbModal, private Titulo: TituloService) { }
+    private modalService: NgbModal, private TituloFixo: TituloFixoService) { }
 
   ngOnInit() {
     this.loading = true;
     this.Manual.itensManualFixo().subscribe(
       result => {
         this.arrItems = result;
-        this.loading = false;
       },
       error => {
         this.loading = false;
         this.notify.error('Erro ao retornar os itens do manual fixo', {timeout: 3000, showProgressBar: false });
+      }
+    );
+
+    this.TituloFixo.titulo().subscribe(
+      result => {
+        this.loading = false;
+        this.arrTitulos = result;
+      },
+      error => {
+        this.loading = false;
+        this.notify.error('Erro ao retornar o título', {timeout: 3000, showProgressBar: false });
       }
     );
   }
@@ -119,9 +178,15 @@ export class ManualFixoComponent implements OnInit {
     );
   }
 
-  openEdit(id, item) {
+  openEdit(id, item, km_ideal, meses_ideal, observacao_ideal, km_severo, meses_severo, observacao_severo) {
     const modalRef = this.modalService.open(ModalManualFixoItemEditComponent);
     modalRef.componentInstance.item = item;
+    modalRef.componentInstance.km_ideal = km_ideal;
+    modalRef.componentInstance.meses_ideal = meses_ideal;
+    modalRef.componentInstance.observacao_ideal = observacao_ideal;
+    modalRef.componentInstance.km_severo = km_severo;
+    modalRef.componentInstance.meses_severo = meses_severo;
+    modalRef.componentInstance.observacao_severo = observacao_severo;
     modalRef.componentInstance.id = id;
 
     modalRef.result.then((result) => {

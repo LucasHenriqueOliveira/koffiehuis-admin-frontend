@@ -6,7 +6,37 @@
 	<form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
 		<div class="form-row">
 			<div class="form-group col-md-6">
+				<select id="inputTitulo" class="form-control" formControlName="selectedTitulo">
+					<option selected value="0">Selecione o título</option>
+					<option *ngFor="let titulo of arrTitulos" [value]="titulo.id">{{titulo.titulo}}</option>
+				</select>
+			</div>
+			<div class="form-group col-md-6">
 				<input type="text" class="form-control" id="item" placeholder="Item" formControlName="item" required>
+			</div>
+			<div class="form-group col-sm-12">
+				<span>Ideal</span>
+			</div>
+			<div class="form-group col-sm-6">
+				<input type="number" class="form-control" formControlName="km_ideal" placeholder="Km">
+			</div>
+			<div class="form-group col-sm-6">
+				<input type="number" class="form-control" formControlName="meses_ideal" placeholder="Meses">
+			</div>
+			<div class="form-group col-sm-12">
+				<textarea class="form-control" rows="3" formControlName="observacao_ideal" placeholder="Observação"></textarea>
+			</div>
+			<div class="form-group col-sm-12">
+				<span>Severo</span>
+			</div>
+			<div class="form-group col-sm-6">
+				<input type="number" class="form-control" formControlName="km_severo" placeholder="Km">
+			</div>
+			<div class="form-group col-sm-6">
+				<input type="number" class="form-control" formControlName="meses_severo" placeholder="Meses">
+			</div>
+			<div class="form-group col-sm-12">
+				<textarea class="form-control" rows="3" formControlName="observacao_severo" placeholder="Observação"></textarea>
 			</div>
 			<div class="form-group col-md-2">
 				<button class="btn btn-primary" [disabled]="!checkButton()">Salvar</button>
@@ -18,15 +48,30 @@
 	<table class="table table-striped">
 		<thead>
 			<tr>
+				<th>Título</th>
 				<th>Item</th>
+				<th>Ideal</th>
+				<th>Severo</th>
 				<th class="text-center">Ações</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr *ngFor="let item of arrItems">
+				<td>{{ item.titulo }}</td>
 				<td>{{ item.item }}</td>
+				<td>
+					Km: {{ item.km_ideal }}<br />
+					Tempo: {{ item.tempo_ideal }}<br />
+					<span *ngIf="item.observacao_ideal ">Observação: {{ item.observacao_ideal }}</span><br />
+				</td>
+				<td>
+					<span *ngIf="item.km_severo ">Km: {{ item.km_severo }}</span><br />
+					<span *ngIf="item.tempo_severo ">Tempo: {{ item.tempo_severo }}</span><br />
+					<span *ngIf="item.observacao_severo ">Observação: {{ item.observacao_severo }}</span><br />
+				</td>
 				<td class="text-center">
-					<a (click)="openEdit(item.id, item.item)">
+					<a (click)="openEdit(item.id, item.item, item.km_ideal, item.tempo_ideal, item.observacao_ideal,
+					item.km_severo, item.tempo_severo, item.observacao_severo)">
 						<i class="fa fa-pencil" aria-hidden="true"></i>
 					</a>
 					<a (click)="openRemove(content, item.id)">
