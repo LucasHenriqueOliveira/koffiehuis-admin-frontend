@@ -17,10 +17,13 @@
 					Manutenção
 				</a>
 				<div class="dropdown-menu" [ngClass]="{ 'show': manutencaoOpen }">
-					<a class="dropdown-item" routerLink="crawler" (click)="toggleManutencao()">Marcas e Modelos</a>
-					<a class="dropdown-item" routerLink="item" (click)="toggleManutencao()">Item do Manual</a>
-					<a class="dropdown-item" routerLink="manual-fixo" (click)="toggleManutencao()">Item do Manual Fixo</a>
+					<!--<a class="dropdown-item" routerLink="crawler" (click)="toggleManutencao()">Marcas e Modelos</a>-->
 					<a class="dropdown-item" routerLink="titulo" (click)="toggleManutencao()">Título</a>
+					<a class="dropdown-item" routerLink="item" (click)="toggleManutencao()">Item do Manual</a>
+					
+					<a class="dropdown-item" routerLink="titulo-fixo" (click)="toggleManutencao()">Título do Manual Fixo</a>
+					<a class="dropdown-item" routerLink="manual-fixo" (click)="toggleManutencao()">Item do Manual Fixo</a>
+					
 					<a class="dropdown-item" routerLink="manual" (click)="toggleManutencao()">Adicionar Manual</a>
 					<a class="dropdown-item" routerLink="pesquisa-manual" (click)="toggleManutencao()">Pesquisa Manual</a>
 					<a class="dropdown-item" routerLink="copia-manual" (click)="toggleManutencao()">Duplicar Manual</a>

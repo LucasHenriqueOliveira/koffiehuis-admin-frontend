@@ -21,6 +21,7 @@ import { CopiaManualComponent } from './components/copia-manual/copia-manual.com
 import { TituloComponent } from './components/titulo/titulo.component';
 import { ManualCarroComponent } from './components/manual-carro/manual-carro.component';
 import { ManualFixoComponent } from './components/manual-fixo/manual-fixo.component';
+import { TituloFixoComponent } from './components/titulo-fixo/titulo-fixo.component';
 
 const appRoutes: Routes = [
   {
@@ -67,6 +68,11 @@ const appRoutes: Routes = [
   {
     path: 'manual-fixo',
     component: ManualFixoComponent,
+    canActivate: [AfterLoginService]
+  },
+  {
+    path: 'titulo-fixo',
+    component: TituloFixoComponent,
     canActivate: [AfterLoginService]
   },
   {
