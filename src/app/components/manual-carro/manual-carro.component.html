@@ -54,29 +54,25 @@
 			</td>
 		</tr>
 	</tbody>
-	<tbody>
+	<tbody *ngFor="let options of arrItemsFixo">
 		<tr>
-			<td scope="row" colspan="7" class="titulo">Verificar</td>
+			<td scope="row" colspan="7" class="titulo" *ngIf="options.items.length">{{options.txtTitulo}}</td>
 		</tr>
-		<tr *ngFor="let item of arrItemsFixo">
+		<tr *ngFor="let item of options.items">
 			<td scope="row">{{item.item}}</td>
-			<td scope="row">
-				<input type="text" class="form-control" size="8" id="fixo_km_ideal_{{item.id}}" value="{{item.km_ideal}}">
-			</td>
+			<td scope="row">{{item.km_ideal}}</td>
+			<td scope="row" class="text-center">{{item.tempo_ideal}}</td>
 			<td scope="row" class="text-center">
-				<input type="text" class="form-control" size="4" id="fixo_meses_ideal_{{item.id}}" value="{{item.meses_ideal}}">
+				<ng-template #popObservacaoIdeal>{{item.observacao_ideal}}</ng-template>
+				<i class="fa fa-pencil-square-o" *ngIf="item.observacao_ideal" aria-hidden="true" [ngbPopover]="popObservacaoIdeal"
+				triggers="mouseenter:mouseleave" popoverTitle="Observação"></i>
 			</td>
+			<td scope="row">{{item.km_severo}}</td>
+			<td scope="row" class="text-center">{{item.tempo_severo}}</td>
 			<td scope="row" class="text-center">
-				<textarea class="form-control" rows="3" id="fixo_observacao_ideal_{{item.id}}">{{item.observacao_ideal}}</textarea>
-			</td>
-			<td scope="row" class="text-center">
-				<input type="text" class="form-control" size="8" id="fixo_km_severo_{{item.id}}" value="{{item.km_severo}}">
-			</td>
-			<td scope="row" class="text-center">
-				<input type="text" class="form-control" size="4" id="fixo_meses_severo_{{item.id}}" value="{{item.meses_severo}}">
-			</td>
-			<td scope="row" class="text-center">
-				<textarea class="form-control" rows="3" id="fixo_observacao_severo_{{item.id}}">{{item.observacao_severo}}</textarea>
+				<ng-template #popObservacaoSevero>{{item.observacao_severo}}</ng-template>
+				<i class="fa fa-pencil-square-o" *ngIf="item.observacao_severo" aria-hidden="true" [ngbPopover]="popObservacaoSevero"
+				triggers="mouseenter:mouseleave" popoverTitle="Observação"></i>
 			</td>
 		</tr>
 	</tbody>

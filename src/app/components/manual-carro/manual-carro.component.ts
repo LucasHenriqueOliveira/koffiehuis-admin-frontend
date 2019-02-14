@@ -62,16 +62,6 @@ export class ManualCarroComponent implements OnInit {
   }
 
   edit() {
-    const arrFixo = [];
-    for (let i = 0; i < this.arrItemsFixo.length; i++) {
-      arrFixo.push({id: this.arrItemsFixo[i].id,
-        km_ideal: (document.getElementById('fixo_km_ideal_' + this.arrItemsFixo[i].id) as HTMLInputElement).value,
-        meses_ideal: (document.getElementById('fixo_meses_ideal_' + this.arrItemsFixo[i].id) as HTMLInputElement).value,
-        observacao_ideal: (document.getElementById('fixo_observacao_ideal_' + this.arrItemsFixo[i].id) as HTMLInputElement).value,
-        km_severo: (document.getElementById('fixo_km_severo_' + this.arrItemsFixo[i].id) as HTMLInputElement).value,
-        meses_severo: (document.getElementById('fixo_meses_severo_' + this.arrItemsFixo[i].id) as HTMLInputElement).value,
-        observacao_severo: (document.getElementById('fixo_observacao_severo_' + this.arrItemsFixo[i].id) as HTMLInputElement).value});
-    }
 
     const arr = [];
     for (let i = 0; i < this.arrItems.length; i++) {
@@ -92,8 +82,7 @@ export class ManualCarroComponent implements OnInit {
       ano: this.ano,
       versao: this.id_versao,
       observacao: (document.getElementById('observacao') as HTMLInputElement).value,
-      itens: arr,
-      itensFixo: arrFixo
+      itens: arr
     };
 
     this.loading = true;

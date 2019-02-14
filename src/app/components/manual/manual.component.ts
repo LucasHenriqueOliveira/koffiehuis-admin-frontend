@@ -273,17 +273,6 @@ export class ManualComponent implements OnInit {
 
   onSubmit() {
 
-    const arrFixo = [];
-    for (let i = 0; i < this.arrItemsFixo.length; i++) {
-      arrFixo.push({id: this.arrItemsFixo[i].id,
-        km_ideal: (document.getElementById('km_ideal_' + this.arrItemsFixo[i].id) as HTMLInputElement).value,
-        meses_ideal: (document.getElementById('meses_ideal_' + this.arrItemsFixo[i].id) as HTMLInputElement).value,
-        observacao_ideal: (document.getElementById('observacao_ideal_' + this.arrItemsFixo[i].id) as HTMLInputElement).value,
-        km_severo: (document.getElementById('km_severo_' + this.arrItemsFixo[i].id) as HTMLInputElement).value,
-        meses_severo: (document.getElementById('meses_severo_' + this.arrItemsFixo[i].id) as HTMLInputElement).value,
-        observacao_severo: (document.getElementById('observacao_severo_' + this.arrItemsFixo[i].id) as HTMLInputElement).value});
-    }
-
     const arr = [];
     for (let i = 0; i < this.arrSelectedItems.length; i++) {
       for (let m = 0; m < this.arrSelectedItems[i]['items'].length; m++) {
@@ -303,8 +292,7 @@ export class ManualComponent implements OnInit {
       selectedAno: this.manualForm.value.selectedAno,
       selectedVersao: this.manualForm.value.selectedVersao,
       observacao: this.manualForm.value.observacao,
-      itens: arr,
-      itensFixo: arrFixo
+      itens: arr
     };
 
     this.loading = true;
