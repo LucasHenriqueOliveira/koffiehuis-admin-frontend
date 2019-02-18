@@ -114,7 +114,7 @@ export class ManualFixoComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
-    this.Manual.itensManualFixo().subscribe(
+    this.Manual.itensManualFixoTitulo().subscribe(
       result => {
         this.arrItems = result;
       },

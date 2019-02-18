@@ -60,14 +60,14 @@
 		</tr>
 		<tr *ngFor="let item of options.items">
 			<td scope="row">{{item.item}}</td>
-			<td scope="row">{{item.km_ideal}}</td>
+			<td scope="row" class="text-center">{{item.km_ideal}}</td>
 			<td scope="row" class="text-center">{{item.tempo_ideal}}</td>
 			<td scope="row" class="text-center">
 				<ng-template #popObservacaoIdeal>{{item.observacao_ideal}}</ng-template>
 				<i class="fa fa-pencil-square-o" *ngIf="item.observacao_ideal" aria-hidden="true" [ngbPopover]="popObservacaoIdeal"
 				triggers="mouseenter:mouseleave" popoverTitle="Observação"></i>
 			</td>
-			<td scope="row">{{item.km_severo}}</td>
+			<td scope="row" class="text-center">{{item.km_severo}}</td>
 			<td scope="row" class="text-center">{{item.tempo_severo}}</td>
 			<td scope="row" class="text-center">
 				<ng-template #popObservacaoSevero>{{item.observacao_severo}}</ng-template>

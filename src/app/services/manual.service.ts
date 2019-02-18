@@ -57,6 +57,10 @@ export class ManualService {
     return this.http.get(`${this.constants.api}/manual-itens-fixo`);
   }
 
+  itensManualFixoTitulo() {
+    return this.http.get(`${this.constants.api}/manual-itens-fixo-titulo`);
+  }
+
   itensManualTitulo(id) {
     return this.http.get(`${this.constants.api}/manual-itens/${id}`);
   }
@@ -83,6 +87,10 @@ export class ManualService {
 
   editItensManualFixo(data) {
     return this.http.put(`${this.constants.api}/manual-itens-fixo`, data);
+  }
+
+  getManualCarro(data) {
+    return this.http.post(`${this.constants.api}/manual-carro/`, data);
   }
 
   manualCarro(id_marca, id_modelo, ano, id_versao) {
@@ -123,5 +131,9 @@ export class ManualService {
 
   editItem(data) {
     return this.http.put(`${this.constants.api}/manual-item`, data);
+  }
+
+  copy(data) {
+    return this.http.post(`${this.constants.api}/manual-copy`, data);
   }
 }

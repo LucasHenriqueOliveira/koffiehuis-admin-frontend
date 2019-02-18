@@ -14,6 +14,7 @@ export class CopiaManualComponent implements OnInit {
 
   loading = false;
   pesquisa = false;
+  copy = false;
   arrMarcas: any;
   arrModelos: any;
   arrAnos: any;
@@ -23,6 +24,7 @@ export class CopiaManualComponent implements OnInit {
   arrAnos2: any;
   arrVersoes2: any;
   arrItens: any = [];
+  arrCarros: any = [];
   id: any;
   manualForm: any;
   manualCompleto: any;
@@ -30,6 +32,10 @@ export class CopiaManualComponent implements OnInit {
   marca: any;
   modelo: any;
   versao: any;
+  marcaAntigo: any;
+  modeloAntigo: any;
+  anoAntigo: any;
+  versaoAntigo: any;
 
   constructor(private Veiculo: VeiculoService,
     private notify: SnotifyService,
@@ -74,7 +80,13 @@ export class CopiaManualComponent implements OnInit {
     this.marca = selectElementText;
 
     this.loading = true;
-    this.Veiculo.modelos(this.manualForm.value.selectedMarca).subscribe(
+    let selectMarca = '';
+    if (status === 1) {
+      selectMarca = this.manualForm.value.selectedMarca;
+    } else {
+      selectMarca = this.copiaManualForm.value.selectedMarca2;
+    }
+    this.Veiculo.modelos(selectMarca).subscribe(
       result => {
         this.loading = false;
         if (status === 1) {
@@ -83,8 +95,8 @@ export class CopiaManualComponent implements OnInit {
           this.manualForm.value.selectedVersao = 0;
         } else {
           this.arrModelos2 = result;
-          this.manualForm.value.selectedAno2 = 0;
-          this.manualForm.value.selectedVersao2 = 0;
+          this.copiaManualForm.value.selectedAno2 = 0;
+          this.copiaManualForm.value.selectedVersao2 = 0;
         }
       },
       error => {
@@ -101,7 +113,13 @@ export class CopiaManualComponent implements OnInit {
     this.modelo = selectElementText;
 
     this.loading = true;
-    this.Veiculo.anos(this.manualForm.value.selectedModelo).subscribe(
+    let selectModelo = '';
+    if (status === 1) {
+      selectModelo = this.manualForm.value.selectedModelo;
+    } else {
+      selectModelo = this.copiaManualForm.value.selectedModelo2;
+    }
+    this.Veiculo.anos(selectModelo).subscribe(
       result => {
         this.loading = false;
         if (status === 1) {
@@ -109,7 +127,7 @@ export class CopiaManualComponent implements OnInit {
           this.manualForm.value.selectedVersao = 0;
         } else {
           this.arrAnos2 = result;
-          this.manualForm.value.selectedVersao2 = 0;
+          this.copiaManualForm.value.selectedVersao2 = 0;
         }
       },
       error => {
@@ -121,7 +139,13 @@ export class CopiaManualComponent implements OnInit {
 
   onChangeAno(event: Event, status) {
     this.loading = true;
-    this.Veiculo.versoes(this.manualForm.value.selectedAno).subscribe(
+    let selectAno = '';
+    if (status === 1) {
+      selectAno = this.manualForm.value.selectedAno;
+    } else {
+      selectAno = this.copiaManualForm.value.selectedAno2;
+    }
+    this.Veiculo.versoes(selectAno).subscribe(
       result => {
         this.loading = false;
         if (status === 1) {
@@ -159,8 +183,8 @@ export class CopiaManualComponent implements OnInit {
   }
 
   checkButton() {
-    return !(this.manualForm.value.selectedMarca === 0) && !(this.manualForm.value.selectedModelo === 0) &&
-      !(this.manualForm.value.selectedAno === 0) && !(this.manualForm.value.selectedVersao === 0);
+    return !(this.manualForm.value.selectedMarca === 0) || !(this.manualForm.value.selectedModelo === 0) ||
+      !(this.manualForm.value.selectedAno === 0) || !(this.manualForm.value.selectedVersao === 0);
   }
 
   checkButton2() {
@@ -170,13 +194,16 @@ export class CopiaManualComponent implements OnInit {
 
   onSubmit() {
     this.loading = true;
-    this.Manual.manualCarro(this.manualForm.value.selectedMarca, this.manualForm.value.selectedModelo,
-      this.manualForm.value.selectedAno, this.manualForm.value.selectedVersao).subscribe(
+    const data = {
+      selectedMarca: this.manualForm.value.selectedMarca,
+      selectedModelo: this.manualForm.value.selectedModelo,
+      selectedAno: this.manualForm.value.selectedAno,
+      selectedVersao: this.manualForm.value.selectedVersao
+    };
+    this.Manual.getManualCarro(data).subscribe(
       result => {
-        this.arrItens = result['manual'];
-        this.manualCompleto = result;
+        this.arrCarros = result;
         this.loading = false;
-        this.pesquisa = true;
       },
       error => {
         this.loading = false;
@@ -185,30 +212,34 @@ export class CopiaManualComponent implements OnInit {
     );
   }
 
-  copiar() {
-    const arr = [];
-    for (let i = 0; i < this.arrItens.length; i++) {
-      for (let m = 0; m < this.arrItens[i]['items'].length; m++) {
-        arr.push(this.arrItens[i]['items'][m]);
-      }
-    }
+  openCopy(marca, modelo, ano, versao) {
+    this.copy = true;
+    this.marcaAntigo = marca;
+    this.modeloAntigo = modelo;
+    this.anoAntigo = ano;
+    this.versaoAntigo = versao;
+  }
 
+  copiar() {
     const data = {
       selectedMarca: this.copiaManualForm.value.selectedMarca2,
       selectedModelo: this.copiaManualForm.value.selectedModelo2,
       selectedAno: this.copiaManualForm.value.selectedAno2,
       selectedVersao: this.copiaManualForm.value.selectedVersao2,
-      observacao: this.manualCompleto['observacao'],
-      itens: arr,
-      itensFixo: this.manualCompleto['manual_fixo']
+      observacao: this.arrCarros['observacao'],
+      marcaAntigo: this.marcaAntigo,
+      modeloAntigo: this.modeloAntigo,
+      anoAntigo: this.anoAntigo,
+      versaoAntigo: this.versaoAntigo
     };
 
     this.loading = true;
-    this.Manual.save(data).subscribe(
+    this.Manual.copy(data).subscribe(
       result => {
-        this.arrItens = [];
+        this.arrCarros = [];
         this.getForm();
         this.loading = false;
+        this.copy = false;
         this.pesquisa = false;
         this.notify.success(result['message'], {timeout: 2000, showProgressBar: false });
       },
@@ -220,25 +251,21 @@ export class CopiaManualComponent implements OnInit {
   }
 
   alterar() {
-    const arr = [];
-    for (let i = 0; i < this.arrItens.length; i++) {
-      for (let m = 0; m < this.arrItens[i]['items'].length; m++) {
-        arr.push(this.arrItens[i]['items'][m]);
-      }
-    }
 
     const data = {
       selectedMarca: this.copiaManualForm.value.selectedMarca2,
       selectedModelo: this.copiaManualForm.value.selectedModelo2,
       selectedAno: this.copiaManualForm.value.selectedAno2,
       selectedVersao: this.copiaManualForm.value.selectedVersao2,
-      observacao: this.manualCompleto['observacao'],
-      itens: arr,
-      itensFixo: this.manualCompleto['manual_fixo']
+      observacao: this.arrCarros['observacao'],
+      marcaAntigo: this.marcaAntigo,
+      modeloAntigo: this.modeloAntigo,
+      anoAntigo: this.anoAntigo,
+      versaoAntigo: this.versaoAntigo
     };
 
     this.loading = true;
-    this.Manual.save(data).subscribe(
+    this.Manual.copy(data).subscribe(
       result => {
         this.loading = false;
         this.notify.success('Os dados foram copiados. Favor realizar a alteração.', {timeout: 2000, showProgressBar: false });
