@@ -109,8 +109,8 @@ export class ManualService {
     return this.http.get(`${this.constants.api}/last-manual`);
   }
 
-  listManual(modelo) {
-    return this.http.get(`${this.constants.api}/list-manual/${modelo}`);
+  listManual(data) {
+    return this.http.post(`${this.constants.api}/list-manual/`, data);
   }
 
   getOptions() {
