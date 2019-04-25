@@ -17,6 +17,8 @@ export class PesquisaManualComponent implements OnInit {
   pesquisa = false;
   arrMarcas: any;
   arrModelos: any;
+  arrAnos: any;
+  arrVersoes: any;
   arrItens: any = [];
   id_marca: any;
   id_modelo: any;
@@ -24,7 +26,9 @@ export class PesquisaManualComponent implements OnInit {
   id_versao: any;
   manualForm = new FormGroup({
     selectedMarca: new FormControl(0),
-    selectedModelo: new FormControl(0)
+    selectedModelo: new FormControl(0),
+    selectedAno: new FormControl(0),
+    selectedVersao: new FormControl(0),
   });
 
   constructor(private Veiculo: VeiculoService,
@@ -61,7 +65,7 @@ export class PesquisaManualComponent implements OnInit {
     );
   }
 
-  onChange() {
+  onChangeMarca() {
     this.loading = true;
     this.Veiculo.modelos(this.manualForm.value.selectedMarca).subscribe(
       result => {
@@ -75,13 +79,50 @@ export class PesquisaManualComponent implements OnInit {
     );
   }
 
+  onChangeModelo() {
+    this.loading = true;
+    const selectModelo = this.manualForm.value.selectedModelo;
+    this.Veiculo.anos(selectModelo).subscribe(
+      result => {
+        this.loading = false;
+        this.arrAnos = result;
+        this.manualForm.value.selectedVersao = 0;
+      },
+      error => {
+        this.loading = false;
+        this.notify.error('Erro ao retornar os anos dos veículos', {timeout: 3000, showProgressBar: false });
+      }
+    );
+  }
+
+  onChangeAno() {
+    this.loading = true;
+    const selectAno = this.manualForm.value.selectedAno;
+    this.Veiculo.versoes(selectAno).subscribe(
+      result => {
+        this.loading = false;
+        this.arrVersoes = result;
+      },
+      error => {
+        this.loading = false;
+        this.notify.error('Erro ao retornar as versões dos veículos', {timeout: 3000, showProgressBar: false });
+      }
+    );
+  }
+
   checkButton() {
-    return !(this.manualForm.value.selectedMarca === 0) && !(this.manualForm.value.selectedModelo === 0);
+    return !(this.manualForm.value.selectedMarca === 0);
   }
 
   onSubmit() {
     this.loading = true;
-    this.Manual.listManual(this.manualForm.value.selectedModelo).subscribe(
+    const data = {
+      selectedMarca: this.manualForm.value.selectedMarca,
+      selectedModelo: this.manualForm.value.selectedModelo,
+      selectedAno: this.manualForm.value.selectedAno,
+      selectedVersao: this.manualForm.value.selectedVersao
+    };
+    this.Manual.listManual(data).subscribe(
       result => {
         this.arrItens = result;
         this.loading = false;
