@@ -204,6 +204,7 @@ export class CopiaManualComponent implements OnInit {
       result => {
         this.arrCarros = result;
         this.loading = false;
+        this.pesquisa = true;
       },
       error => {
         this.loading = false;
