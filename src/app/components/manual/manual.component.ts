@@ -45,6 +45,8 @@ export class ManualComponent implements OnInit {
   txtAno: any;
   txtVersao: any;
   txtTitulo: any;
+  removeItemId: any;
+  modalReference: any;
   filteredOptions: Observable<string[]>;
 
   constructor(private Veiculo: VeiculoService,
@@ -101,6 +103,23 @@ export class ManualComponent implements OnInit {
 
   setOptions(options) {
     this.options = options;
+    this.checkItems(options);
+  }
+
+  checkItems(options) {
+    for (let t = 0; t < options.length; t++) {
+      for (let i = 0; i < this.arrSelectedItems.length; i++) {
+        if (Number(this.arrSelectedItems[i]['titulo']) === options[t]['id_titulo']) {
+          for (let m = 0; m < this.arrSelectedItems[i]['items'].length; m++) {
+            if (Number(this.arrSelectedItems[i]['items'][m]['item']) === options[t]['id']) {
+              setTimeout(function() {
+                (document.getElementById('check_' + options[t]['id']) as HTMLInputElement).checked = true;
+              }, 50);
+            }
+          }
+        }
+      }
+    }
   }
 
   onChangeTitulo(event: Event) {
@@ -187,7 +206,7 @@ export class ManualComponent implements OnInit {
     return !(this.manualForm.value.selectedMarca === 0) && !(this.manualForm.value.selectedModelo === 0);
   }
 
-  setItens(id, checked, text, content) {
+  setItens(id, checked, text, content, contentDelete) {
     this.km_ideal = '';
     this.meses_ideal = '';
     this.observacao_ideal = '';
@@ -207,14 +226,25 @@ export class ManualComponent implements OnInit {
       this.textItem = text;
       this.modalService.open(content);
     } else {
-      for (let i = 0; i < this.arrSelectedItems.length; i++) {
-        for (let m = 0; m < this.arrSelectedItems[i]['items'].length; m++) {
-          if (this.arrSelectedItems[i]['items'][m]['item'] === id) {
-            this.arrSelectedItems[i]['items'].splice(m, 1);
-          }
+      this.removeItemId = id;
+      this.modalReference = this.modalService.open(contentDelete);
+    }
+  }
+
+  cancelRemoveItem() {
+    (document.getElementById('check_' + this.removeItemId) as HTMLInputElement).checked = true;
+    this.modalReference.close();
+  }
+
+  removeItem() {
+    for (let i = 0; i < this.arrSelectedItems.length; i++) {
+      for (let m = 0; m < this.arrSelectedItems[i]['items'].length; m++) {
+        if (this.arrSelectedItems[i]['items'][m]['item'] === this.removeItemId) {
+          this.arrSelectedItems[i]['items'].splice(m, 1);
         }
       }
     }
+    this.modalReference.close();
   }
 
   closeItem() {
