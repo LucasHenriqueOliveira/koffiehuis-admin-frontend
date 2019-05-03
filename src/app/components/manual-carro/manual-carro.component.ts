@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SnotifyService } from 'ng-snotify';
 import { ManualService } from '../../services/manual.service';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-manual-carro',
@@ -21,11 +22,13 @@ export class ManualCarroComponent implements OnInit {
   modelo: any;
   versao: any;
   observacao: any;
+  id: any;
 
   constructor(private route: ActivatedRoute,
     private router: Router,
     private notify: SnotifyService,
-    private Manual: ManualService) { }
+    private Manual: ManualService,
+    private modalService: NgbModal) { }
 
   ngOnInit() {
     this.route
@@ -93,6 +96,30 @@ export class ManualCarroComponent implements OnInit {
       },
       error => {
         this.loading = false;
+        this.notify.error(error.error.error, {timeout: 3000, showProgressBar: false });
+      }
+    );
+  }
+
+  openRemove(content, id) {
+    this.id = id;
+    this.modalService.open(content);
+  }
+
+  removeItem() {
+    this.loading = true;
+    this.Manual.removeItemManualCarro(this.id, this.id_marca, this.id_modelo, this.ano, this.id_versao).subscribe(
+      result => {
+        this.loading = false;
+        this.arrItems = result['data']['manual'];
+        this.arrItemsFixo = result['data']['manual_fixo'];
+        this.observacao = result['data']['observacao'];
+        this.modalService.dismissAll();
+        this.notify.success(result['message'], {timeout: 2000, showProgressBar: false });
+      },
+      error => {
+        this.loading = false;
+        this.modalService.dismissAll();
         this.notify.error(error.error.error, {timeout: 3000, showProgressBar: false });
       }
     );

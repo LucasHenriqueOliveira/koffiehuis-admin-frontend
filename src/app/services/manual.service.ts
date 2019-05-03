@@ -101,6 +101,10 @@ export class ManualService {
     return this.http.delete(`${this.constants.api}/manual-carro/${id_marca}/${id_modelo}/${ano}/${id_versao}`);
   }
 
+  removeItemManualCarro(id, id_marca, id_modelo, ano, id_versao) {
+    return this.http.delete(`${this.constants.api}/item-manual-carro/${id}/${id_marca}/${id_modelo}/${ano}/${id_versao}}`);
+  }
+
   editManualCarro(data) {
     return this.http.put(`${this.constants.api}/manual-carro`, data);
   }

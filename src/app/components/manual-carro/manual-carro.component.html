@@ -17,6 +17,7 @@
 			<th scope="col" class="no-border"></th>
 			<th scope="col" colspan="3" class="text-center">Ideal</th>
 			<th scope="col" colspan="3" class="text-center">Severo</th>
+			<td class="no-border"></td>
 		</tr>
 		<tr>
 			<td scope="col" class="no-border"></td>
@@ -26,11 +27,12 @@
 			<th scope="col" class="text-center">Km</th>
 			<th scope="col" class="text-center">Meses</th>
 			<th scope="col" class="text-center">Obs</th>
+			<th scope="col" class="text-center">Ação</th>
 		</tr>
 	</thead>
 	<tbody *ngFor="let options of arrItems">
 		<tr>
-			<td scope="row" colspan="7" class="titulo" *ngIf="options.items.length">{{options.txtTitulo}}</td>
+			<td scope="row" colspan="8" class="titulo" *ngIf="options.items.length">{{options.txtTitulo}}</td>
 		</tr>
 		<tr *ngFor="let item of options.items">
 			<td scope="row">{{item.item}}</td>
@@ -51,6 +53,11 @@
 			</td>
 			<td scope="row" class="text-center">
 				<textarea class="form-control" rows="3" id="observacao_severo_{{item.id}}">{{item.observacao_severo}}</textarea>
+			</td>
+			<td scope="row" class="text-center action-manual">
+				<a (click)="openRemove(contentDelete, item.id_manual_carro)">
+					<i class="fa fa-trash" aria-hidden="true"></i>
+				</a>
 			</td>
 		</tr>
 	</tbody>
@@ -88,3 +95,19 @@
 </div>
 
 <div [ngClass]="{'loading': loading}"></div>
+
+<ng-template #contentDelete let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title">Deletar item do manual</h4>
+		<button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+		<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	<div class="modal-body">
+		<p>Você deseja apagar o item do manual?</p>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-light" (click)="modal.dismiss('cancel click')">Não</button>
+		<button type="button" class="btn btn-danger" ngbAutofocus (click)="removeItem()">Sim</button>
+	</div>
+</ng-template>
