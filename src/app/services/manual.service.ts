@@ -89,6 +89,10 @@ export class ManualService {
     return this.http.put(`${this.constants.api}/manual-itens-fixo`, data);
   }
 
+  saveItemManualTitulo(data) {
+    return this.http.post(`${this.constants.api}/add-manual-item`, data);
+  }
+
   getManualCarro(data) {
     return this.http.post(`${this.constants.api}/manual-carro/`, data);
   }

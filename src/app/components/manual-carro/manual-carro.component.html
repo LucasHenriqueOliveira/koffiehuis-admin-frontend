@@ -1,7 +1,16 @@
-<button class="btn btn-lg col-xs-12" (click)="backbutton()">
-	<i class="fa fa-chevron-left" aria-hidden="true"></i> Voltar
-</button>
-<br /><br />
+<div class="row">
+	<div class="col-sm">
+		<button class="btn btn-lg" (click)="backbutton()">
+			<i class="fa fa-chevron-left" aria-hidden="true"></i> Voltar
+		</button>
+	</div>
+	<div class="col-sm text-right">
+		<button type="button" class="btn btn-primary" (click)="openItem(contentItem)">
+			<i class="fa fa-plus" aria-hidden="true"></i> Adicionar Item
+		</button>
+	</div>
+</div>
+<br />
 <fieldset class="fieldset">
 	<legend>Dados do Veículo</legend>
 	<ul>
@@ -110,4 +119,59 @@
 		<button type="button" class="btn btn-light" (click)="modal.dismiss('cancel click')">Não</button>
 		<button type="button" class="btn btn-danger" ngbAutofocus (click)="removeItem()">Sim</button>
 	</div>
+</ng-template>
+
+<ng-template #contentItem let-modal>
+	<form [formGroup]="itemForm">
+		<div class="modal-header">
+			<h4 class="modal-title">Adicionar Item</h4>
+			<button type="button" class="close" aria-label="Close" (click)="modal.dismiss('cancel click')">
+			<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="modal-body">
+			<div class="form-row">
+				<div class="form-group col-sm-12">
+					<select id="inputTitulo" class="form-control" formControlName="selectedTitulo" (change)="onChangeTitulo()">
+						<option selected value="0">Selecione o título</option>
+						<option *ngFor="let titulo of arrTitulos" [value]="titulo.id">{{titulo.titulo}}</option>
+					</select>
+				</div>
+				<div class="form-group col-sm-12">
+					<select id="inputTitulo" class="form-control" formControlName="selectedItem">
+						<option selected value="0">Selecione o Item</option>
+						<option *ngFor="let item of options" [value]="item.id">{{item.item}}</option>
+					</select>
+				</div>
+			</div>
+			<p>Ideal <br /></p>
+			<div class="form-row">
+				<div class="form-group col-sm-6">
+					<input type="number" class="form-control" ngbAutofocus [(ngModel)]="km_ideal" [ngModelOptions]="{standalone: true}" name="km_ideal" value="" placeholder="Km">
+				</div>
+				<div class="form-group col-sm-6">
+					<input type="number" class="form-control" [(ngModel)]="meses_ideal" [ngModelOptions]="{standalone: true}" name="meses_ideal" value="" placeholder="Meses">
+				</div>
+				<div class="form-group col-sm-12">
+					<textarea class="form-control" rows="3" [(ngModel)]="observacao_ideal" [ngModelOptions]="{standalone: true}" placeholder="Observação"></textarea>
+				</div>
+			</div>
+			<p>Severo <br /></p>
+			<div class="form-row">
+				<div class="form-group col-sm-6">
+					<input type="number" class="form-control" [(ngModel)]="km_severo" [ngModelOptions]="{standalone: true}" name="km_severo" value="" placeholder="Km">
+				</div>
+				<div class="form-group col-sm-6">
+					<input type="number" class="form-control" [(ngModel)]="meses_severo" [ngModelOptions]="{standalone: true}" name="meses_severo" value="" placeholder="Meses">
+				</div>
+				<div class="form-group col-sm-12">
+					<textarea class="form-control" rows="3" [(ngModel)]="observacao_severo" [ngModelOptions]="{standalone: true}" placeholder="Observação"></textarea>
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-light" (click)="modal.dismiss('cancel click')">Cancelar</button>
+			<button type="button" class="btn btn-danger" (click)="addItem(km_ideal, meses_ideal, observacao_ideal, km_severo, meses_severo, observacao_severo)">Adicionar</button>
+		</div>
+	</form>
 </ng-template>

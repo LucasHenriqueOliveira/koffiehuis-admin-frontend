@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SnotifyService } from 'ng-snotify';
 import { ManualService } from '../../services/manual.service';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { TituloService } from 'src/app/services/titulo.service';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-manual-carro',
@@ -18,17 +20,38 @@ export class ManualCarroComponent implements OnInit {
   loading = false;
   arrItems: any = [];
   arrItemsFixo: any = [];
+  arrTitulos: any = [];
+  options: any = [];
   marca: any;
   modelo: any;
   versao: any;
   observacao: any;
   id: any;
+  selectedTitulo: any;
+  itemForm: any;
+  km_ideal: any;
+  meses_ideal: any;
+  observacao_ideal: any;
+  km_severo: any;
+  meses_severo: any;
+  observacao_severo: any;
 
   constructor(private route: ActivatedRoute,
     private router: Router,
     private notify: SnotifyService,
     private Manual: ManualService,
-    private modalService: NgbModal) { }
+    private modalService: NgbModal,
+    private Titulo: TituloService) {
+
+      this.getForm();
+  }
+
+  getForm() {
+    this.itemForm = new FormGroup({
+      selectedTitulo: new FormControl(0),
+      selectedItem: new FormControl(0)
+    });
+  }
 
   ngOnInit() {
     this.route
@@ -114,6 +137,70 @@ export class ManualCarroComponent implements OnInit {
         this.arrItems = result['data']['manual'];
         this.arrItemsFixo = result['data']['manual_fixo'];
         this.observacao = result['data']['observacao'];
+        this.modalService.dismissAll();
+        this.notify.success(result['message'], {timeout: 2000, showProgressBar: false });
+      },
+      error => {
+        this.loading = false;
+        this.modalService.dismissAll();
+        this.notify.error(error.error.error, {timeout: 3000, showProgressBar: false });
+      }
+    );
+  }
+
+  openItem(content) {
+    this.modalService.open(content, { size: 'lg'});
+    this.Titulo.titulo().subscribe(
+      result => {
+        this.arrTitulos = result;
+      },
+      error => {
+        this.loading = false;
+        this.notify.error('Erro ao retornar o título', {timeout: 3000, showProgressBar: false });
+      }
+    );
+  }
+
+  onChangeTitulo() {
+    this.Manual.itensManualTitulo(this.itemForm.value.selectedTitulo).subscribe(
+      result => {
+        this.options = result;
+      },
+      error => {
+        this.loading = false;
+        this.notify.error('Erro ao retornar os itens do manual', {timeout: 3000, showProgressBar: false });
+      }
+    );
+  }
+
+  addItem(km_ideal, meses_ideal, observacao_ideal, km_severo, meses_severo, observacao_severo) {
+    const data = {
+      km_ideal: km_ideal,
+      meses_ideal: meses_ideal,
+      observacao_ideal: observacao_ideal,
+      km_severo: km_severo,
+      meses_severo: meses_severo,
+      observacao_severo: observacao_severo,
+      marca: this.id_marca,
+      modelo: this.id_modelo,
+      ano: this.ano,
+      versao: this.id_versao,
+      item: this.itemForm.value.selectedItem
+    };
+
+    this.Manual.saveItemManualTitulo(data).subscribe(
+      result => {
+        this.loading = false;
+        this.arrItems = result['data']['manual'];
+        this.arrItemsFixo = result['data']['manual_fixo'];
+        this.observacao = result['data']['observacao'];
+        this.getForm();
+        this.km_ideal = '';
+        this.meses_ideal = '';
+        this.observacao_ideal = '';
+        this.km_severo = '';
+        this.meses_severo = '';
+        this.observacao_severo = '';
         this.modalService.dismissAll();
         this.notify.success(result['message'], {timeout: 2000, showProgressBar: false });
       },
