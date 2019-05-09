@@ -48,6 +48,8 @@ import { ManualCarroComponent } from './components/manual-carro/manual-carro.com
 import { ManualFixoComponent, ModalManualFixoItemEditComponent } from './components/manual-fixo/manual-fixo.component';
 import { TituloFixoComponent, ModalTituloFixoEditComponent } from './components/titulo-fixo/titulo-fixo.component';
 import { TituloFixoService } from './services/titulo-fixo.service';
+import { FluidoComponent, ModalFluidoEditComponent} from './components/fluido/fluido.component';
+import { FluidoService } from './services/fluido.service';
 registerLocaleData(ptBr);
 
 
@@ -81,7 +83,9 @@ registerLocaleData(ptBr);
     ManualFixoComponent,
     ModalManualFixoItemEditComponent,
     TituloFixoComponent,
-    ModalTituloFixoEditComponent
+    ModalTituloFixoEditComponent,
+    FluidoComponent,
+    ModalFluidoEditComponent
   ],
   imports: [
     BrowserModule,
@@ -115,7 +119,8 @@ registerLocaleData(ptBr);
     NgbActiveModal,
     DashboardService,
     TituloService,
-    TituloFixoService
+    TituloFixoService,
+    FluidoService
   ],
   bootstrap: [AppComponent],
   entryComponents: [
@@ -125,7 +130,8 @@ registerLocaleData(ptBr);
     ModalManualItemEditComponent,
     ModalTituloEditComponent,
     ModalManualFixoItemEditComponent,
-    ModalTituloFixoEditComponent
+    ModalTituloFixoEditComponent,
+    ModalFluidoEditComponent
   ]
 })
 export class AppModule { }
