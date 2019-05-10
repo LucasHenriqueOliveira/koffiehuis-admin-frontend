@@ -41,7 +41,7 @@ export class ManualCarroComponent implements OnInit {
   cabine: any;
   carga: any;
   parte: any;
-  raio_roda: any;
+  roda_raio: any;
   pneu_medida: any;
   calibragem_psi: any;
   observacao_info: any;
@@ -98,7 +98,7 @@ export class ManualCarroComponent implements OnInit {
     this.cabine = info['cabine'];
     this.carga = info['carga'];
     this.parte = info['parte'];
-    this.raio_roda = info['roda_raio'];
+    this.roda_raio = info['roda_raio'];
     this.pneu_medida = info['pneu_medida'];
     this.calibragem_psi = info['calibragem_psi'];
     this.observacao_info = info['observacao_geral'];
