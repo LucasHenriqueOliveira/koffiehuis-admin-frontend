@@ -32,6 +32,88 @@
 		</div>
 	</fieldset>
 	<fieldset class="fieldset">
+		<legend>Mais informações</legend>
+		<p>Acrescente as informações do veículo</p>
+		<div class="form-row">
+			<div class="form-group col-md-12">
+				<select id="inputCabine" class="form-control" formControlName="selectedCabine">
+					<option selected value="0">Selecione a cabine</option>
+					<option value="Sedan">Sedan</option>
+					<option value="Hatch/Compacto">Hatch/Compacto</option>
+					<option value="SUV/Crossover">SUV/Crossover</option>
+					<option value="Pickup">Pickup</option>
+					<option value="Perua(Station Wagon)">Perua(Station Wagon)</option>
+					<option value="Cupê/Conversível">Cupê/Conversível</option>
+					<option value="Van/Furgão">Van/Furgão</option>
+					<option value="Minivan">Minivan</option>
+					<option value="Buggy/Jipe">Buggy/Jipe</option>
+					<option value="Outros">Outros</option>
+				</select>
+			</div>
+			<div class="form-group col-md-6">
+				<select id="inputCarga" class="form-control" formControlName="selectedCarga">
+					<option selected value="0">Selecione a carga</option>
+					<option value="Normal">Normal</option>
+					<option value="Completa">Completa</option>
+				</select>
+			</div>
+			<div class="form-group col-md-6">
+				<select id="inputParte" class="form-control" formControlName="selectedParte">
+					<option selected value="0">Selecione a parte</option>
+					<option value="Traseira">Traseira</option>
+					<option value="Dianteira">Dianteira</option>
+					<option value="Estepe">Estepe</option>
+				</select>
+			</div>
+			<div class="form-group col-md-4">
+				<input type="text" class="form-control" id="inputRodaRaio" placeholder="Raio Roda" formControlName="inputRodaRaio">
+			</div>
+			<div class="form-group col-md-4">
+				<input type="text" class="form-control" id="inputPneuMedida" placeholder="Medida Pneu" formControlName="inputPneuMedida">
+			</div>
+			<div class="form-group col-md-4">
+				<input type="text" class="form-control" id="inputCalibragemPsi" placeholder="Calibragem psi" formControlName="inputCalibragemPsi">
+			</div>
+			<div class="form-group col-md-12">
+				<textarea class="form-control" rows="3" id="observacaoInfo" placeholder="Observação" formControlName="observacaoInfo"></textarea>
+			</div>
+		</div>
+	</fieldset>
+	<fieldset class="fieldset">
+		<legend>Fluidos</legend>
+		<p>Adicione os fluidos</p>
+		<a class="btn btn-sm btn-primary btn-add" (click)="openFluido(contentFluido)">Adicionar</a>
+		<br /><br />
+		<table class="table table-bordered" *ngIf="arrFluidosAdd.length">
+			<thead>
+				<tr>
+					<th scope="col">Fluido</th>
+					<th scope="col">Descrição</th>
+					<th scope="col" class="text-center">Litros</th>
+					<th scope="col" class="text-center">Obs</th>
+					<th scope="col" class="text-center">Ação</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let fluido of arrFluidosAdd">
+					<td scope="row">{{fluido.nome}}</td>
+					<td scope="row">{{fluido.descricao}}</td>
+					<td scope="row" class="text-center">{{fluido.litros}}</td>
+					<td scope="row" class="text-center">
+						<ng-template #popObservacaoFluido>{{fluido.observacao}}</ng-template>
+						<i class="fa fa-pencil-square-o" *ngIf="fluido.observacao" aria-hidden="true" [ngbPopover]="popObservacaoFluido"
+						triggers="mouseenter:mouseleave" popoverTitle="Observação"></i>
+					</td>
+					<td scope="row" class="text-center">
+						<a (click)="removeFluido(fluido)">
+							<i class="fa fa-trash" aria-hidden="true"></i>
+						</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</fieldset>
+	<fieldset class="fieldset">
 		<legend>Itens do Manual</legend>
 		<p>
 			Selecione o título, marque os itens do manual relacionados e clique em adicionar
@@ -188,5 +270,35 @@
 	<div class="modal-footer">
 		<button type="button" class="btn btn-light" (click)="cancelRemoveItem()">Não</button>
 		<button type="button" class="btn btn-danger" ngbAutofocus (click)="removeItem()">Sim</button>
+	</div>
+</ng-template>
+
+<ng-template #contentFluido let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title">Adicionar o fluido</h4>
+		<button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+		<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	<div class="modal-body">
+		<div class="form-group col-md-12">
+			<select id="inputFluido" ngbAutofocus class="form-control" (change)="setFluidoNome($event)" [(ngModel)]="tipo_fluido" [ngModelOptions]="{standalone: true}">
+				<option selected value="0">Selecione o fluido</option>
+				<option *ngFor="let fluido of arrFluidos" [value]="fluido.id">{{fluido.nome}}</option>
+			</select>
+		</div>
+		<div class="form-group col-sm-12">
+			<input type="text" class="form-control" [(ngModel)]="descricao_fluido" [ngModelOptions]="{standalone: true}" name="descricao_fluido" value="" placeholder="Descrição">
+		</div>
+		<div class="form-group col-sm-12">
+			<input type="text" class="form-control" [(ngModel)]="litros_fluido" [ngModelOptions]="{standalone: true}" name="litros_fluido" value="" placeholder="Litros">
+		</div>
+		<div class="form-group col-sm-12">
+			<textarea class="form-control" rows="3" [(ngModel)]="observacao_fluido" [ngModelOptions]="{standalone: true}" placeholder="Observação"></textarea>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-light" (click)="modal.dismiss('Cross click')">Cancelar</button>
+		<button type="button" class="btn btn-danger" ngbAutofocus (click)="addFluido()">Salvar</button>
 	</div>
 </ng-template>

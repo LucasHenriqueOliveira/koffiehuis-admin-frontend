@@ -18,6 +18,37 @@
 		<li><b>Modelo:</b> {{modelo}}</li>
 		<li><b>Ano:</b> {{ano}}</li>
 		<li><b>Versão:</b> {{versao}}</li>
+		<br />
+		<li *ngIf="cabine"><b>Cabine:</b> {{cabine}}</li>
+		<li *ngIf="carga"><b>Carga:</b> {{carga}}</li>
+		<li *ngIf="parte"><b>Parte:</b> {{parte}}</li>
+		<li *ngIf="roda_raio"><b>Raio da Roda:</b> {{roda_raio}}</li>
+		<li *ngIf="pneu_medida"><b>Medida Pneu:</b> {{pneu_medida}}</li>
+		<li *ngIf="calibragem_psi"><b>Calibragem psi:</b> {{calibragem_psi}}</li>
+		<li *ngIf="observacao_info"><b>Observação:</b> {{observacao_info}}</li>
+		<br />
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col">Nome</th>
+					<th scope="col">Descrição</th>
+					<th scope="col">Litros</th>
+					<th scope="col">Observação</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let fluido of arrFluidos">
+					<td>{{fluido.nome}}</td>
+					<td>{{fluido.descricao}}</td>
+					<td class="text-center">{{fluido.litros}}</td>
+					<td class="text-center">
+						<ng-template #popObservacao>{{fluido.observacao}}</ng-template>
+						<i class="fa fa-pencil-square-o" *ngIf="fluido.observacao" aria-hidden="true" [ngbPopover]="popObservacao"
+						triggers="mouseenter:mouseleave" popoverTitle="Observação"></i>
+					</td>
+				</tr>
+			</tbody>
+		</table>
 	</ul>
 </fieldset>
 <table class="table table-bordered no-border">

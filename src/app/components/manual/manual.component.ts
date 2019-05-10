@@ -6,6 +6,7 @@ import { ManualService } from '../../services/manual.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 import { TituloService } from 'src/app/services/titulo.service';
+import { FluidoService } from 'src/app/services/fluido.service';
 
 
 @Component({
@@ -25,6 +26,8 @@ export class ManualComponent implements OnInit {
   arrSelectedItems: any = [];
   arrayItems: any = [];
   arrTitulos: any = [];
+  arrFluidos: any = [];
+  arrFluidosAdd: any = [];
   manualForm: any;
   id: any;
   options: any;
@@ -45,15 +48,21 @@ export class ManualComponent implements OnInit {
   txtAno: any;
   txtVersao: any;
   txtTitulo: any;
+  txtFluidoNome: any;
   removeItemId: any;
   modalReference: any;
   filteredOptions: Observable<string[]>;
+  descricao_fluido: any;
+  litros_fluido: any;
+  observacao_fluido: any;
+  tipo_fluido: any = 0;
 
   constructor(private Veiculo: VeiculoService,
     private notify: SnotifyService,
     private Manual: ManualService,
     private modalService: NgbModal,
-    private Titulo: TituloService) {
+    private Titulo: TituloService,
+    private Fluido: FluidoService) {
       this.getForm();
   }
 
@@ -64,7 +73,14 @@ export class ManualComponent implements OnInit {
       selectedAno: new FormControl(0),
       selectedVersao: new FormControl(0),
       selectedTitulo: new FormControl(0),
-      observacao: new FormControl('')
+      selectedCabine: new FormControl(0),
+      selectedCarga: new FormControl(0),
+      selectedParte: new FormControl(0),
+      observacao: new FormControl(''),
+      inputRodaRaio: new FormControl(''),
+      inputPneuMedida: new FormControl(''),
+      inputCalibragemPsi: new FormControl(''),
+      observacaoInfo: new FormControl('')
     });
   }
 
@@ -89,6 +105,16 @@ export class ManualComponent implements OnInit {
       }
     );
 
+    this.Fluido.fluido().subscribe(
+      result => {
+        this.arrFluidos = result;
+      },
+      error => {
+        this.loading = false;
+        this.notify.error('Erro ao retornar o fluído', {timeout: 3000, showProgressBar: false });
+      }
+    );
+
     this.Manual.itensManualFixo().subscribe(
       result => {
         this.arrItemsFixo = result;
@@ -99,6 +125,40 @@ export class ManualComponent implements OnInit {
         this.notify.error('Erro ao retornar os itens do manual fixo', {timeout: 3000, showProgressBar: false });
       }
     );
+  }
+
+  resetFormFluido() {
+    this.tipo_fluido = 0;
+    this.descricao_fluido = '';
+    this.litros_fluido = '';
+    this.observacao_fluido = '';
+  }
+
+  setFluidoNome(event: Event) {
+    const selectedOptions = event['target']['options'];
+    const selectedIndex = selectedOptions.selectedIndex;
+    const selectElementText = selectedOptions[selectedIndex].text;
+    this.txtFluidoNome = selectElementText;
+  }
+
+  addFluido() {
+    this.arrFluidosAdd.push({
+      id: Number(this.tipo_fluido),
+      nome: this.txtFluidoNome,
+      descricao: this.descricao_fluido,
+      litros: this.litros_fluido,
+      observacao: this.observacao_fluido
+    });
+    this.resetFormFluido();
+    this.modalService.dismissAll();
+  }
+
+  removeFluido(fluido) {
+    for (let i = 0; i < this.arrFluidosAdd.length; i++) {
+      if (this.arrFluidosAdd[i]['id'] === fluido.id) {
+        this.arrFluidosAdd.splice(i, 1);
+      }
+    }
   }
 
   setOptions(options) {
@@ -204,6 +264,10 @@ export class ManualComponent implements OnInit {
 
   checkButton() {
     return !(this.manualForm.value.selectedMarca === 0) && !(this.manualForm.value.selectedModelo === 0);
+  }
+
+  openFluido(content) {
+    this.modalService.open(content);
   }
 
   setItens(id, checked, text, content, contentDelete) {
@@ -322,7 +386,15 @@ export class ManualComponent implements OnInit {
       selectedAno: this.manualForm.value.selectedAno,
       selectedVersao: this.manualForm.value.selectedVersao,
       observacao: this.manualForm.value.observacao,
-      itens: arr
+      selectedCabine: this.manualForm.value.selectedCabine,
+      selectedCarga: this.manualForm.value.selectedCarga,
+      selectedParte: this.manualForm.value.selectedParte,
+      inputRodaRaio: this.manualForm.value.inputRodaRaio,
+      inputPneuMedida: this.manualForm.value.inputPneuMedida,
+      inputCalibragemPsi: this.manualForm.value.inputCalibragemPsi,
+      observacaoInfo: this.manualForm.value.observacaoInfo,
+      itens: arr,
+      fluidos: this.arrFluidosAdd
     };
 
     this.loading = true;
@@ -331,6 +403,7 @@ export class ManualComponent implements OnInit {
         this.getForm();
         this.resetForm();
         this.arrayItems = [];
+        this.arrFluidosAdd = [];
         this.loading = false;
         this.notify.success(result['message'], {timeout: 2000, showProgressBar: false });
       },

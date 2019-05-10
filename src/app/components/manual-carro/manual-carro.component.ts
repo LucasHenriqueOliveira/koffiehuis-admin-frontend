@@ -5,6 +5,7 @@ import { ManualService } from '../../services/manual.service';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TituloService } from 'src/app/services/titulo.service';
 import { FormGroup, FormControl } from '@angular/forms';
+import { AngularWaitBarrier } from 'blocking-proxy/built/lib/angular_wait_barrier';
 
 @Component({
   selector: 'app-manual-carro',
@@ -21,6 +22,8 @@ export class ManualCarroComponent implements OnInit {
   arrItems: any = [];
   arrItemsFixo: any = [];
   arrTitulos: any = [];
+  arrInfo: any = [];
+  arrFluidos: any = [];
   options: any = [];
   marca: any;
   modelo: any;
@@ -35,6 +38,13 @@ export class ManualCarroComponent implements OnInit {
   km_severo: any;
   meses_severo: any;
   observacao_severo: any;
+  cabine: any;
+  carga: any;
+  parte: any;
+  raio_roda: any;
+  pneu_medida: any;
+  calibragem_psi: any;
+  observacao_info: any;
 
   constructor(private route: ActivatedRoute,
     private router: Router,
@@ -68,6 +78,7 @@ export class ManualCarroComponent implements OnInit {
         result => {
           this.arrItems = result['manual'];
           this.arrItemsFixo = result['manual_fixo'];
+          this.carroInfo(result['manual_info'], result['manual_fluido']);
           this.observacao = result['observacao'];
           this.loading = false;
         },
@@ -81,6 +92,17 @@ export class ManualCarroComponent implements OnInit {
       this.modelo = arr['modelo'];
       this.ano = arr['ano'];
       this.versao = arr['versao'];
+  }
+
+  carroInfo(info, fluidos) {
+    this.cabine = info['cabine'];
+    this.carga = info['carga'];
+    this.parte = info['parte'];
+    this.raio_roda = info['roda_raio'];
+    this.pneu_medida = info['pneu_medida'];
+    this.calibragem_psi = info['calibragem_psi'];
+    this.observacao_info = info['observacao_geral'];
+    this.arrFluidos = fluidos;
   }
 
   backbutton() {

@@ -22,3 +22,7 @@ h6 {
 hr {
     margin-bottom: 5px;
 }
+
+.btn-add {
+    color: white !important;
+}

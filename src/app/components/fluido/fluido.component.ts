@@ -9,7 +9,7 @@ import { FluidoService } from 'src/app/services/fluido.service';
   template: `
   <form>
     <div class="modal-header">
-      <h4 class="modal-title">Editar fluído</h4>
+      <h4 class="modal-title">Editar fluido</h4>
       <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
       </button>
@@ -69,7 +69,7 @@ export class FluidoComponent implements OnInit {
       },
       error => {
         this.loading = false;
-        this.notify.error('Erro ao retornar o título', {timeout: 3000, showProgressBar: false });
+        this.notify.error('Erro ao retornar o fluido', {timeout: 3000, showProgressBar: false });
       }
     );
   }
