@@ -26,8 +26,8 @@
 		<li *ngIf="pneu_medida"><b>Medida Pneu:</b> {{pneu_medida}}</li>
 		<li *ngIf="calibragem_psi"><b>Calibragem psi:</b> {{calibragem_psi}}</li>
 		<li *ngIf="observacao_info"><b>Observação:</b> {{observacao_info}}</li>
-		<br />
-		<table class="table">
+		<br *ngIf="arrFluidos.length" />
+		<table class="table" *ngIf="arrFluidos.length">
 			<thead>
 				<tr>
 					<th scope="col">Nome</th>
