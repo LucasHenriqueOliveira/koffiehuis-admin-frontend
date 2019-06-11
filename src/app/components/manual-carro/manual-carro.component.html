@@ -75,7 +75,7 @@
 			<td scope="row" colspan="8" class="titulo" *ngIf="options.items.length">{{options.txtTitulo}}</td>
 		</tr>
 		<tr *ngFor="let item of options.items">
-			<td scope="row">{{item.item}}</td>
+			<td scope="row" width="25%">{{item.item}}</td>
 			<td scope="row">
 				<input type="text" class="form-control" size="8" id="km_ideal_{{item.id}}" value="{{item.km_ideal}}">
 			</td>
