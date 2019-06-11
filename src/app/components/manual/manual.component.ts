@@ -380,6 +380,26 @@ export class ManualComponent implements OnInit {
       }
     }
 
+    if (!this.manualForm.value.selectedModelo) {
+      this.notify.error('Falta selecionar o modelo!', {timeout: 3000, showProgressBar: false });
+      return false;
+    }
+
+    if (!this.manualForm.value.selectedMarca) {
+      this.notify.error('Falta selecionar a marca!', {timeout: 3000, showProgressBar: false });
+      return false;
+    }
+
+    if (!this.manualForm.value.selectedAno) {
+      this.notify.error('Falta selecionar o ano!', {timeout: 3000, showProgressBar: false });
+      return false;
+    }
+
+    if (!this.manualForm.value.selectedVersao) {
+      this.notify.error('Falta selecionar a versão!', {timeout: 3000, showProgressBar: false });
+      return false;
+    }
+
     const data = {
       selectedModelo: this.manualForm.value.selectedModelo,
       selectedMarca: this.manualForm.value.selectedMarca,
