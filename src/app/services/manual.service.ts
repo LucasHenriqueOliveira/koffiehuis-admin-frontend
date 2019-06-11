@@ -118,7 +118,7 @@ export class ManualService {
   }
 
   listManual(data) {
-    return this.http.post(`${this.constants.api}/list-manual/`, data);
+    return this.http.post(`${this.constants.api}/list-manual`, data);
   }
 
   getOptions() {
