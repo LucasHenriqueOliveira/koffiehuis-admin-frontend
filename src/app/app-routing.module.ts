@@ -23,6 +23,7 @@ import { ManualCarroComponent } from './components/manual-carro/manual-carro.com
 import { ManualFixoComponent } from './components/manual-fixo/manual-fixo.component';
 import { TituloFixoComponent } from './components/titulo-fixo/titulo-fixo.component';
 import { FluidoComponent } from './components/fluido/fluido.component';
+import { OpcionaisComponent } from './components/opcionais/opcionais.component';
 
 const appRoutes: Routes = [
   {
@@ -84,6 +85,11 @@ const appRoutes: Routes = [
   {
     path: 'fluido',
     component: FluidoComponent,
+    canActivate: [AfterLoginService]
+  },
+  {
+    path: 'opcionais',
+    component: OpcionaisComponent,
     canActivate: [AfterLoginService]
   },
   {

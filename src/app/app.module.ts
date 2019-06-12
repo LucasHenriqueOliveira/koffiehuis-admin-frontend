@@ -50,6 +50,8 @@ import { TituloFixoComponent, ModalTituloFixoEditComponent } from './components/
 import { TituloFixoService } from './services/titulo-fixo.service';
 import { FluidoComponent, ModalFluidoEditComponent} from './components/fluido/fluido.component';
 import { FluidoService } from './services/fluido.service';
+import { OpcionaisComponent, ModalOpcionalEditComponent } from './components/opcionais/opcionais.component';
+import { OpcionaisService } from './services/opcionais.service';
 registerLocaleData(ptBr);
 
 
@@ -86,7 +88,9 @@ registerLocaleData(ptBr);
     ModalTituloFixoEditComponent,
     FluidoComponent,
     ModalFluidoEditComponent,
-    ModalManualFluidoEditComponent
+    ModalManualFluidoEditComponent,
+    OpcionaisComponent,
+    ModalOpcionalEditComponent
   ],
   imports: [
     BrowserModule,
@@ -121,7 +125,8 @@ registerLocaleData(ptBr);
     DashboardService,
     TituloService,
     TituloFixoService,
-    FluidoService
+    FluidoService,
+    OpcionaisService
   ],
   bootstrap: [AppComponent],
   entryComponents: [
@@ -133,7 +138,8 @@ registerLocaleData(ptBr);
     ModalManualFixoItemEditComponent,
     ModalTituloFixoEditComponent,
     ModalFluidoEditComponent,
-    ModalManualFluidoEditComponent
+    ModalManualFluidoEditComponent,
+    ModalOpcionalEditComponent
   ]
 })
 export class AppModule { }
