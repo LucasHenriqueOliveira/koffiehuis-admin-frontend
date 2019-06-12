@@ -94,7 +94,7 @@ export class ManualService {
   }
 
   getManualCarro(data) {
-    return this.http.post(`${this.constants.api}/manual-carro/`, data);
+    return this.http.post(`${this.constants.api}/manual-carro`, data);
   }
 
   manualCarro(id_marca, id_modelo, ano, id_versao) {
