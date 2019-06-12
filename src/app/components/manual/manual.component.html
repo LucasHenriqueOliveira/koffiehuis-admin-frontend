@@ -95,9 +95,13 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr *ngFor="let fluido of arrFluidosAdd">
+				<tr *ngFor="let fluido of arrFluidosAdd; let i = index">
 					<td scope="row">{{fluido.nome}}</td>
-					<td scope="row">{{fluido.descricao}}</td>
+					<td scope="row">
+						{{fluido.descricao1}}<br />
+						{{fluido.descricao2}}<br />
+						{{fluido.descricao3}}
+					</td>
 					<td scope="row" class="text-center">{{fluido.litros}}</td>
 					<td scope="row" class="text-center">
 						<ng-template #popObservacaoFluido>{{fluido.observacao}}</ng-template>
@@ -105,6 +109,9 @@
 						triggers="mouseenter:mouseleave" popoverTitle="Observação"></i>
 					</td>
 					<td scope="row" class="text-center">
+						<a (click)="editarFluido(fluido, i)">
+							<i class="fa fa-pencil" aria-hidden="true"></i>
+						</a> &nbsp;
 						<a (click)="removeFluido(fluido)">
 							<i class="fa fa-trash" aria-hidden="true"></i>
 						</a>
@@ -112,6 +119,7 @@
 				</tr>
 			</tbody>
 		</table>
+		<textarea class="form-control" rows="3" id="observacaoGeralFluido" placeholder="Observação" formControlName="observacaoGeralFluido"></textarea>
 	</fieldset>
 	<fieldset class="fieldset">
 		<legend>Itens do Manual</legend>
@@ -288,7 +296,13 @@
 			</select>
 		</div>
 		<div class="form-group col-sm-12">
-			<input type="text" class="form-control" [(ngModel)]="descricao_fluido" [ngModelOptions]="{standalone: true}" name="descricao_fluido" value="" placeholder="Descrição">
+			<input type="text" class="form-control" [(ngModel)]="descricao_fluido1" [ngModelOptions]="{standalone: true}" name="descricao_fluido1" value="" placeholder="Descrição 1">
+		</div>
+		<div class="form-group col-sm-12">
+			<input type="text" class="form-control" [(ngModel)]="descricao_fluido2" [ngModelOptions]="{standalone: true}" name="descricao_fluido2" value="" placeholder="Descrição 2">
+		</div>
+		<div class="form-group col-sm-12">
+			<input type="text" class="form-control" [(ngModel)]="descricao_fluido3" [ngModelOptions]="{standalone: true}" name="descricao_fluido3" value="" placeholder="Descrição 3">
 		</div>
 		<div class="form-group col-sm-12">
 			<input type="text" class="form-control" [(ngModel)]="litros_fluido" [ngModelOptions]="{standalone: true}" name="litros_fluido" value="" placeholder="Litros">

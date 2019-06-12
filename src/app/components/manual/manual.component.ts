@@ -3,11 +3,92 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { SnotifyService } from 'ng-snotify';
 import { VeiculoService } from '../../services/veiculo.service';
 import { ManualService } from '../../services/manual.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 import { TituloService } from 'src/app/services/titulo.service';
 import { FluidoService } from 'src/app/services/fluido.service';
 
+@Component({
+  selector: 'app-manual-fluido-edit-modal',
+  template: `
+  <form>
+    <div class="modal-header">
+      <h4 class="modal-title">Editar fluido</h4>
+      <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="form-row">
+        <div class="form-group col-md-12">
+          <select id="inputFluido" ngbAutofocus class="form-control"
+          [(ngModel)]="id" [ngModelOptions]="{standalone: true}">
+            <option *ngFor="let fluido of arrFluidos" [value]="fluido.id">{{fluido.nome}}</option>
+          </select>
+        </div>
+        <div class="form-group col-md-12">
+          <input type="text" class="form-control" [(ngModel)]="descricao_fluido1"
+          [ngModelOptions]="{standalone: true}" placeholder="Descrição 1">
+        </div>
+        <div class="form-group col-md-12">
+          <input type="text" class="form-control" [(ngModel)]="descricao_fluido2"
+          [ngModelOptions]="{standalone: true}" placeholder="Descrição 2">
+        </div>
+        <div class="form-group col-md-12">
+          <input type="text" class="form-control" [(ngModel)]="descricao_fluido3"
+          [ngModelOptions]="{standalone: true}" placeholder="Descrição 3">
+        </div>
+        <div class="form-group col-sm-12">
+          <input type="text" class="form-control" [(ngModel)]="litros_fluido"
+          [ngModelOptions]="{standalone: true}" name="litros_fluido" placeholder="Litros">
+        </div>
+        <div class="form-group col-sm-12">
+          <textarea class="form-control" rows="3" [(ngModel)]="observacao_fluido"
+          [ngModelOptions]="{standalone: true}" placeholder="Observação"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-light" (click)="activeModal.dismiss('cancel click')">Cancelar</button>
+      <button type="button" (click)="edit(id, descricao_fluido1, descricao_fluido2, descricao_fluido3,
+        litros_fluido, observacao_fluido)" class="btn btn-danger" ngbAutofocus>Editar</button>
+    </div>
+  </form>
+  `
+})
+export class ModalManualFluidoEditComponent {
+  @Input() arrFluidos;
+  @Input() id;
+  @Input() nome;
+  @Input() descricao_fluido1;
+  @Input() descricao_fluido2;
+  @Input() descricao_fluido3;
+  @Input() litros_fluido;
+  @Input() observacao_fluido;
+  txtFluidoNome: any;
+
+  constructor(public activeModal: NgbActiveModal) {}
+
+  edit(id, descricao_fluido1, descricao_fluido2, descricao_fluido3, litros_fluido, observacao_fluido) {
+
+    for (let i = 0; i < this.arrFluidos.length; i++) {
+      if (this.arrFluidos[i]['id'] === parseInt(id, 10)) {
+        this.txtFluidoNome = this.arrFluidos[i]['nome'];
+      }
+    }
+
+    const data = {
+      id: id,
+      nome: this.txtFluidoNome,
+      descricao1: descricao_fluido1,
+      descricao2: descricao_fluido2,
+      descricao3: descricao_fluido3,
+      litros: litros_fluido,
+      observacao: observacao_fluido
+    };
+    this.activeModal.close(data);
+  }
+}
 
 @Component({
   selector: 'app-manual',
@@ -52,10 +133,13 @@ export class ManualComponent implements OnInit {
   removeItemId: any;
   modalReference: any;
   filteredOptions: Observable<string[]>;
-  descricao_fluido: any;
+  descricao_fluido1: any;
+  descricao_fluido2: any;
+  descricao_fluido3: any;
   litros_fluido: any;
   observacao_fluido: any;
   tipo_fluido: any = 0;
+  index_fluido: any;
 
   constructor(private Veiculo: VeiculoService,
     private notify: SnotifyService,
@@ -80,7 +164,8 @@ export class ManualComponent implements OnInit {
       inputRodaRaio: new FormControl(''),
       inputPneuMedida: new FormControl(''),
       inputCalibragemPsi: new FormControl(''),
-      observacaoInfo: new FormControl('')
+      observacaoInfo: new FormControl(''),
+      observacaoGeralFluido: new FormControl('')
     });
   }
 
@@ -129,7 +214,9 @@ export class ManualComponent implements OnInit {
 
   resetFormFluido() {
     this.tipo_fluido = 0;
-    this.descricao_fluido = '';
+    this.descricao_fluido1 = '';
+    this.descricao_fluido2 = '';
+    this.descricao_fluido3 = '';
     this.litros_fluido = '';
     this.observacao_fluido = '';
   }
@@ -145,12 +232,36 @@ export class ManualComponent implements OnInit {
     this.arrFluidosAdd.push({
       id: Number(this.tipo_fluido),
       nome: this.txtFluidoNome,
-      descricao: this.descricao_fluido,
+      descricao1: this.descricao_fluido1,
+      descricao2: this.descricao_fluido2,
+      descricao3: this.descricao_fluido3,
       litros: this.litros_fluido,
       observacao: this.observacao_fluido
     });
     this.resetFormFluido();
     this.modalService.dismissAll();
+  }
+
+  editarFluido(fluido, index) {
+    const modalRef = this.modalService.open(ModalManualFluidoEditComponent);
+    modalRef.componentInstance.arrFluidos = this.arrFluidos;
+    modalRef.componentInstance.id = fluido.id;
+    modalRef.componentInstance.nome = fluido.nome;
+    modalRef.componentInstance.descricao_fluido1 = fluido.descricao1;
+    modalRef.componentInstance.descricao_fluido2 = fluido.descricao2;
+    modalRef.componentInstance.descricao_fluido3 = fluido.descricao3;
+    modalRef.componentInstance.litros_fluido = fluido.litros;
+    modalRef.componentInstance.observacao_fluido = fluido.observacao;
+    this.index_fluido = index;
+
+    modalRef.result.then((result) => {
+      this.editFluido(result, this.index_fluido);
+    }).catch((error) => {
+    });
+  }
+
+  editFluido(data, index) {
+    this.arrFluidosAdd[index] = data;
   }
 
   removeFluido(fluido) {
@@ -413,6 +524,7 @@ export class ManualComponent implements OnInit {
       inputPneuMedida: this.manualForm.value.inputPneuMedida,
       inputCalibragemPsi: this.manualForm.value.inputCalibragemPsi,
       observacaoInfo: this.manualForm.value.observacaoInfo,
+      observacaoGeralFluido: this.manualForm.value.observacaoGeralFluido,
       itens: arr,
       fluidos: this.arrFluidosAdd
     };

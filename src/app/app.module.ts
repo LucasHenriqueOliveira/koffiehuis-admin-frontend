@@ -22,7 +22,7 @@ import { CrawlerComponent } from './components/crawler/crawler.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CrawlerService } from './services/crawler.service';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { ManualComponent } from './components/manual/manual.component';
+import { ManualComponent, ModalManualFluidoEditComponent } from './components/manual/manual.component';
 
 import { registerLocaleData } from '@angular/common';
 import ptBr from '@angular/common/locales/pt';
@@ -85,7 +85,8 @@ registerLocaleData(ptBr);
     TituloFixoComponent,
     ModalTituloFixoEditComponent,
     FluidoComponent,
-    ModalFluidoEditComponent
+    ModalFluidoEditComponent,
+    ModalManualFluidoEditComponent
   ],
   imports: [
     BrowserModule,
@@ -131,7 +132,8 @@ registerLocaleData(ptBr);
     ModalTituloEditComponent,
     ModalManualFixoItemEditComponent,
     ModalTituloFixoEditComponent,
-    ModalFluidoEditComponent
+    ModalFluidoEditComponent,
+    ModalManualFluidoEditComponent
   ]
 })
 export class AppModule { }
