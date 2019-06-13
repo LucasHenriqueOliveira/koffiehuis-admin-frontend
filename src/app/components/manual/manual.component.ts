@@ -158,12 +158,14 @@ export class ManualComponent implements OnInit {
       selectedVersao: new FormControl(0),
       selectedTitulo: new FormControl(0),
       selectedCabine: new FormControl(0),
-      selectedCarga: new FormControl(0),
-      selectedParte: new FormControl(0),
       observacao: new FormControl(''),
       inputRodaRaio: new FormControl(''),
       inputPneuMedida: new FormControl(''),
-      inputCalibragemPsi: new FormControl(''),
+      inputNormalTraseiraCalibragemPsi: new FormControl(''),
+      inputNormalDianteiraCalibragemPsi: new FormControl(''),
+      inputCompletaTraseiraCalibragemPsi: new FormControl(''),
+      inputCompletaDianteiraCalibragemPsi: new FormControl(''),
+      inputEstepeCalibragemPsi: new FormControl(''),
       observacaoInfo: new FormControl(''),
       observacaoGeralFluido: new FormControl('')
     });
@@ -518,16 +520,20 @@ export class ManualComponent implements OnInit {
       selectedVersao: this.manualForm.value.selectedVersao,
       observacao: this.manualForm.value.observacao,
       selectedCabine: this.manualForm.value.selectedCabine,
-      selectedCarga: this.manualForm.value.selectedCarga,
-      selectedParte: this.manualForm.value.selectedParte,
       inputRodaRaio: this.manualForm.value.inputRodaRaio,
       inputPneuMedida: this.manualForm.value.inputPneuMedida,
-      inputCalibragemPsi: this.manualForm.value.inputCalibragemPsi,
+      inputNormalTraseiraCalibragemPsi: this.manualForm.value.inputNormalTraseiraCalibragemPsi,
+      inputNormalDianteiraCalibragemPsi: this.manualForm.value.inputNormalDianteiraCalibragemPsi,
+      inputCompletaTraseiraCalibragemPsi: this.manualForm.value.inputCompletaTraseiraCalibragemPsi,
+      inputCompletaDianteiraCalibragemPsi: this.manualForm.value.inputCompletaDianteiraCalibragemPsi,
+      inputEstepeCalibragemPsi: this.manualForm.value.inputEstepeCalibragemPsi,
       observacaoInfo: this.manualForm.value.observacaoInfo,
       observacaoGeralFluido: this.manualForm.value.observacaoGeralFluido,
       itens: arr,
       fluidos: this.arrFluidosAdd
     };
+
+    console.log(data);
 
     this.loading = true;
     this.Manual.save(data).subscribe(

@@ -20,11 +20,56 @@
 		<li><b>Versão:</b> {{versao}}</li>
 		<br />
 		<li *ngIf="cabine"><b>Cabine:</b> {{cabine}}</li>
-		<li *ngIf="carga"><b>Carga:</b> {{carga}}</li>
-		<li *ngIf="parte"><b>Parte:</b> {{parte}}</li>
 		<li *ngIf="roda_raio"><b>Raio da Roda:</b> {{roda_raio}}</li>
 		<li *ngIf="pneu_medida"><b>Medida Pneu:</b> {{pneu_medida}}</li>
-		<li *ngIf="calibragem_psi"><b>Calibragem psi:</b> {{calibragem_psi}}</li>
+		<br />
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col" class="text-center no-border">Carga</th>
+					<th scope="col" class="text-center no-border">Local</th>
+					<th scope="col" class="text-center no-border">Calibragem</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td scope="row" class="text-center">Normal</td>
+					<td scope="row" class="text-center">Traseira</td>
+					<td scope="row" class="text-center">
+						{{normal_traseira_calibragem_psi}}
+					</td>
+				</tr>
+				<tr>
+					<td scope="row" class="text-center">Normal</td>
+					<td scope="row" class="text-center">Dianteira</td>
+					<td scope="row" class="text-center">
+						{{normal_dianteira_calibragem_psi}}
+					</td>
+				</tr>
+				<tr>
+					<td scope="row" class="text-center">Completa</td>
+					<td scope="row" class="text-center">Traseira</td>
+					<td scope="row" class="text-center">
+						{{completa_traseira_calibragem_psi}}
+					</td>
+				</tr>
+				<tr>
+					<td scope="row" class="text-center">Completa</td>
+					<td scope="row" class="text-center">Dianteira</td>
+					<td scope="row" class="text-center">
+						{{completa_dianteira_calibragem_psi}}
+					</td>
+				</tr>
+				<tr>
+					<td scope="row" class="text-center"></td>
+					<td scope="row" class="text-center">Estepe</td>
+					<td scope="row" class="text-center">
+						{{estepe_calibragem_psi}}
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		
 		<li *ngIf="observacao_info"><b>Observação:</b> {{observacao_info}}</li>
 		<br *ngIf="arrFluidos.length" />
 		<table class="table" *ngIf="arrFluidos.length">
@@ -32,14 +77,18 @@
 				<tr>
 					<th scope="col">Nome</th>
 					<th scope="col">Descrição</th>
-					<th scope="col">Litros</th>
-					<th scope="col">Observação</th>
+					<th scope="col" class="text-center">Litros</th>
+					<th scope="col" class="text-center">Observação</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr *ngFor="let fluido of arrFluidos">
 					<td>{{fluido.nome}}</td>
-					<td>{{fluido.descricao}}</td>
+					<td>
+						<span *ngIf="fluido.descricao1">{{fluido.descricao1}}<br /></span>
+						<span *ngIf="fluido.descricao2">{{fluido.descricao2}}<br /></span>
+						<span *ngIf="fluido.descricao3">{{fluido.descricao3}}</span>
+					</td>
 					<td class="text-center">{{fluido.litros}}</td>
 					<td class="text-center">
 						<ng-template #popObservacao>{{fluido.observacao}}</ng-template>
@@ -49,6 +98,7 @@
 				</tr>
 			</tbody>
 		</table>
+		<li *ngIf="observacao_fluido"><b>Observação:</b> {{observacao_fluido}}</li>
 	</ul>
 </fieldset>
 <table class="table table-bordered no-border">

@@ -32,10 +32,10 @@
 		</div>
 	</fieldset>
 	<fieldset class="fieldset">
-		<legend>Mais informações</legend>
+		<legend>Rodas e Pneus</legend>
 		<p>Acrescente as informações do veículo</p>
 		<div class="form-row">
-			<div class="form-group col-md-12">
+			<div class="form-group col-md-4">
 				<select id="inputCabine" class="form-control" formControlName="selectedCabine">
 					<option selected value="0">Selecione a cabine</option>
 					<option value="Sedan">Sedan</option>
@@ -50,29 +50,60 @@
 					<option value="Outros">Outros</option>
 				</select>
 			</div>
-			<div class="form-group col-md-6">
-				<select id="inputCarga" class="form-control" formControlName="selectedCarga">
-					<option selected value="0">Selecione a carga</option>
-					<option value="Normal">Normal</option>
-					<option value="Completa">Completa</option>
-				</select>
-			</div>
-			<div class="form-group col-md-6">
-				<select id="inputParte" class="form-control" formControlName="selectedParte">
-					<option selected value="0">Selecione a parte</option>
-					<option value="Traseira">Traseira</option>
-					<option value="Dianteira">Dianteira</option>
-					<option value="Estepe">Estepe</option>
-				</select>
-			</div>
 			<div class="form-group col-md-4">
 				<input type="text" class="form-control" id="inputRodaRaio" placeholder="Raio Roda" formControlName="inputRodaRaio">
 			</div>
 			<div class="form-group col-md-4">
 				<input type="text" class="form-control" id="inputPneuMedida" placeholder="Medida Pneu" formControlName="inputPneuMedida">
 			</div>
-			<div class="form-group col-md-4">
-				<input type="text" class="form-control" id="inputCalibragemPsi" placeholder="Calibragem psi" formControlName="inputCalibragemPsi">
+			<div class="form-group col-md-6">
+				
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col" class="text-center no-border">Carga</th>
+							<th scope="col" class="text-center no-border">Local</th>
+							<th scope="col" class="no-border"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td scope="row" class="text-center">Normal</td>
+							<td scope="row" class="text-center">Traseira</td>
+							<td scope="row">
+								<input type="text" class="form-control" placeholder="Calibragem psi" formControlName="inputNormalTraseiraCalibragemPsi">
+							</td>
+						</tr>
+						<tr>
+							<td scope="row" class="text-center">Normal</td>
+							<td scope="row" class="text-center">Dianteira</td>
+							<td scope="row">
+								<input type="text" class="form-control" placeholder="Calibragem psi" formControlName="inputNormalDianteiraCalibragemPsi">
+							</td>
+						</tr>
+						<tr>
+							<td scope="row" class="text-center">Completa</td>
+							<td scope="row" class="text-center">Traseira</td>
+							<td scope="row">
+								<input type="text" class="form-control" placeholder="Calibragem psi" formControlName="inputCompletaTraseiraCalibragemPsi">
+							</td>
+						</tr>
+						<tr>
+							<td scope="row" class="text-center">Completa</td>
+							<td scope="row" class="text-center">Dianteira</td>
+							<td scope="row">
+								<input type="text" class="form-control" placeholder="Calibragem psi" formControlName="inputCompletaDianteiraCalibragemPsi">
+							</td>
+						</tr>
+						<tr>
+							<td scope="row" class="text-center"></td>
+							<td scope="row" class="text-center">Estepe</td>
+							<td scope="row">
+								<input type="text" class="form-control" placeholder="Calibragem psi" formControlName="inputEstepeCalibragemPsi">
+							</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 			<div class="form-group col-md-12">
 				<textarea class="form-control" rows="3" id="observacaoInfo" placeholder="Observação" formControlName="observacaoInfo"></textarea>

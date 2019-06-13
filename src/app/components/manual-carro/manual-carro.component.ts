@@ -29,6 +29,7 @@ export class ManualCarroComponent implements OnInit {
   modelo: any;
   versao: any;
   observacao: any;
+  observacao_fluido: any;
   id: any;
   selectedTitulo: any;
   itemForm: any;
@@ -39,11 +40,13 @@ export class ManualCarroComponent implements OnInit {
   meses_severo: any;
   observacao_severo: any;
   cabine: any;
-  carga: any;
-  parte: any;
   roda_raio: any;
   pneu_medida: any;
-  calibragem_psi: any;
+  normal_dianteira_calibragem_psi: any;
+  normal_traseira_calibragem_psi: any;
+  completa_dianteira_calibragem_psi: any;
+  completa_traseira_calibragem_psi: any;
+  estepe_calibragem_psi: any;
   observacao_info: any;
 
   constructor(private route: ActivatedRoute,
@@ -80,6 +83,7 @@ export class ManualCarroComponent implements OnInit {
           this.arrItemsFixo = result['manual_fixo'];
           this.carroInfo(result['manual_info'], result['manual_fluido']);
           this.observacao = result['observacao'];
+          this.observacao_fluido = result['observacao_fluido'];
           this.loading = false;
         },
         error => {
@@ -96,11 +100,13 @@ export class ManualCarroComponent implements OnInit {
 
   carroInfo(info, fluidos) {
     this.cabine = info['cabine'];
-    this.carga = info['carga'];
-    this.parte = info['parte'];
     this.roda_raio = info['roda_raio'];
     this.pneu_medida = info['pneu_medida'];
-    this.calibragem_psi = info['calibragem_psi'];
+    this.normal_dianteira_calibragem_psi = info['normal_dianteira_calibragem_psi'];
+    this.normal_traseira_calibragem_psi = info['normal_traseira_calibragem_psi'];
+    this.completa_dianteira_calibragem_psi = info['completa_dianteira_calibragem_psi'];
+    this.completa_traseira_calibragem_psi = info['completa_traseira_calibragem_psi'];
+    this.estepe_calibragem_psi = info['estepe_calibragem_psi'];
     this.observacao_info = info['observacao_geral'];
     this.arrFluidos = fluidos;
   }
