@@ -533,8 +533,6 @@ export class ManualComponent implements OnInit {
       fluidos: this.arrFluidosAdd
     };
 
-    console.log(data);
-
     this.loading = true;
     this.Manual.save(data).subscribe(
       result => {

@@ -4,24 +4,39 @@
 			<i class="fa fa-chevron-left" aria-hidden="true"></i> Voltar
 		</button>
 	</div>
-	<div class="col-sm text-right">
-		<button type="button" class="btn btn-primary" (click)="openItem(contentItem)">
-			<i class="fa fa-plus" aria-hidden="true"></i> Adicionar Item
-		</button>
-	</div>
 </div>
 <br />
 <fieldset class="fieldset">
-	<legend>Dados do Veículo</legend>
+	<legend>Veículo</legend>
 	<ul>
 		<li><b>Marca:</b> {{marca}}</li>
 		<li><b>Modelo:</b> {{modelo}}</li>
 		<li><b>Ano:</b> {{ano}}</li>
 		<li><b>Versão:</b> {{versao}}</li>
+	</ul>
+</fieldset>
+<fieldset class="fieldset">
+	<legend>Rodas e Pneus</legend>
+		<ul class="padding-left-0">
+		<li class="form-row">
+			<div class="col-sm text-right">
+				<button type="button" class="btn btn-sm btn-primary" (click)="openRodas(contentRodas)">
+					<i class="fa fa-pencil" aria-hidden="true"></i> Alterar Rodas e Pneus
+				</button>
+			</div>
+		</li>
 		<br />
-		<li *ngIf="cabine"><b>Cabine:</b> {{cabine}}</li>
-		<li *ngIf="roda_raio"><b>Raio da Roda:</b> {{roda_raio}}</li>
-		<li *ngIf="pneu_medida"><b>Medida Pneu:</b> {{pneu_medida}}</li>
+		<li class="form-row">
+			<div class="col-sm-4 text-center">
+				<span><b>Cabine:</b> {{cabine}}</span>
+			</div>
+			<div class="col-sm-4 text-center">
+				<span><b>Raio:</b> {{roda_raio}}</span>
+			</div>
+			<div class="col-sm-4 text-center">
+				<span><b>Medida:</b> {{pneu_medida}}</span>
+			</div>
+		</li>
 		<br />
 		<table class="table">
 			<thead>
@@ -69,8 +84,25 @@
 				</tr>
 			</tbody>
 		</table>
-		
-		<li *ngIf="observacao_info"><b>Observação:</b> {{observacao_info}}</li>
+		<li *ngIf="observacao_info"><b>Observação</b> &nbsp;
+			<a (click)="openObservacao(editarObservacao, observacao_info, 'pneus')">
+				<i class="fa fa-pencil" aria-hidden="true"></i>
+			</a>
+			<br />
+			{{observacao_info}}
+		</li>
+	</ul>
+</fieldset>
+<fieldset class="fieldset">
+	<legend>Fluidos</legend>
+	<ul class="padding-left-0">
+		<li *ngIf="arrFluidos.length">
+			<div class="col-sm text-right">
+				<button type="button" class="btn btn-sm btn-primary" (click)="openFluido(contentFluido)">
+					<i class="fa fa-plus" aria-hidden="true"></i> Adicionar Fluido
+				</button>
+			</div>
+		</li>
 		<br *ngIf="arrFluidos.length" />
 		<table class="table" *ngIf="arrFluidos.length">
 			<thead>
@@ -78,7 +110,7 @@
 					<th scope="col">Nome</th>
 					<th scope="col">Descrição</th>
 					<th scope="col" class="text-center">Litros</th>
-					<th scope="col" class="text-center">Observação</th>
+					<th scope="col" class="text-center">Ação</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -93,96 +125,157 @@
 					<td class="text-center">
 						<ng-template #popObservacao>{{fluido.observacao}}</ng-template>
 						<i class="fa fa-commenting-o" *ngIf="fluido.observacao" aria-hidden="true" [ngbPopover]="popObservacao"
-						triggers="mouseenter:mouseleave" popoverTitle="Observação"></i>
+						triggers="mouseenter:mouseleave" popoverTitle="Observação"></i> &nbsp;
+						<a (click)="editarFluido(fluido)">
+							<i class="fa fa-pencil" aria-hidden="true"></i>
+						</a> &nbsp;
+						<a (click)="openRemoveFluido(deleteFluido, fluido.id_manual_carro_fluido)">
+							<i class="fa fa-trash" aria-hidden="true"></i>
+						</a>
 					</td>
 				</tr>
 			</tbody>
 		</table>
-		<li *ngIf="observacao_fluido"><b>Observação:</b> {{observacao_fluido}}</li>
+		<li *ngIf="observacao_fluido"><b>Observação</b> &nbsp;
+			<a (click)="openObservacao(editarObservacao, observacao_fluido, 'fluido')">
+				<i class="fa fa-pencil" aria-hidden="true"></i>
+			</a>
+			<br />
+			{{observacao_fluido}}
+		</li>
 	</ul>
 </fieldset>
-<table class="table table-bordered no-border">
-	<thead>
-		<tr>
-			<th scope="col" class="no-border"></th>
-			<th scope="col" colspan="3" class="text-center">Ideal</th>
-			<th scope="col" colspan="3" class="text-center">Severo</th>
-			<td class="no-border"></td>
-		</tr>
-		<tr>
-			<td scope="col" class="no-border"></td>
-			<th scope="col" class="text-center">Km</th>
-			<th scope="col" class="text-center">Meses</th>
-			<th scope="col" class="text-center">Obs</th>
-			<th scope="col" class="text-center">Km</th>
-			<th scope="col" class="text-center">Meses</th>
-			<th scope="col" class="text-center">Obs</th>
-			<th scope="col" class="text-center">Ação</th>
-		</tr>
-	</thead>
-	<tbody *ngFor="let options of arrItems">
-		<tr>
-			<td scope="row" colspan="8" class="titulo" *ngIf="options.items.length">{{options.txtTitulo}}</td>
-		</tr>
-		<tr *ngFor="let item of options.items">
-			<td scope="row" width="25%">{{item.item}}</td>
-			<td scope="row">
-				<input type="text" class="form-control" size="8" id="km_ideal_{{item.id}}" value="{{item.km_ideal}}">
-			</td>
-			<td scope="row" class="text-center">
-				<input type="text" class="form-control" size="4" id="meses_ideal_{{item.id}}" value="{{item.meses_ideal}}">
-			</td>
-			<td scope="row" class="text-center">
-				<textarea class="form-control" rows="3" id="observacao_ideal_{{item.id}}">{{item.observacao_ideal}}</textarea>
-			</td>
-			<td scope="row" class="text-center">
-				<input type="text" class="form-control" size="8" id="km_severo_{{item.id}}" value="{{item.km_severo}}">
-			</td>
-			<td scope="row" class="text-center">
-				<input type="text" class="form-control" size="4" id="meses_severo_{{item.id}}" value="{{item.meses_severo}}">
-			</td>
-			<td scope="row" class="text-center">
-				<textarea class="form-control" rows="3" id="observacao_severo_{{item.id}}">{{item.observacao_severo}}</textarea>
-			</td>
-			<td scope="row" class="text-center action-manual">
-				<a (click)="openRemove(contentDelete, item.id_manual_carro)">
-					<i class="fa fa-trash" aria-hidden="true"></i>
-				</a>
-			</td>
-		</tr>
-	</tbody>
-	<tbody *ngFor="let options of arrItemsFixo">
-		<tr>
-			<td scope="row" colspan="7" class="titulo" *ngIf="options.items.length">{{options.txtTitulo}}</td>
-		</tr>
-		<tr *ngFor="let item of options.items">
-			<td scope="row">{{item.item}}</td>
-			<td scope="row" class="text-center">{{item.km_ideal}}</td>
-			<td scope="row" class="text-center">{{item.tempo_ideal}}</td>
-			<td scope="row" class="text-center">
-				<ng-template #popObservacaoIdeal>{{item.observacao_ideal}}</ng-template>
-				<i class="fa fa-commenting-o" *ngIf="item.observacao_ideal" aria-hidden="true" [ngbPopover]="popObservacaoIdeal"
-				triggers="mouseenter:mouseleave" popoverTitle="Observação"></i>
-			</td>
-			<td scope="row" class="text-center">{{item.km_severo}}</td>
-			<td scope="row" class="text-center">{{item.tempo_severo}}</td>
-			<td scope="row" class="text-center">
-				<ng-template #popObservacaoSevero>{{item.observacao_severo}}</ng-template>
-				<i class="fa fa-commenting-o" *ngIf="item.observacao_severo" aria-hidden="true" [ngbPopover]="popObservacaoSevero"
-				triggers="mouseenter:mouseleave" popoverTitle="Observação"></i>
-			</td>
-		</tr>
-	</tbody>
-</table>
-
-<label for="observacao">Observação:</label>
-<textarea class="form-control" rows="5" id="observacao">{{observacao}}</textarea>
+<fieldset class="fieldset">
+	<legend>Itens</legend>
+	<ul class="padding-left-0">
+		<div class="col-sm text-right">
+			<button type="button" class="btn btn-sm btn-primary" (click)="openItem(contentItem)">
+				<i class="fa fa-plus" aria-hidden="true"></i> Adicionar Item
+			</button>
+		</div>
+		<br />
+		<table class="table table-bordered no-border">
+			<thead>
+				<tr>
+					<th scope="col" class="no-border"></th>
+					<th scope="col" colspan="3" class="text-center">Ideal</th>
+					<th scope="col" colspan="3" class="text-center">Severo</th>
+					<td class="no-border"></td>
+				</tr>
+				<tr>
+					<td scope="col" class="no-border"></td>
+					<th scope="col" class="text-center">Km</th>
+					<th scope="col" class="text-center">Meses</th>
+					<th scope="col" class="text-center">Obs</th>
+					<th scope="col" class="text-center">Km</th>
+					<th scope="col" class="text-center">Meses</th>
+					<th scope="col" class="text-center">Obs</th>
+					<th scope="col" class="text-center">Ação</th>
+				</tr>
+			</thead>
+			<tbody *ngFor="let options of arrItems">
+				<tr>
+					<td scope="row" colspan="8" class="titulo" *ngIf="options.items.length">{{options.txtTitulo}}</td>
+				</tr>
+				<tr *ngFor="let item of options.items">
+					<td scope="row" width="25%">{{item.item}}</td>
+					<td scope="row">
+						<span *ngIf="item.km_ideal">{{item.km_ideal}}</span>
+						<span *ngIf="!item.km_ideal">-</span>
+						<!--<input type="text" class="form-control" size="8" id="km_ideal_{{item.id}}" value="{{item.km_ideal}}">-->
+					</td>
+					<td scope="row" class="text-center">
+						<span *ngIf="item.meses_ideal">{{item.meses_ideal}}</span>
+						<span *ngIf="!item.meses_ideal">-</span>
+						<!--<input type="text" class="form-control" size="4" id="meses_ideal_{{item.id}}" value="{{item.meses_ideal}}">-->
+					</td>
+					<td scope="row" class="text-center">
+						<ng-template #popObservacaoIdeal>{{item.observacao_ideal}}</ng-template>
+						<i class="fa fa-commenting-o" *ngIf="item.observacao_ideal" aria-hidden="true" [ngbPopover]="popObservacaoIdeal"
+						triggers="mouseenter:mouseleave" popoverTitle="Observação"></i>
+						<span *ngIf="!item.observacao_ideal">-</span>
+						<!--<textarea class="form-control" rows="3" id="observacao_ideal_{{item.id}}">{{item.observacao_ideal}}</textarea>-->
+					</td>
+					<td scope="row" class="text-center">
+						<span *ngIf="item.km_severo">{{item.km_severo}}</span>
+						<span *ngIf="!item.km_severo">-</span>
+						<!--<input type="text" class="form-control" size="8" id="km_severo_{{item.id}}" value="{{item.km_severo}}">-->
+					</td>
+					<td scope="row" class="text-center">
+						<span *ngIf="item.meses_severo">{{item.meses_severo}}</span>
+						<span *ngIf="!item.meses_severo">-</span>
+						<!--<input type="text" class="form-control" size="4" id="meses_severo_{{item.id}}" value="{{item.meses_severo}}">-->
+					</td>
+					<td scope="row" class="text-center">
+						<ng-template #popObservacaoSevero>{{item.observacao_severo}}</ng-template>
+						<i class="fa fa-commenting-o" *ngIf="item.observacao_severo" aria-hidden="true" [ngbPopover]="popObservacaoSevero"
+						triggers="mouseenter:mouseleave" popoverTitle="Observação"></i>
+						<span *ngIf="!item.observacao_severo">-</span>
+						<!--<textarea class="form-control" rows="3" id="observacao_severo_{{item.id}}">{{item.observacao_severo}}</textarea>-->
+					</td>
+					<td scope="row" class="text-center action-manual">
+						<a (click)="editarItem(contentEditItem, item)">
+							<i class="fa fa-pencil" aria-hidden="true"></i>
+						</a> &nbsp;
+						<a (click)="openRemove(contentDelete, item.id_manual_carro)">
+							<i class="fa fa-trash" aria-hidden="true"></i>
+						</a>
+					</td>
+				</tr>
+			</tbody>
+			<tbody *ngFor="let options of arrItemsFixo">
+				<tr>
+					<td scope="row" colspan="8" class="titulo" *ngIf="options.items.length">{{options.txtTitulo}}</td>
+				</tr>
+				<tr *ngFor="let item of options.items">
+					<td scope="row">{{item.item}}</td>
+					<td scope="row" class="text-center">
+						{{item.km_ideal}}
+						<span *ngIf="!item.km_ideal">-</span>
+					</td>
+					<td scope="row" class="text-center">
+						{{item.tempo_ideal}}
+						<span *ngIf="!item.tempo_ideal">-</span>
+					</td>
+					<td scope="row" class="text-center">
+						<ng-template #popObservacaoIdeal>{{item.observacao_ideal}}</ng-template>
+						<i class="fa fa-commenting-o" *ngIf="item.observacao_ideal" aria-hidden="true" [ngbPopover]="popObservacaoIdeal"
+						triggers="mouseenter:mouseleave" popoverTitle="Observação"></i>
+						<span *ngIf="!item.observacao_ideal">-</span>
+					</td>
+					<td scope="row" class="text-center">
+						{{item.km_severo}}
+						<span *ngIf="!item.km_severo">-</span>
+					</td>
+					<td scope="row" class="text-center">
+						{{item.tempo_severo}}
+						<span *ngIf="!item.tempo_severo">-</span>
+					</td>
+					<td scope="row" class="text-center">
+						<ng-template #popObservacaoSevero>{{item.observacao_severo}}</ng-template>
+						<i class="fa fa-commenting-o" *ngIf="item.observacao_severo" aria-hidden="true" [ngbPopover]="popObservacaoSevero"
+						triggers="mouseenter:mouseleave" popoverTitle="Observação"></i>
+						<span *ngIf="!item.observacao_severo">-</span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<label for="observacao">Observação:</label> &nbsp;
+		<a (click)="openObservacao(editarObservacao, observacao, 'geral')">
+			<i class="fa fa-pencil" aria-hidden="true"></i>
+		</a>
+		<br />
+		{{observacao}}
+	</ul>
+</fieldset>
 <br />
+<!--
 <div class="form-row">
 	<div class="form-group col-md-12 text-center">
 		<button class="btn btn-primary btn-lg" (click)="edit()">Alterar</button>
 	</div>
 </div>
+-->
 
 <div [ngClass]="{'loading': loading}"></div>
 
@@ -213,7 +306,7 @@
 		<div class="modal-body">
 			<div class="form-row">
 				<div class="form-group col-sm-12">
-					<select id="inputTitulo" class="form-control" formControlName="selectedTitulo" (change)="onChangeTitulo()">
+					<select id="inputTitulo" ngbAutofocus class="form-control" formControlName="selectedTitulo" (change)="onChangeTitulo()">
 						<option selected value="0">Selecione o título</option>
 						<option *ngFor="let titulo of arrTitulos" [value]="titulo.id">{{titulo.titulo}}</option>
 					</select>
@@ -228,7 +321,7 @@
 			<p>Ideal <br /></p>
 			<div class="form-row">
 				<div class="form-group col-sm-6">
-					<input type="number" class="form-control" ngbAutofocus [(ngModel)]="km_ideal" [ngModelOptions]="{standalone: true}" name="km_ideal" value="" placeholder="Km">
+					<input type="number" class="form-control" [(ngModel)]="km_ideal" [ngModelOptions]="{standalone: true}" name="km_ideal" value="" placeholder="Km">
 				</div>
 				<div class="form-group col-sm-6">
 					<input type="number" class="form-control" [(ngModel)]="meses_ideal" [ngModelOptions]="{standalone: true}" name="meses_ideal" value="" placeholder="Meses">
@@ -255,4 +348,199 @@
 			<button type="button" class="btn btn-danger" (click)="addItem(km_ideal, meses_ideal, observacao_ideal, km_severo, meses_severo, observacao_severo)">Adicionar</button>
 		</div>
 	</form>
+</ng-template>
+
+<ng-template #contentEditItem let-modal>
+	<form [formGroup]="itemForm">
+		<div class="modal-header">
+			<h4 class="modal-title">Editar Item</h4>
+			<button type="button" class="close" aria-label="Close" (click)="modal.dismiss('cancel click')">
+			<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="modal-body">
+			<p>Ideal <br /></p>
+			<div class="form-row">
+				<div class="form-group col-sm-6">
+					<input type="number" class="form-control" ngbAutofocus [(ngModel)]="km_ideal_edit" [ngModelOptions]="{standalone: true}" name="km_ideal" value="" placeholder="Km">
+				</div>
+				<div class="form-group col-sm-6">
+					<input type="number" class="form-control" [(ngModel)]="meses_ideal_edit" [ngModelOptions]="{standalone: true}" name="meses_ideal" value="" placeholder="Meses">
+				</div>
+				<div class="form-group col-sm-12">
+					<textarea class="form-control" rows="3" [(ngModel)]="observacao_ideal_edit" [ngModelOptions]="{standalone: true}" placeholder="Observação"></textarea>
+				</div>
+			</div>
+			<p>Severo <br /></p>
+			<div class="form-row">
+				<div class="form-group col-sm-6">
+					<input type="number" class="form-control" [(ngModel)]="km_severo_edit" [ngModelOptions]="{standalone: true}" name="km_severo" value="" placeholder="Km">
+				</div>
+				<div class="form-group col-sm-6">
+					<input type="number" class="form-control" [(ngModel)]="meses_severo_edit" [ngModelOptions]="{standalone: true}" name="meses_severo" value="" placeholder="Meses">
+				</div>
+				<div class="form-group col-sm-12">
+					<textarea class="form-control" rows="3" [(ngModel)]="observacao_severo_edit" [ngModelOptions]="{standalone: true}" placeholder="Observação"></textarea>
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-light" (click)="modal.dismiss('cancel click')">Cancelar</button>
+			<button type="button" class="btn btn-danger" (click)="editItem()">Salvar</button>
+		</div>
+	</form>
+</ng-template>
+
+<ng-template #deleteFluido let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title">Deletar fluido</h4>
+		<button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+		<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	<div class="modal-body">
+		<p>Você deseja apagar o fluido? <br />
+			<b>Essa operação não poderá ser desfeita.</b></p>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-light" (click)="modal.dismiss('cancel click')">Não</button>
+		<button type="button" class="btn btn-danger" ngbAutofocus (click)="removeFluido()">Sim</button>
+	</div>
+</ng-template>
+
+<ng-template #contentFluido let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title">Adicionar o fluido</h4>
+		<button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+		<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	<div class="modal-body">
+		<div class="form-group col-md-12">
+			<select id="inputFluido" ngbAutofocus class="form-control" [(ngModel)]="tipo_fluido" [ngModelOptions]="{standalone: true}">
+				<option selected value="0">Selecione o fluido</option>
+				<option *ngFor="let fluido of arrFluidosGeral" [value]="fluido.id">{{fluido.nome}}</option>
+			</select>
+		</div>
+		<div class="form-group col-sm-12">
+			<input type="text" class="form-control" [(ngModel)]="descricao_fluido1" [ngModelOptions]="{standalone: true}" name="descricao_fluido1" value="" placeholder="Descrição 1">
+		</div>
+		<div class="form-group col-sm-12">
+			<input type="text" class="form-control" [(ngModel)]="descricao_fluido2" [ngModelOptions]="{standalone: true}" name="descricao_fluido2" value="" placeholder="Descrição 2">
+		</div>
+		<div class="form-group col-sm-12">
+			<input type="text" class="form-control" [(ngModel)]="descricao_fluido3" [ngModelOptions]="{standalone: true}" name="descricao_fluido3" value="" placeholder="Descrição 3">
+		</div>
+		<div class="form-group col-sm-12">
+			<input type="text" class="form-control" [(ngModel)]="litros_fluido" [ngModelOptions]="{standalone: true}" name="litros_fluido" value="" placeholder="Litros">
+		</div>
+		<div class="form-group col-sm-12">
+			<textarea class="form-control" rows="3" [(ngModel)]="observacao_fluido_unit" [ngModelOptions]="{standalone: true}" placeholder="Observação"></textarea>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-light" (click)="modal.dismiss('Cross click')">Cancelar</button>
+		<button type="button" class="btn btn-danger" ngbAutofocus (click)="addFluido()">Salvar</button>
+	</div>
+</ng-template>
+
+<ng-template #editarObservacao let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title">Editar observação</h4>
+		<button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+		<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	<div class="modal-body">
+		<textarea class="form-control" rows="5" id="inputObservacao" [(ngModel)]="inputObservacao">{{inputObservacao}}</textarea>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-light" (click)="modal.dismiss('cancel click')">Cancelar</button>
+		<button type="button" class="btn btn-danger" ngbAutofocus (click)="editObservacao()">Salvar</button>
+	</div>
+</ng-template>
+
+<ng-template #contentRodas let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title">Editar Rodas e Pneus</h4>
+		<button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+		<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	<div class="modal-body">
+		<div class="form-row">
+			<div class="form-group col-md-4">
+				<select id="inputCabine" class="form-control" [(ngModel)]="selectedCabine" [ngModelOptions]="{standalone: true}">
+					<option value="Sedan">Sedan</option>
+					<option value="Hatch/Compacto">Hatch/Compacto</option>
+					<option value="SUV/Crossover">SUV/Crossover</option>
+					<option value="Pickup">Pickup</option>
+					<option value="Perua(Station Wagon)">Perua(Station Wagon)</option>
+					<option value="Cupê/Conversível">Cupê/Conversível</option>
+					<option value="Van/Furgão">Van/Furgão</option>
+					<option value="Minivan">Minivan</option>
+					<option value="Buggy/Jipe">Buggy/Jipe</option>
+					<option value="Outros">Outros</option>
+				</select>
+			</div>
+			<div class="form-group col-md-4">
+				<input type="text" class="form-control" id="inputRodaRaio" placeholder="Raio Roda" [(ngModel)]="inputRodaRaio" [ngModelOptions]="{standalone: true}">
+			</div>
+			<div class="form-group col-md-4">
+				<input type="text" class="form-control" id="inputPneuMedida" placeholder="Medida Pneu" [(ngModel)]="inputPneuMedida" [ngModelOptions]="{standalone: true}">
+			</div>
+			<div class="form-group col-md-12">
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col" class="text-center no-border">Carga</th>
+							<th scope="col" class="text-center no-border">Local</th>
+							<th scope="col" class="no-border"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td scope="row" class="text-center">Normal</td>
+							<td scope="row" class="text-center">Traseira</td>
+							<td scope="row">
+								<input type="text" class="form-control" placeholder="Calibragem psi" [(ngModel)]="inputNormalTraseiraCalibragemPsi" [ngModelOptions]="{standalone: true}">
+							</td>
+						</tr>
+						<tr>
+							<td scope="row" class="text-center">Normal</td>
+							<td scope="row" class="text-center">Dianteira</td>
+							<td scope="row">
+								<input type="text" class="form-control" placeholder="Calibragem psi" [(ngModel)]="inputNormalDianteiraCalibragemPsi" [ngModelOptions]="{standalone: true}">
+							</td>
+						</tr>
+						<tr>
+							<td scope="row" class="text-center">Completa</td>
+							<td scope="row" class="text-center">Traseira</td>
+							<td scope="row">
+								<input type="text" class="form-control" placeholder="Calibragem psi" [(ngModel)]="inputCompletaTraseiraCalibragemPsi" [ngModelOptions]="{standalone: true}">
+							</td>
+						</tr>
+						<tr>
+							<td scope="row" class="text-center">Completa</td>
+							<td scope="row" class="text-center">Dianteira</td>
+							<td scope="row">
+								<input type="text" class="form-control" placeholder="Calibragem psi" [(ngModel)]="inputCompletaDianteiraCalibragemPsi" [ngModelOptions]="{standalone: true}">
+							</td>
+						</tr>
+						<tr>
+							<td scope="row" class="text-center"></td>
+							<td scope="row" class="text-center">Estepe</td>
+							<td scope="row">
+								<input type="text" class="form-control" placeholder="Calibragem psi" [(ngModel)]="inputEstepeCalibragemPsi" [ngModelOptions]="{standalone: true}">
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-light" (click)="modal.dismiss('cancel click')">Cancelar</button>
+		<button type="button" class="btn btn-danger" ngbAutofocus (click)="editRodas()">Salvar</button>
+	</div>
 </ng-template>

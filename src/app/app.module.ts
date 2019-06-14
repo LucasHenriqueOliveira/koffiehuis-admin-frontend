@@ -44,7 +44,7 @@ import { PesquisaManualComponent } from './components/pesquisa-manual/pesquisa-m
 import { CopiaManualComponent } from './components/copia-manual/copia-manual.component';
 import { TituloComponent, ModalTituloEditComponent } from './components/titulo/titulo.component';
 import { TituloService } from './services/titulo.service';
-import { ManualCarroComponent } from './components/manual-carro/manual-carro.component';
+import { ManualCarroComponent, ModalFluidoEditManualCarroComponent } from './components/manual-carro/manual-carro.component';
 import { ManualFixoComponent, ModalManualFixoItemEditComponent } from './components/manual-fixo/manual-fixo.component';
 import { TituloFixoComponent, ModalTituloFixoEditComponent } from './components/titulo-fixo/titulo-fixo.component';
 import { TituloFixoService } from './services/titulo-fixo.service';
@@ -90,7 +90,8 @@ registerLocaleData(ptBr);
     ModalFluidoEditComponent,
     ModalManualFluidoEditComponent,
     OpcionaisComponent,
-    ModalOpcionalEditComponent
+    ModalOpcionalEditComponent,
+    ModalFluidoEditManualCarroComponent
   ],
   imports: [
     BrowserModule,
@@ -139,7 +140,8 @@ registerLocaleData(ptBr);
     ModalTituloFixoEditComponent,
     ModalFluidoEditComponent,
     ModalManualFluidoEditComponent,
-    ModalOpcionalEditComponent
+    ModalOpcionalEditComponent,
+    ModalFluidoEditManualCarroComponent
   ]
 })
 export class AppModule { }

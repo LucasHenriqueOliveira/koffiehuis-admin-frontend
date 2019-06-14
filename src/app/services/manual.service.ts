@@ -144,4 +144,20 @@ export class ManualService {
   copy(data) {
     return this.http.post(`${this.constants.api}/manual-copy`, data);
   }
+
+  editObservacaoInfo(data) {
+    return this.http.put(`${this.constants.api}/manual-observacao-info`, data);
+  }
+
+  editObservacaoGeral(data) {
+    return this.http.put(`${this.constants.api}/manual-observacao-geral`, data);
+  }
+
+  editRodas(data) {
+    return this.http.put(`${this.constants.api}/manual-rodas`, data);
+  }
+
+  editItemManualTitulo(data) {
+    return this.http.put(`${this.constants.api}/manual-item-edit`, data);
+  }
 }

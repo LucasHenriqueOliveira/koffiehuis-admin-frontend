@@ -26,4 +26,20 @@ export class FluidoService {
   edit(data) {
     return this.http.put(`${this.constants.api}/fluido`, data);
   }
+
+  editFluidoCarro(data) {
+    return this.http.put(`${this.constants.api}/fluido-carro`, data);
+  }
+
+  removeFluidoCarro(data) {
+    return this.http.post(`${this.constants.api}/fluido-carro`, data);
+  }
+
+  addFluidoCarro(data) {
+    return this.http.post(`${this.constants.api}/fluido-carro-add`, data);
+  }
+
+  editObservacaoFluidoCarro(data) {
+    return this.http.put(`${this.constants.api}/fluido-carro-obs`, data);
+  }
 }
