@@ -6,7 +6,6 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TituloService } from 'src/app/services/titulo.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { FluidoService } from 'src/app/services/fluido.service';
-import { ConsoleReporter } from 'jasmine';
 
 @Component({
   selector: 'app-fluido-edit-manual-carro-modal',
