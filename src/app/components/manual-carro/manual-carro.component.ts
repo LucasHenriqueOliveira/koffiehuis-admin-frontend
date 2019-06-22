@@ -101,6 +101,7 @@ export class ManualCarroComponent implements OnInit {
   id_marca: any;
   id_modelo: any;
   ano: any;
+  ano_txt: any;
   id_versao: any;
   loading = false;
   arrItems: any = [];
@@ -183,6 +184,7 @@ export class ManualCarroComponent implements OnInit {
         this.id_marca = params['id_marca'];
         this.id_modelo = params['id_modelo'];
         this.ano = params['ano'];
+        this.ano_txt = params['ano_txt'];
         this.id_versao = params['id_versao'];
       });
 
@@ -205,7 +207,9 @@ export class ManualCarroComponent implements OnInit {
       this.marca = arr['marca'];
       this.modelo = arr['modelo'];
       this.ano = arr['ano'];
+      this.ano_txt = arr['ano_txt'];
       this.versao = arr['versao'];
+      console.log(this.ano_txt);
   }
 
   carroInfo(info, fluidos) {
@@ -254,6 +258,7 @@ export class ManualCarroComponent implements OnInit {
     data['marca'] = this.id_marca;
     data['modelo'] = this.id_modelo;
     data['ano'] = this.ano;
+    data['ano_txt'] = this.ano_txt;
     data['versao'] = this.id_versao;
 
     this.loading = true;

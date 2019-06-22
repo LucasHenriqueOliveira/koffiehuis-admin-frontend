@@ -11,13 +11,15 @@ export class ManualService {
   marca: any;
   modelo: any;
   ano: any;
+  ano_txt: any;
   versao: any;
 
   constructor(private http: HttpClient) { }
 
-  setLocal(marca, modelo, ano, versao) {
+  setLocal(marca, modelo, ano_txt, ano, versao) {
     this.marca = marca;
     this.modelo = modelo;
+    this.ano_txt = ano_txt;
     this.ano = ano;
     this.versao = versao;
   }
@@ -28,6 +30,7 @@ export class ManualService {
     arr['marca'] = this.marca;
     arr['modelo'] = this.modelo;
     arr['ano'] = this.ano;
+    arr['ano_txt'] = this.ano_txt;
     arr['versao'] = this.versao;
 
     return arr;

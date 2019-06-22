@@ -36,6 +36,7 @@ export class CopiaManualComponent implements OnInit {
   modeloAntigo: any;
   anoAntigo: any;
   versaoAntigo: any;
+  ano_txt: any;
 
   constructor(private Veiculo: VeiculoService,
     private notify: SnotifyService,
@@ -143,6 +144,10 @@ export class CopiaManualComponent implements OnInit {
     if (status === 1) {
       selectAno = this.manualForm.value.selectedAno;
     } else {
+      const selectedOptions = event['target']['options'];
+      const selectedIndex = selectedOptions.selectedIndex;
+      const selectElementText = selectedOptions[selectedIndex].text;
+      this.ano_txt = selectElementText;
       selectAno = this.copiaManualForm.value.selectedAno2;
     }
     this.Veiculo.versoes(selectAno).subscribe(
@@ -213,11 +218,12 @@ export class CopiaManualComponent implements OnInit {
     );
   }
 
-  openCopy(marca, modelo, ano, versao) {
+  openCopy(marca, modelo, ano_txt, ano, versao) {
     this.copy = true;
     this.marcaAntigo = marca;
     this.modeloAntigo = modelo;
     this.anoAntigo = ano;
+    this.ano_txt = ano_txt;
     this.versaoAntigo = versao;
   }
 
@@ -270,7 +276,7 @@ export class CopiaManualComponent implements OnInit {
       result => {
         this.loading = false;
         this.notify.success('Os dados foram copiados. Favor realizar a alteração.', {timeout: 2000, showProgressBar: false });
-        this.Manual.setLocal(this.marca, this.modelo, this.copiaManualForm.value.selectedAno2, this.versao);
+        this.Manual.setLocal(this.marca, this.modelo, this.ano_txt, this.copiaManualForm.value.selectedAno2, this.versao);
         this.router.navigate(['/manual-carro'],  { queryParams: { id_marca: this.copiaManualForm.value.selectedMarca2,
           id_modelo: this.copiaManualForm.value.selectedModelo2, ano: this.copiaManualForm.value.selectedAno2,
           id_versao: this.copiaManualForm.value.selectedVersao2} });

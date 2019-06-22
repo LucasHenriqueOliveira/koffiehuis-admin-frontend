@@ -162,10 +162,10 @@ export class PesquisaManualComponent implements OnInit {
     );
   }
 
-  openEdit(id_marca, marca, id_modelo, modelo, ano, id_versao, versao) {
-    this.Manual.setLocal(marca, modelo, ano, versao);
+  openEdit(id_marca, marca, id_modelo, modelo, ano_txt, ano, id_versao, versao) {
+    this.Manual.setLocal(marca, modelo, ano_txt, ano, versao);
     this.router.navigate(['/manual-carro'],  { queryParams: { id_marca: id_marca,
-      id_modelo: id_modelo, ano: ano, id_versao: id_versao} });
+      id_modelo: id_modelo, ano_txt: ano_txt, ano: ano, id_versao: id_versao} });
   }
 
   edit(data) {
