@@ -36,7 +36,7 @@
 	</form>
 
 	<div class="table-responsive" *ngIf="arrCarros.length">
-		<table class="table table-striped">
+		<table class="table">
 			<thead>
 				<tr>
 				<th>Marca</th>
@@ -47,13 +47,13 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr *ngFor="let item of arrCarros">
+				<tr *ngFor="let item of arrCarros; let i = index" [class.active]="i == selectedRow">
 					<td>{{ item.marca }}</td>
 					<td >{{ item.modelo }}</td>
 					<td class="text-center">{{ item.ano }}</td>
 					<td>{{ item.versao }}</td>
 					<td class="text-center">
-						<a title="Selecionar" (click)="openCopy(item.id_marca, item.id_modelo, item.ano, item.id_ano, item.id_versao)">
+						<a title="Selecionar" (click)="openCopy(item.id_marca, item.id_modelo, item.ano, item.id_ano, item.id_versao, i)">
 							<i class="fa fa-clone" aria-hidden="true"></i>
 						</a>
 					</td>

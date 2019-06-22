@@ -37,6 +37,7 @@ export class CopiaManualComponent implements OnInit {
   anoAntigo: any;
   versaoAntigo: any;
   ano_txt: any;
+  selectedRow: any = null;
 
   constructor(private Veiculo: VeiculoService,
     private notify: SnotifyService,
@@ -218,13 +219,14 @@ export class CopiaManualComponent implements OnInit {
     );
   }
 
-  openCopy(marca, modelo, ano_txt, ano, versao) {
+  openCopy(marca, modelo, ano_txt, ano, versao, index) {
     this.copy = true;
     this.marcaAntigo = marca;
     this.modeloAntigo = modelo;
     this.anoAntigo = ano;
     this.ano_txt = ano_txt;
     this.versaoAntigo = versao;
+    this.selectedRow = index;
   }
 
   copiar() {
