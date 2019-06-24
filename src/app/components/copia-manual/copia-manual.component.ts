@@ -280,7 +280,7 @@ export class CopiaManualComponent implements OnInit {
         this.notify.success('Os dados foram copiados. Favor realizar a alteração.', {timeout: 2000, showProgressBar: false });
         this.Manual.setLocal(this.marca, this.modelo, this.ano_txt, this.copiaManualForm.value.selectedAno2, this.versao);
         this.router.navigate(['/manual-carro'],  { queryParams: { id_marca: this.copiaManualForm.value.selectedMarca2,
-          id_modelo: this.copiaManualForm.value.selectedModelo2, ano: this.copiaManualForm.value.selectedAno2,
+          id_modelo: this.copiaManualForm.value.selectedModelo2, ano_txt: this.ano_txt, ano: this.copiaManualForm.value.selectedAno2,
           id_versao: this.copiaManualForm.value.selectedVersao2} });
       },
       error => {

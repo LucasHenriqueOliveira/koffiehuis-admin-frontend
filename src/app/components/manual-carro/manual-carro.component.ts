@@ -209,7 +209,6 @@ export class ManualCarroComponent implements OnInit {
       this.ano = arr['ano'];
       this.ano_txt = arr['ano_txt'];
       this.versao = arr['versao'];
-      console.log(this.ano_txt);
   }
 
   carroInfo(info, fluidos) {
