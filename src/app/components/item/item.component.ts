@@ -21,10 +21,17 @@ import { TituloService } from 'src/app/services/titulo.service';
           <input type="text" class="form-control" [(ngModel)]="item" [ngModelOptions]="{standalone: true}">
         </div>
       </div>
+      <div class="form-row">
+        <div class="form-group form-check col-md-6 checkbox">
+          <input class="form-check-input" type="checkbox" [(ngModel)]="severo" [ngModelOptions]="{standalone: true}"
+          style="margin-left: 0;" value="1" id="defaultCheck2">
+          <label class="form-check-label" style="margin-left: 20px;" for="defaultCheck2">Severo</label>
+        </div>
+      </div>
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-light" (click)="activeModal.dismiss('cancel click')">Cancelar</button>
-      <button type="button" (click)="edit(item)" class="btn btn-danger" ngbAutofocus>Editar</button>
+      <button type="button" (click)="edit(item, severo)" class="btn btn-danger" ngbAutofocus>Editar</button>
     </div>
   </form>
   `
@@ -32,13 +39,15 @@ import { TituloService } from 'src/app/services/titulo.service';
 export class ModalManualItemEditComponent {
   @Input() item;
   @Input() id;
+  @Input() severo;
 
   constructor(public activeModal: NgbActiveModal) {}
 
-  edit(item) {
+  edit(item, severo) {
     const data = {
       id: this.id,
-      item: item
+      item: item,
+      severo: severo
     };
     this.activeModal.close(data);
   }
@@ -53,7 +62,8 @@ export class ItemComponent implements OnInit {
 
   itemForm = new FormGroup({
     item: new FormControl(''),
-    selectedTitulo: new FormControl(0)
+    selectedTitulo: new FormControl(0),
+    severo: new FormControl(false)
   });
   loading = false;
   arrItems: any;
@@ -129,10 +139,11 @@ export class ItemComponent implements OnInit {
     );
   }
 
-  openEdit(id, item) {
+  openEdit(id, item, severo) {
     const modalRef = this.modalService.open(ModalManualItemEditComponent);
     modalRef.componentInstance.item = item;
     modalRef.componentInstance.id = id;
+    modalRef.componentInstance.severo = severo;
 
     modalRef.result.then((result) => {
       this.edit(result);
