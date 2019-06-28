@@ -23,15 +23,22 @@ import { TituloService } from 'src/app/services/titulo.service';
       </div>
       <div class="form-row">
         <div class="form-group form-check col-md-6 checkbox">
-          <input class="form-check-input" type="checkbox" [(ngModel)]="severo" [ngModelOptions]="{standalone: true}"
+          <input class="form-check-input" type="checkbox" [(ngModel)]="altera_uso" [ngModelOptions]="{standalone: true}"
           style="margin-left: 0;" value="1" id="defaultCheck2">
-          <label class="form-check-label" style="margin-left: 20px;" for="defaultCheck2">Severo</label>
+          <label class="form-check-label" style="margin-left: 20px;" for="defaultCheck2">Altera Cond. Uso</label>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group form-check col-md-6 checkbox">
+          <input class="form-check-input" type="checkbox" [(ngModel)]="etiqueta_uso" [ngModelOptions]="{standalone: true}"
+          style="margin-left: 0;" value="1" id="defaultCheck3">
+          <label class="form-check-label" style="margin-left: 20px;" for="defaultCheck3">Etiqueta Cond. Uso</label>
         </div>
       </div>
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-light" (click)="activeModal.dismiss('cancel click')">Cancelar</button>
-      <button type="button" (click)="edit(item, severo)" class="btn btn-danger" ngbAutofocus>Editar</button>
+      <button type="button" (click)="edit(item, altera_uso, etiqueta_uso)" class="btn btn-danger" ngbAutofocus>Editar</button>
     </div>
   </form>
   `
@@ -39,15 +46,17 @@ import { TituloService } from 'src/app/services/titulo.service';
 export class ModalManualItemEditComponent {
   @Input() item;
   @Input() id;
-  @Input() severo;
+  @Input() altera_uso;
+  @Input() etiqueta_uso;
 
   constructor(public activeModal: NgbActiveModal) {}
 
-  edit(item, severo) {
+  edit(item, altera_uso, etiqueta_uso) {
     const data = {
       id: this.id,
       item: item,
-      severo: severo
+      altera_uso: altera_uso,
+      etiqueta_uso: etiqueta_uso
     };
     this.activeModal.close(data);
   }
@@ -63,7 +72,8 @@ export class ItemComponent implements OnInit {
   itemForm = new FormGroup({
     item: new FormControl(''),
     selectedTitulo: new FormControl(0),
-    severo: new FormControl(false)
+    altera_uso: new FormControl(false),
+    etiqueta_uso: new FormControl(false)
   });
   loading = false;
   arrItems: any;
@@ -139,11 +149,12 @@ export class ItemComponent implements OnInit {
     );
   }
 
-  openEdit(id, item, severo) {
+  openEdit(id, item, altera_uso, etiqueta_uso) {
     const modalRef = this.modalService.open(ModalManualItemEditComponent);
     modalRef.componentInstance.item = item;
     modalRef.componentInstance.id = id;
-    modalRef.componentInstance.severo = severo;
+    modalRef.componentInstance.altera_uso = altera_uso;
+    modalRef.componentInstance.etiqueta_uso = etiqueta_uso;
 
     modalRef.result.then((result) => {
       this.edit(result);
