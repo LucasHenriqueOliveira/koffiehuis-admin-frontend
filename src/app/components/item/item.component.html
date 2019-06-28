@@ -19,8 +19,8 @@
 				<label class="form-check-label" for="defaultCheck1">Altera Cond. Uso</label>
 			</div>
 			<div class="form-group form-check col-md-12 checkbox">
-				<input class="form-check-input" type="checkbox" formControlName="altera_uso" value="1" id="defaultCheck1">
-				<label class="form-check-label" for="defaultCheck1">Etiqueta Uso</label>
+				<input class="form-check-input" type="checkbox" formControlName="etiqueta_oleo" value="1" id="defaultCheck1">
+				<label class="form-check-label" for="defaultCheck1">Etiqueta Óleo</label>
 			</div>
 			<div class="form-group col-md-2">
 				<button class="btn btn-primary" [disabled]="!checkButton()">Salvar</button>
@@ -35,7 +35,7 @@
 				<th>Título</th>
 				<th>Item</th>
 				<th class="text-center" width="20%">Altera Uso?</th>
-				<th class="text-center" width="20%">Etiqueta Uso?</th>
+				<th class="text-center" width="20%">Etiqueta Óleo?</th>
 				<th class="text-center">Ações</th>
 			</tr>
 		</thead>
@@ -48,11 +48,11 @@
 					<span *ngIf="!item.altera_uso">Não</span>
 				</td>
 				<td class="text-center">
-					<span *ngIf="item.etiqueta_uso">Sim</span>
-					<span *ngIf="!item.etiqueta_uso">Não</span>
+					<span *ngIf="item.etiqueta_oleo">Sim</span>
+					<span *ngIf="!item.etiqueta_oleo">Não</span>
 				</td>
 				<td class="text-center">
-					<a (click)="openEdit(item.id, item.item, item.altera_uso, item.etiqueta_uso)">
+					<a (click)="openEdit(item.id, item.item, item.altera_uso, item.etiqueta_oleo)">
 						<i class="fa fa-pencil" aria-hidden="true"></i>
 					</a>
 					<a (click)="openRemove(content, item.id)">
