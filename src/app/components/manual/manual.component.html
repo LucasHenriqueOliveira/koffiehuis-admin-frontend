@@ -169,6 +169,7 @@
 					<input type="checkbox" class="form-check-input" name="itens[{{item.id}}]" id="check_{{item.id}}" [value]="item.id"
 					(change)="setItens($event.target.getAttribute('value'), $event.target.checked, item.item, contentItem, contentDelete)">
 					<label class="form-check-label" for="check_{{item.id}}">{{ item.item }}</label>
+					&nbsp;<i class="fa fa-exclamation-triangle" *ngIf="item.altera_uso" aria-hidden="true"></i>
 				</div>
 			</div>
 		</div>
