@@ -36,6 +36,21 @@ import { TituloFixoService } from 'src/app/services/titulo-fixo.service';
           [ngModelOptions]="{standalone: true}" placeholder="Observação"></textarea>
         </div>
         <div class="form-group col-sm-12">
+          <span>Misto</span>
+        </div>
+        <div class="form-group col-sm-6">
+          <input type="number" class="form-control" [(ngModel)]="km_misto"
+          [ngModelOptions]="{standalone: true}" name="km_misto" value="" placeholder="Km">
+        </div>
+        <div class="form-group col-sm-6">
+          <input type="number" class="form-control" [(ngModel)]="meses_misto"
+          [ngModelOptions]="{standalone: true}" name="meses_misto" value="" placeholder="Meses">
+        </div>
+        <div class="form-group col-sm-12">
+          <textarea class="form-control" rows="3" [(ngModel)]="observacao_misto"
+          [ngModelOptions]="{standalone: true}" placeholder="Observação"></textarea>
+        </div>
+        <div class="form-group col-sm-12">
           <span>Severo</span>
         </div>
         <div class="form-group col-sm-6">
@@ -54,7 +69,7 @@ import { TituloFixoService } from 'src/app/services/titulo-fixo.service';
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-light" (click)="activeModal.dismiss('cancel click')">Cancelar</button>
-      <button type="button" (click)="edit(item, km_ideal, meses_ideal, observacao_ideal,
+      <button type="button" (click)="edit(item, km_ideal, meses_ideal, observacao_ideal, km_misto, meses_misto, observacao_misto,
         km_severo, meses_severo, observacao_severo)" class="btn btn-danger" ngbAutofocus>Editar</button>
     </div>
   </form>
@@ -65,6 +80,9 @@ export class ModalManualFixoItemEditComponent {
   @Input() km_ideal;
   @Input() meses_ideal;
   @Input() observacao_ideal;
+  @Input() km_misto;
+  @Input() meses_misto;
+  @Input() observacao_misto;
   @Input() km_severo;
   @Input() meses_severo;
   @Input() observacao_severo;
@@ -72,13 +90,18 @@ export class ModalManualFixoItemEditComponent {
 
   constructor(public activeModal: NgbActiveModal) {}
 
-  edit(item, km_ideal, meses_ideal, observacao_ideal, km_severo, meses_severo, observacao_severo) {
+  edit(item, km_ideal, meses_ideal, observacao_ideal,
+    km_misto, meses_misto, observacao_misto,
+    km_severo, meses_severo, observacao_severo) {
     const data = {
       id: this.id,
       item: item,
       km_ideal: km_ideal,
       meses_ideal: meses_ideal,
       observacao_ideal: observacao_ideal,
+      km_misto: km_misto,
+      meses_misto: meses_misto,
+      observacao_misto: observacao_misto,
       km_severo: km_severo,
       meses_severo: meses_severo,
       observacao_severo: observacao_severo
@@ -100,6 +123,9 @@ export class ManualFixoComponent implements OnInit {
     km_ideal: new FormControl(''),
     meses_ideal: new FormControl(''),
     observacao_ideal: new FormControl(''),
+    km_misto: new FormControl(''),
+    meses_misto: new FormControl(''),
+    observacao_misto: new FormControl(''),
     km_severo: new FormControl(''),
     meses_severo: new FormControl(''),
     observacao_severo: new FormControl(''),
@@ -178,12 +204,17 @@ export class ManualFixoComponent implements OnInit {
     );
   }
 
-  openEdit(id, item, km_ideal, meses_ideal, observacao_ideal, km_severo, meses_severo, observacao_severo) {
+  openEdit(id, item, km_ideal, meses_ideal, observacao_ideal,
+    km_misto, meses_misto, observacao_misto,
+    km_severo, meses_severo, observacao_severo) {
     const modalRef = this.modalService.open(ModalManualFixoItemEditComponent);
     modalRef.componentInstance.item = item;
     modalRef.componentInstance.km_ideal = km_ideal;
     modalRef.componentInstance.meses_ideal = meses_ideal;
     modalRef.componentInstance.observacao_ideal = observacao_ideal;
+    modalRef.componentInstance.km_misto = km_misto;
+    modalRef.componentInstance.meses_misto = meses_misto;
+    modalRef.componentInstance.observacao_misto = observacao_misto;
     modalRef.componentInstance.km_severo = km_severo;
     modalRef.componentInstance.meses_severo = meses_severo;
     modalRef.componentInstance.observacao_severo = observacao_severo;
