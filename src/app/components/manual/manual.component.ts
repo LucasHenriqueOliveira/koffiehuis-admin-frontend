@@ -120,6 +120,9 @@ export class ManualComponent implements OnInit {
   km_ideal: any;
   meses_ideal: any;
   observacao_ideal: any;
+  km_misto: any;
+  meses_misto: any;
+  observacao_misto: any;
   km_severo: any;
   meses_severo: any;
   observacao_severo: any;
@@ -387,6 +390,9 @@ export class ManualComponent implements OnInit {
     this.km_ideal = '';
     this.meses_ideal = '';
     this.observacao_ideal = '';
+    this.km_misto = '';
+    this.meses_misto = '';
+    this.observacao_misto = '';
     this.km_severo = '';
     this.meses_severo = '';
     this.observacao_severo = '';
@@ -433,13 +439,14 @@ export class ManualComponent implements OnInit {
     this.modalService.dismissAll();
   }
 
-  addItem(km_ideal, meses_ideal, observacao_ideal, km_severo, meses_severo, observacao_severo) {
+  addItem(km_ideal, meses_ideal, observacao_ideal, km_misto, meses_misto, observacao_misto, km_severo, meses_severo, observacao_severo) {
     if (this.arrSelectedItems.length) {
       this.tituloExist = false;
       for (let i = 0; i < this.arrSelectedItems.length; i++) {
         if (this.arrSelectedItems[i]['titulo'] === this.manualForm.value.selectedTitulo) {
           this.arrSelectedItems[i]['items'].push({ item: this.idItem, txtItem: this.textItem,
             km_ideal: km_ideal, meses_ideal: meses_ideal, observacao_ideal: observacao_ideal,
+            km_misto: km_misto, meses_misto: meses_misto, observacao_misto: observacao_misto,
             km_severo: km_severo, meses_severo: meses_severo, observacao_severo: observacao_severo
           });
           this.tituloExist = true;
@@ -452,6 +459,7 @@ export class ManualComponent implements OnInit {
           txtTitulo: this.txtTitulo,
           items: [{ item: this.idItem, txtItem: this.textItem,
             km_ideal: km_ideal, meses_ideal: meses_ideal, observacao_ideal: observacao_ideal,
+            km_misto: km_misto, meses_misto: meses_misto, observacao_misto: observacao_misto,
             km_severo: km_severo, meses_severo: meses_severo, observacao_severo: observacao_severo
           }]
         });
@@ -462,6 +470,7 @@ export class ManualComponent implements OnInit {
         txtTitulo: this.txtTitulo,
         items: [{ item: this.idItem, txtItem: this.textItem,
           km_ideal: km_ideal, meses_ideal: meses_ideal, observacao_ideal: observacao_ideal,
+          km_misto: km_misto, meses_misto: meses_misto, observacao_misto: observacao_misto,
           km_severo: km_severo, meses_severo: meses_severo, observacao_severo: observacao_severo
         }]
       });
@@ -487,6 +496,9 @@ export class ManualComponent implements OnInit {
         km_ideal: this.arrSelectedItems[i]['items'][m]['km_ideal'],
         meses_ideal: this.arrSelectedItems[i]['items'][m]['meses_ideal'],
         observacao_ideal: this.arrSelectedItems[i]['items'][m]['observacao_ideal'],
+        km_misto: this.arrSelectedItems[i]['items'][m]['km_misto'],
+        meses_misto: this.arrSelectedItems[i]['items'][m]['meses_misto'],
+        observacao_misto: this.arrSelectedItems[i]['items'][m]['observacao_misto'],
         km_severo: this.arrSelectedItems[i]['items'][m]['km_severo'],
         meses_severo: this.arrSelectedItems[i]['items'][m]['meses_severo'],
         observacao_severo: this.arrSelectedItems[i]['items'][m]['observacao_severo']});

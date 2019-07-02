@@ -159,6 +159,7 @@
 				<tr>
 					<th scope="col" class="no-border"></th>
 					<th scope="col" colspan="3" class="text-center">Ideal</th>
+					<th scope="col" colspan="3" class="text-center">Misto</th>
 					<th scope="col" colspan="3" class="text-center">Severo</th>
 					<td class="no-border"></td>
 				</tr>
@@ -170,12 +171,15 @@
 					<th scope="col" class="text-center">Km</th>
 					<th scope="col" class="text-center">Meses</th>
 					<th scope="col" class="text-center">Obs</th>
+					<th scope="col" class="text-center">Km</th>
+					<th scope="col" class="text-center">Meses</th>
+					<th scope="col" class="text-center">Obs</th>
 					<th scope="col" class="text-center">Ação</th>
 				</tr>
 			</thead>
 			<tbody *ngFor="let options of arrItems">
 				<tr>
-					<td scope="row" colspan="8" class="titulo" *ngIf="options.items.length">{{options.txtTitulo}}</td>
+					<td scope="row" colspan="11" class="titulo" *ngIf="options.items.length">{{options.txtTitulo}}</td>
 				</tr>
 				<tr *ngFor="let item of options.items">
 					<td scope="row" width="25%">{{item.item}}</td>
@@ -195,6 +199,23 @@
 						triggers="mouseenter:mouseleave" popoverTitle="Observação"></i>
 						<span *ngIf="!item.observacao_ideal">-</span>
 						<!--<textarea class="form-control" rows="3" id="observacao_ideal_{{item.id}}">{{item.observacao_ideal}}</textarea>-->
+					</td>
+					<td scope="row" class="text-center">
+						<span *ngIf="item.km_misto">{{item.km_misto}}</span>
+						<span *ngIf="!item.km_misto">-</span>
+						<!--<input type="text" class="form-control" size="8" id="km_severo_{{item.id}}" value="{{item.km_severo}}">-->
+					</td>
+					<td scope="row" class="text-center">
+						<span *ngIf="item.meses_misto">{{item.meses_misto}}</span>
+						<span *ngIf="!item.meses_misto">-</span>
+						<!--<input type="text" class="form-control" size="4" id="meses_severo_{{item.id}}" value="{{item.meses_severo}}">-->
+					</td>
+					<td scope="row" class="text-center">
+						<ng-template #popObservacaoMisto>{{item.observacao_misto}}</ng-template>
+						<i class="fa fa-commenting-o" *ngIf="item.observacao_misto" aria-hidden="true" [ngbPopover]="popObservacaoMisto"
+						triggers="mouseenter:mouseleave" popoverTitle="Observação"></i>
+						<span *ngIf="!item.observacao_misto">-</span>
+						<!--<textarea class="form-control" rows="3" id="observacao_severo_{{item.id}}">{{item.observacao_severo}}</textarea>-->
 					</td>
 					<td scope="row" class="text-center">
 						<span *ngIf="item.km_severo">{{item.km_severo}}</span>
@@ -225,7 +246,7 @@
 			</tbody>
 			<tbody *ngFor="let options of arrItemsFixo">
 				<tr>
-					<td scope="row" colspan="8" class="titulo" *ngIf="options.items.length">{{options.txtTitulo}}</td>
+					<td scope="row" colspan="11" class="titulo" *ngIf="options.items.length">{{options.txtTitulo}}</td>
 				</tr>
 				<tr *ngFor="let item of options.items">
 					<td scope="row">{{item.item}}</td>
@@ -234,8 +255,8 @@
 						<span *ngIf="!item.km_ideal">-</span>
 					</td>
 					<td scope="row" class="text-center">
-						{{item.tempo_ideal}}
-						<span *ngIf="!item.tempo_ideal">-</span>
+						{{item.meses_ideal}}
+						<span *ngIf="!item.meses_ideal">-</span>
 					</td>
 					<td scope="row" class="text-center">
 						<ng-template #popObservacaoIdeal>{{item.observacao_ideal}}</ng-template>
@@ -244,12 +265,26 @@
 						<span *ngIf="!item.observacao_ideal">-</span>
 					</td>
 					<td scope="row" class="text-center">
+						{{item.km_misto}}
+						<span *ngIf="!item.km_misto">-</span>
+					</td>
+					<td scope="row" class="text-center">
+						{{item.meses_misto}}
+						<span *ngIf="!item.meses_misto">-</span>
+					</td>
+					<td scope="row" class="text-center">
+						<ng-template #popObservacaoMisto>{{item.observacao_misto}}</ng-template>
+						<i class="fa fa-commenting-o" *ngIf="item.observacao_misto" aria-hidden="true" [ngbPopover]="popObservacaoMisto"
+						triggers="mouseenter:mouseleave" popoverTitle="Observação"></i>
+						<span *ngIf="!item.observacao_misto">-</span>
+					</td>
+					<td scope="row" class="text-center">
 						{{item.km_severo}}
 						<span *ngIf="!item.km_severo">-</span>
 					</td>
 					<td scope="row" class="text-center">
-						{{item.tempo_severo}}
-						<span *ngIf="!item.tempo_severo">-</span>
+						{{item.meses_severo}}
+						<span *ngIf="!item.meses_severo">-</span>
 					</td>
 					<td scope="row" class="text-center">
 						<ng-template #popObservacaoSevero>{{item.observacao_severo}}</ng-template>
@@ -330,6 +365,18 @@
 					<textarea class="form-control" rows="3" [(ngModel)]="observacao_ideal" [ngModelOptions]="{standalone: true}" placeholder="Observação"></textarea>
 				</div>
 			</div>
+			<p>Misto <br /></p>
+			<div class="form-row">
+				<div class="form-group col-sm-6">
+					<input type="number" class="form-control" [(ngModel)]="km_misto" [ngModelOptions]="{standalone: true}" name="km_misto" value="" placeholder="Km">
+				</div>
+				<div class="form-group col-sm-6">
+					<input type="number" class="form-control" [(ngModel)]="meses_misto" [ngModelOptions]="{standalone: true}" name="meses_misto" value="" placeholder="Meses">
+				</div>
+				<div class="form-group col-sm-12">
+					<textarea class="form-control" rows="3" [(ngModel)]="observacao_misto" [ngModelOptions]="{standalone: true}" placeholder="Observação"></textarea>
+				</div>
+			</div>
 			<p>Severo <br /></p>
 			<div class="form-row">
 				<div class="form-group col-sm-6">
@@ -345,7 +392,7 @@
 		</div>
 		<div class="modal-footer">
 			<button type="button" class="btn btn-light" (click)="modal.dismiss('cancel click')">Cancelar</button>
-			<button type="button" class="btn btn-danger" (click)="addItem(km_ideal, meses_ideal, observacao_ideal, km_severo, meses_severo, observacao_severo)">Adicionar</button>
+			<button type="button" class="btn btn-danger" (click)="addItem(km_ideal, meses_ideal, observacao_ideal, km_misto, meses_misto, observacao_misto, km_severo, meses_severo, observacao_severo)">Adicionar</button>
 		</div>
 	</form>
 </ng-template>
@@ -369,6 +416,18 @@
 				</div>
 				<div class="form-group col-sm-12">
 					<textarea class="form-control" rows="3" [(ngModel)]="observacao_ideal_edit" [ngModelOptions]="{standalone: true}" placeholder="Observação"></textarea>
+				</div>
+			</div>
+			<p>Misto <br /></p>
+			<div class="form-row">
+				<div class="form-group col-sm-6">
+					<input type="number" class="form-control" [(ngModel)]="km_misto_edit" [ngModelOptions]="{standalone: true}" name="km_misto" value="" placeholder="Km">
+				</div>
+				<div class="form-group col-sm-6">
+					<input type="number" class="form-control" [(ngModel)]="meses_misto_edit" [ngModelOptions]="{standalone: true}" name="meses_misto" value="" placeholder="Meses">
+				</div>
+				<div class="form-group col-sm-12">
+					<textarea class="form-control" rows="3" [(ngModel)]="observacao_misto_edit" [ngModelOptions]="{standalone: true}" placeholder="Observação"></textarea>
 				</div>
 			</div>
 			<p>Severo <br /></p>

@@ -123,6 +123,9 @@ export class ManualCarroComponent implements OnInit {
   km_ideal: any;
   meses_ideal: any;
   observacao_ideal: any;
+  km_misto: any;
+  meses_misto: any;
+  observacao_misto: any;
   km_severo: any;
   meses_severo: any;
   observacao_severo: any;
@@ -154,6 +157,9 @@ export class ManualCarroComponent implements OnInit {
   km_ideal_edit: any;
   meses_ideal_edit: any;
   observacao_ideal_edit: any;
+  km_misto_edit: any;
+  meses_misto_edit: any;
+  observacao_misto_edit: any;
   km_severo_edit: any;
   meses_severo_edit: any;
   observacao_severo_edit: any;
@@ -282,6 +288,9 @@ export class ManualCarroComponent implements OnInit {
         km_ideal: (document.getElementById('km_ideal_' + this.arrItems[i]['items'][m].id) as HTMLInputElement).value,
         meses_ideal: (document.getElementById('meses_ideal_' + this.arrItems[i]['items'][m].id) as HTMLInputElement).value,
         observacao_ideal: (document.getElementById('observacao_ideal_' + this.arrItems[i]['items'][m].id) as HTMLInputElement).value,
+        km_misto: (document.getElementById('km_misto_' + this.arrItems[i]['items'][m].id) as HTMLInputElement).value,
+        meses_misto: (document.getElementById('meses_misto_' + this.arrItems[i]['items'][m].id) as HTMLInputElement).value,
+        observacao_misto: (document.getElementById('observacao_misto_' + this.arrItems[i]['items'][m].id) as HTMLInputElement).value,
         km_severo: (document.getElementById('km_severo_' + this.arrItems[i]['items'][m].id) as HTMLInputElement).value,
         meses_severo: (document.getElementById('meses_severo_' + this.arrItems[i]['items'][m].id) as HTMLInputElement).value,
         observacao_severo: (document.getElementById('observacao_severo_' + this.arrItems[i]['items'][m].id) as HTMLInputElement).value});
@@ -545,6 +554,9 @@ export class ManualCarroComponent implements OnInit {
     this.km_ideal_edit = item.km_ideal;
     this.meses_ideal_edit = item.meses_ideal;
     this.observacao_ideal_edit = item.observacao_ideal;
+    this.km_misto_edit = item.km_misto;
+    this.meses_misto_edit = item.meses_misto;
+    this.observacao_misto_edit = item.observacao_misto;
     this.km_severo_edit = item.km_severo;
     this.meses_severo_edit = item.meses_severo;
     this.observacao_severo_edit = item.observacao_severo;
@@ -561,6 +573,9 @@ export class ManualCarroComponent implements OnInit {
       km_ideal: this.km_ideal_edit,
       meses_ideal: this.meses_ideal_edit,
       observacao_ideal: this.observacao_ideal_edit,
+      km_misto: this.km_misto_edit,
+      meses_misto: this.meses_misto_edit,
+      observacao_misto: this.observacao_misto_edit,
       km_severo: this.km_severo_edit,
       meses_severo: this.meses_severo_edit,
       observacao_severo: this.observacao_severo_edit
@@ -583,11 +598,14 @@ export class ManualCarroComponent implements OnInit {
     );
   }
 
-  addItem(km_ideal, meses_ideal, observacao_ideal, km_severo, meses_severo, observacao_severo) {
+  addItem(km_ideal, meses_ideal, observacao_ideal, km_misto, meses_misto, observacao_misto, km_severo, meses_severo, observacao_severo) {
     const data = {
       km_ideal: km_ideal,
       meses_ideal: meses_ideal,
       observacao_ideal: observacao_ideal,
+      km_misto: km_misto,
+      meses_misto: meses_misto,
+      observacao_misto: observacao_misto,
       km_severo: km_severo,
       meses_severo: meses_severo,
       observacao_severo: observacao_severo,
@@ -608,6 +626,9 @@ export class ManualCarroComponent implements OnInit {
         this.km_ideal = '';
         this.meses_ideal = '';
         this.observacao_ideal = '';
+        this.km_misto = '';
+        this.meses_misto = '';
+        this.observacao_misto = '';
         this.km_severo = '';
         this.meses_severo = '';
         this.observacao_severo = '';

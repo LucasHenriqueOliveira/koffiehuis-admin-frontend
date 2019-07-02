@@ -187,6 +187,7 @@
 				<tr>
 					<th scope="col" class="no-border"></th>
 					<th scope="col" colspan="3" class="text-center">Ideal</th>
+					<th scope="col" colspan="3" class="text-center">Misto</th>
 					<th scope="col" colspan="3" class="text-center">Severo</th>
 				</tr>
 				<tr>
@@ -197,49 +198,108 @@
 					<th scope="col" class="text-center">Km</th>
 					<th scope="col" class="text-center">Meses</th>
 					<th scope="col" class="text-center">Obs</th>
+					<th scope="col" class="text-center">Km</th>
+					<th scope="col" class="text-center">Meses</th>
+					<th scope="col" class="text-center">Obs</th>
 				</tr>
 			</thead>
 			<tbody *ngFor="let options of arrSelectedItems">
 				<tr>
-					<td scope="row" colspan="7" class="titulo" *ngIf="options.items.length">{{options.txtTitulo}}</td>
+					<td scope="row" colspan="10" class="titulo" *ngIf="options.items.length">{{options.txtTitulo}}</td>
 				</tr>
 				<tr *ngFor="let item of options.items">
 					<td scope="row">{{item.txtItem}}</td>
-					<td scope="row" class="text-center">{{item.km_ideal}}</td>
-					<td scope="row" class="text-center">{{item.meses_ideal}}</td>
+					<td scope="row" class="text-center">
+						<span *ngIf="item.km_ideal">{{item.km_ideal}}</span>
+						<span *ngIf="!item.km_ideal">-</span>
+					</td>
+					<td scope="row" class="text-center">
+						<span *ngIf="item.meses_ideal">{{item.meses_ideal}}</span>
+						<span *ngIf="!item.meses_ideal">-</span>
+					</td>
 					<td scope="row" class="text-center">
 						<ng-template #popObservacaoIdeal>{{item.observacao_ideal}}</ng-template>
 						<i class="fa fa-commenting-o" *ngIf="item.observacao_ideal" aria-hidden="true" [ngbPopover]="popObservacaoIdeal"
 						triggers="mouseenter:mouseleave" popoverTitle="Observação"></i>
+						<span *ngIf="!item.observacao_ideal">-</span>
 					</td>
-					<td scope="row" class="text-center">{{item.km_severo}}</td>
-					<td scope="row" class="text-center">{{item.meses_severo}}</td>
+					<td scope="row" class="text-center">
+						<span *ngIf="item.km_misto">{{item.km_misto}}</span>
+						<span *ngIf="!item.km_misto">-</span>
+					</td>
+					<td scope="row" class="text-center">
+						<span *ngIf="item.meses_misto">{{item.meses_misto}}</span>
+						<span *ngIf="!item.meses_misto">-</span>
+					</td>
+					<td scope="row" class="text-center">
+						<ng-template #popObservacaoMisto>{{item.observacao_misto}}</ng-template>
+						<i class="fa fa-commenting-o" *ngIf="item.observacao_misto" aria-hidden="true" [ngbPopover]="popObservacaoMisto"
+						triggers="mouseenter:mouseleave" popoverTitle="Observação"></i>
+						<span *ngIf="!item.observacao_misto">-</span>
+					</td>
+					<td scope="row" class="text-center">
+						<span *ngIf="item.km_severo">{{item.km_severo}}</span>
+						<span *ngIf="!item.km_severo">-</span>
+					</td>
+					<td scope="row" class="text-center">
+						<span *ngIf="item.meses_severo">{{item.meses_severo}}</span>
+						<span *ngIf="!item.meses_severo">-</span>
+					</td>
 					<td scope="row" class="text-center">
 						<ng-template #popObservacaoSevero>{{item.observacao_severo}}</ng-template>
 						<i class="fa fa-commenting-o" *ngIf="item.observacao_severo" aria-hidden="true" [ngbPopover]="popObservacaoSevero"
 						triggers="mouseenter:mouseleave" popoverTitle="Observação"></i>
+						<span *ngIf="!item.observacao_severo">-</span>
 					</td>
 				</tr>
 			</tbody>
 			<tbody *ngFor="let options of arrItemsFixo">
 				<tr>
-					<td scope="row" colspan="7" class="titulo" *ngIf="options.items.length">{{options.txtTitulo}}</td>
+					<td scope="row" colspan="10" class="titulo" *ngIf="options.items.length">{{options.txtTitulo}}</td>
 				</tr>
 				<tr *ngFor="let item of options.items">
 					<td scope="row">{{item.item}}</td>
-					<td scope="row" class="text-center">{{item.km_ideal}}</td>
-					<td scope="row" class="text-center">{{item.tempo_ideal}}</td>
+					<td scope="row" class="text-center">
+						<span *ngIf="item.km_ideal">{{item.km_ideal}}</span>
+						<span *ngIf="!item.km_ideal">-</span>
+					</td>
+					<td scope="row" class="text-center">
+						<span *ngIf="item.meses_ideal">{{item.meses_ideal}}</span>
+						<span *ngIf="!item.meses_ideal">-</span>
+					</td>
 					<td scope="row" class="text-center">
 						<ng-template #popObservacaoIdeal>{{item.observacao_ideal}}</ng-template>
 						<i class="fa fa-commenting-o" *ngIf="item.observacao_ideal" aria-hidden="true" [ngbPopover]="popObservacaoIdeal"
 						triggers="mouseenter:mouseleave" popoverTitle="Observação"></i>
+						<span *ngIf="!item.observacao_ideal">-</span>
 					</td>
-					<td scope="row" class="text-center">{{item.km_severo}}</td>
-					<td scope="row" class="text-center">{{item.tempo_severo}}</td>
+					<td scope="row" class="text-center">
+						<span *ngIf="item.km_misto">{{item.km_misto}}</span>
+						<span *ngIf="!item.km_misto">-</span>
+					</td>
+					<td scope="row" class="text-center">
+						<span *ngIf="item.meses_misto">{{item.meses_misto}}</span>
+						<span *ngIf="!item.meses_misto">-</span>
+					</td>
+					<td scope="row" class="text-center">
+						<ng-template #popObservacaoMisto>{{item.observacao_misto}}</ng-template>
+						<i class="fa fa-commenting-o" *ngIf="item.observacao_misto" aria-hidden="true" [ngbPopover]="popObservacaoMisto"
+						triggers="mouseenter:mouseleave" popoverTitle="Observação"></i>
+						<span *ngIf="!item.observacao_misto">-</span>
+					</td>
+					<td scope="row" class="text-center">
+						<span *ngIf="item.km_severo">{{item.km_severo}}</span>
+						<span *ngIf="!item.km_severo">-</span>
+					</td>
+					<td scope="row" class="text-center">
+						<span *ngIf="item.meses_severo">{{item.meses_severo}}</span>
+						<span *ngIf="!item.meses_severo">-</span>
+					</td>
 					<td scope="row" class="text-center">
 						<ng-template #popObservacaoSevero>{{item.observacao_severo}}</ng-template>
 						<i class="fa fa-commenting-o" *ngIf="item.observacao_severo" aria-hidden="true" [ngbPopover]="popObservacaoSevero"
 						triggers="mouseenter:mouseleave" popoverTitle="Observação"></i>
+						<span *ngIf="!item.observacao_severo">-</span>
 					</td>
 				</tr>
 			</tbody>
@@ -278,6 +338,18 @@
 				<textarea class="form-control" rows="3" [(ngModel)]="observacao_ideal" [ngModelOptions]="{standalone: true}" placeholder="Observação"></textarea>
 			</div>
 		</div>
+		<p>Misto <br /></p>
+		<div class="form-row">
+			<div class="form-group col-sm-6">
+				<input type="number" class="form-control" [(ngModel)]="km_misto" [ngModelOptions]="{standalone: true}" name="km_misto" value="" placeholder="Km">
+			</div>
+			<div class="form-group col-sm-6">
+				<input type="number" class="form-control" [(ngModel)]="meses_misto" [ngModelOptions]="{standalone: true}" name="meses_misto" value="" placeholder="Meses">
+			</div>
+			<div class="form-group col-sm-12">
+				<textarea class="form-control" rows="3" [(ngModel)]="observacao_misto" [ngModelOptions]="{standalone: true}" placeholder="Observação"></textarea>
+			</div>
+		</div>
 		<p>Severo <br /></p>
 		<div class="form-row">
 			<div class="form-group col-sm-6">
@@ -293,7 +365,7 @@
 	</div>
 	<div class="modal-footer">
 		<button type="button" class="btn btn-light" (click)="closeItem()">Cancelar</button>
-		<button type="button" class="btn btn-danger" (click)="addItem(km_ideal, meses_ideal, observacao_ideal, km_severo, meses_severo, observacao_severo)">Adicionar</button>
+		<button type="button" class="btn btn-danger" (click)="addItem(km_ideal, meses_ideal, observacao_ideal, km_misto, meses_misto, observacao_misto, km_severo, meses_severo, observacao_severo)">Adicionar</button>
 	</div>
 </ng-template>
 
