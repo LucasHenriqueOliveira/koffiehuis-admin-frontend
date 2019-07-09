@@ -32,7 +32,7 @@ import { TituloService } from 'src/app/services/titulo.service';
         <div class="form-group form-check col-md-6 checkbox">
           <input class="form-check-input" type="checkbox" [(ngModel)]="etiqueta_oleo" [ngModelOptions]="{standalone: true}"
           style="margin-left: 0;" value="1" id="defaultCheck3">
-          <label class="form-check-label" style="margin-left: 20px;" for="defaultCheck3">Etiqueta Uso</label>
+          <label class="form-check-label" style="margin-left: 20px;" for="defaultCheck3">Etiqueta Óleo</label>
         </div>
       </div>
     </div>
