@@ -35,10 +35,17 @@ import { TituloService } from 'src/app/services/titulo.service';
           <label class="form-check-label" style="margin-left: 20px;" for="defaultCheck3">Etiqueta Óleo</label>
         </div>
       </div>
+      <div class="form-row">
+        <div class="form-group form-check col-md-6 checkbox">
+          <input class="form-check-input" type="checkbox" [(ngModel)]="opcional" [ngModelOptions]="{standalone: true}"
+          style="margin-left: 0;" value="1" id="defaultCheck4">
+          <label class="form-check-label" style="margin-left: 20px;" for="defaultCheck4">Opcional</label>
+        </div>
+      </div>
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-light" (click)="activeModal.dismiss('cancel click')">Cancelar</button>
-      <button type="button" (click)="edit(item, altera_uso, etiqueta_oleo)" class="btn btn-danger" ngbAutofocus>Editar</button>
+      <button type="button" (click)="edit(item, altera_uso, etiqueta_oleo, opcional)" class="btn btn-danger" ngbAutofocus>Editar</button>
     </div>
   </form>
   `
@@ -48,15 +55,17 @@ export class ModalManualItemEditComponent {
   @Input() id;
   @Input() altera_uso;
   @Input() etiqueta_oleo;
+  @Input() opcional;
 
   constructor(public activeModal: NgbActiveModal) {}
 
-  edit(item, altera_uso, etiqueta_oleo) {
+  edit(item, altera_uso, etiqueta_oleo, opcional) {
     const data = {
       id: this.id,
       item: item,
       altera_uso: altera_uso,
-      etiqueta_oleo: etiqueta_oleo
+      etiqueta_oleo: etiqueta_oleo,
+      opcional: opcional
     };
     this.activeModal.close(data);
   }
@@ -73,7 +82,8 @@ export class ItemComponent implements OnInit {
     item: new FormControl(''),
     selectedTitulo: new FormControl(0),
     altera_uso: new FormControl(false),
-    etiqueta_oleo: new FormControl(false)
+    etiqueta_oleo: new FormControl(false),
+    opcional: new FormControl(false)
   });
   loading = false;
   arrItems: any;
@@ -149,12 +159,13 @@ export class ItemComponent implements OnInit {
     );
   }
 
-  openEdit(id, item, altera_uso, etiqueta_oleo) {
+  openEdit(id, item, altera_uso, etiqueta_oleo, opcional) {
     const modalRef = this.modalService.open(ModalManualItemEditComponent);
     modalRef.componentInstance.item = item;
     modalRef.componentInstance.id = id;
     modalRef.componentInstance.altera_uso = altera_uso;
     modalRef.componentInstance.etiqueta_oleo = etiqueta_oleo;
+    modalRef.componentInstance.opcional = opcional;
 
     modalRef.result.then((result) => {
       this.edit(result);
