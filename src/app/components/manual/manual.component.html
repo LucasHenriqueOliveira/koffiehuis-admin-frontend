@@ -169,7 +169,9 @@
 					<input type="checkbox" class="form-check-input" name="itens[{{item.id}}]" id="check_{{item.id}}" [value]="item.id"
 					(change)="setItens($event.target.getAttribute('value'), $event.target.checked, item.item, contentItem, contentDelete)">
 					<label class="form-check-label" for="check_{{item.id}}">{{ item.item }}</label>
-					&nbsp;<i class="fa fa-exclamation-triangle" *ngIf="item.altera_uso" aria-hidden="true"></i>
+					&nbsp;<i class="fa fa-exclamation-triangle" *ngIf="item.altera_uso" aria-hidden="true" placement="right" ngbTooltip="Altera condição de uso"></i>
+					&nbsp;<i class="fa fa-tint" *ngIf="item.etiqueta_oleo" aria-hidden="true" placement="right" ngbTooltip="Etiqueta de Óleo"></i>
+					&nbsp;<i class="fa fa-check-square" *ngIf="item.opcional" aria-hidden="true" placement="right" ngbTooltip="Opcional"></i>
 				</div>
 			</div>
 		</div>
