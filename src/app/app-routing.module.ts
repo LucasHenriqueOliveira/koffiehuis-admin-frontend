@@ -24,6 +24,7 @@ import { ManualFixoComponent } from './components/manual-fixo/manual-fixo.compon
 import { TituloFixoComponent } from './components/titulo-fixo/titulo-fixo.component';
 import { FluidoComponent } from './components/fluido/fluido.component';
 import { OpcionaisComponent } from './components/opcionais/opcionais.component';
+import { GrupoComponent } from './components/grupo/grupo.component';
 
 const appRoutes: Routes = [
   {
@@ -105,6 +106,11 @@ const appRoutes: Routes = [
   {
     path: 'crawler',
     component: CrawlerComponent,
+    canActivate: [AfterLoginService]
+  },
+  {
+    path: 'grupo',
+    component: GrupoComponent,
     canActivate: [AfterLoginService]
   },
   {

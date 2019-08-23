@@ -52,6 +52,8 @@ import { FluidoComponent, ModalFluidoEditComponent} from './components/fluido/fl
 import { FluidoService } from './services/fluido.service';
 import { OpcionaisComponent, ModalOpcionalEditComponent } from './components/opcionais/opcionais.component';
 import { OpcionaisService } from './services/opcionais.service';
+import { GrupoComponent, ModalGrupoEditComponent } from './components/grupo/grupo.component';
+import { GrupoService } from './services/grupo.service';
 registerLocaleData(ptBr);
 
 
@@ -91,7 +93,9 @@ registerLocaleData(ptBr);
     ModalManualFluidoEditComponent,
     OpcionaisComponent,
     ModalOpcionalEditComponent,
-    ModalFluidoEditManualCarroComponent
+    ModalFluidoEditManualCarroComponent,
+    GrupoComponent,
+    ModalGrupoEditComponent
   ],
   imports: [
     BrowserModule,
@@ -127,7 +131,8 @@ registerLocaleData(ptBr);
     TituloService,
     TituloFixoService,
     FluidoService,
-    OpcionaisService
+    OpcionaisService,
+    GrupoService
   ],
   bootstrap: [AppComponent],
   entryComponents: [
@@ -141,7 +146,8 @@ registerLocaleData(ptBr);
     ModalFluidoEditComponent,
     ModalManualFluidoEditComponent,
     ModalOpcionalEditComponent,
-    ModalFluidoEditManualCarroComponent
+    ModalFluidoEditManualCarroComponent,
+    ModalGrupoEditComponent
   ]
 })
 export class AppModule { }

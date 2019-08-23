@@ -3,6 +3,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { SnotifyService } from 'ng-snotify';
 import { ManualService } from 'src/app/services/manual.service';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { GrupoService } from 'src/app/services/grupo.service';
 
 @Component({
   selector: 'app-lista-edit-modal',
@@ -17,34 +18,37 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
     <div class="modal-body">
       <div class="form-row">
         <div class="form-group col-md-12">
-          <select id="inputManual" class="form-control" [(ngModel)]="id_manual" [ngModelOptions]="{standalone: true}">
-            <option *ngFor="let manual of arrManual" [value]="manual.id">{{manual.item}}</option>
+          <select id="inputGrupo" class="form-control" [(ngModel)]="id_grupo" [ngModelOptions]="{standalone: true}">
+            <option *ngFor="let grupo of arrGrupo" [value]="grupo.id">{{grupo.nome}}</option>
           </select>
         </div>
         <div class="form-group col-md-12">
-          <input type="text" class="form-control" [(ngModel)]="nome" [ngModelOptions]="{standalone: true}">
+          <select id="inputManual" class="form-control" [(ngModel)]="id_manual" [ngModelOptions]="{standalone: true}">
+            <option *ngFor="let manual of arrManual" [value]="manual.id">{{manual.item}}</option>
+          </select>
         </div>
       </div>
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-light" (click)="activeModal.dismiss('cancel click')">Cancelar</button>
-      <button type="button" (click)="edit(nome, id_manual)" class="btn btn-danger" ngbAutofocus>Editar</button>
+      <button type="button" (click)="edit(id_grupo, id_manual)" class="btn btn-danger" ngbAutofocus>Editar</button>
     </div>
   </form>
   `
 })
 export class ModalListaEditComponent {
-  @Input() nome;
+  @Input() id_grupo;
   @Input() id_manual;
   @Input() id;
   @Input() arrManual;
+  @Input() arrGrupo;
 
   constructor(public activeModal: NgbActiveModal) {}
 
-  edit(nome, id_manual) {
+  edit(id_grupo, id_manual) {
     const data = {
       id: this.id,
-      nome: nome,
+      id_grupo: id_grupo,
       id_manual: id_manual
     };
     this.activeModal.close(data);
@@ -60,18 +64,19 @@ export class ListaComponent implements OnInit {
 
   loading = false;
   arrManual: any = [];
+  arrGrupo: any = [];
   arrItems: any = [];
   listaForm: any;
   id: any;
 
-  constructor(private notify: SnotifyService, private Manual: ManualService, private modalService: NgbModal) {
+  constructor(private notify: SnotifyService, private Manual: ManualService, private Grupo: GrupoService, private modalService: NgbModal) {
     this.getForm();
   }
 
   getForm() {
     this.listaForm = new FormGroup({
       selectedManual: new FormControl(0),
-      item: new FormControl('')
+      selectedGrupo: new FormControl(0),
     });
   }
 
@@ -84,6 +89,15 @@ export class ListaComponent implements OnInit {
       },
       error => {
         this.notify.error('Erro ao retornar os itens do manual', {timeout: 3000, showProgressBar: false });
+      }
+    );
+
+    this.Grupo.grupo().subscribe(
+      result => {
+        this.arrGrupo = result;
+      },
+      error => {
+        this.notify.error('Erro ao retornar o grupo', {timeout: 3000, showProgressBar: false });
       }
     );
 
@@ -104,7 +118,7 @@ export class ListaComponent implements OnInit {
   }
 
   checkButton() {
-    return this.listaForm.value.item && !(this.listaForm.value.selectedManual === 0);
+    return !(this.listaForm.value.selectedGrupo === 0) && !(this.listaForm.value.selectedManual === 0);
   }
 
   onSubmit() {
@@ -145,12 +159,13 @@ export class ListaComponent implements OnInit {
     );
   }
 
-  openEdit(id, nome, id_manual) {
+  openEdit(id, id_grupo, id_manual) {
     const modalRef = this.modalService.open(ModalListaEditComponent);
-    modalRef.componentInstance.nome = nome;
+    modalRef.componentInstance.id_grupo = id_grupo;
     modalRef.componentInstance.id_manual = id_manual;
     modalRef.componentInstance.id = id;
     modalRef.componentInstance.arrManual = this.arrManual;
+    modalRef.componentInstance.arrGrupo = this.arrGrupo;
 
     modalRef.result.then((result) => {
       this.edit(result);

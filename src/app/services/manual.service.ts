@@ -128,6 +128,8 @@ export class ManualService {
     return this.http.get(`${this.constants.api}/manual-options`);
   }
 
+  /* Lista de Manutenções */
+
   getItens() {
     return this.http.get(`${this.constants.api}/manual-item`);
   }
@@ -143,6 +145,8 @@ export class ManualService {
   editItem(data) {
     return this.http.put(`${this.constants.api}/manual-item`, data);
   }
+
+  /* --------- */
 
   copy(data) {
     return this.http.post(`${this.constants.api}/manual-copy`, data);
