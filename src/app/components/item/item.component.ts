@@ -22,6 +22,12 @@ import { TituloService } from 'src/app/services/titulo.service';
         </div>
       </div>
       <div class="form-row">
+        <div class="form-group col-md-12">
+          <textarea class="form-control" rows="3" [(ngModel)]="descricao" [ngModelOptions]="{standalone: true}"
+          placeholder="Descrição"></textarea>
+        </div>
+      </div>
+      <div class="form-row">
         <div class="form-group form-check col-md-6 checkbox">
           <input class="form-check-input" type="checkbox" [(ngModel)]="altera_uso" [ngModelOptions]="{standalone: true}"
           style="margin-left: 0;" value="1" id="defaultCheck2">
@@ -45,7 +51,8 @@ import { TituloService } from 'src/app/services/titulo.service';
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-light" (click)="activeModal.dismiss('cancel click')">Cancelar</button>
-      <button type="button" (click)="edit(item, altera_uso, etiqueta_oleo, opcional)" class="btn btn-danger" ngbAutofocus>Editar</button>
+      <button type="button" (click)="edit(item, descricao, altera_uso, etiqueta_oleo, opcional)"
+      class="btn btn-danger" ngbAutofocus>Editar</button>
     </div>
   </form>
   `
@@ -53,16 +60,18 @@ import { TituloService } from 'src/app/services/titulo.service';
 export class ModalManualItemEditComponent {
   @Input() item;
   @Input() id;
+  @Input() descricao;
   @Input() altera_uso;
   @Input() etiqueta_oleo;
   @Input() opcional;
 
   constructor(public activeModal: NgbActiveModal) {}
 
-  edit(item, altera_uso, etiqueta_oleo, opcional) {
+  edit(item, descricao, altera_uso, etiqueta_oleo, opcional) {
     const data = {
       id: this.id,
       item: item,
+      descricao: descricao,
       altera_uso: altera_uso,
       etiqueta_oleo: etiqueta_oleo,
       opcional: opcional
@@ -83,7 +92,8 @@ export class ItemComponent implements OnInit {
     selectedTitulo: new FormControl(0),
     altera_uso: new FormControl(false),
     etiqueta_oleo: new FormControl(false),
-    opcional: new FormControl(false)
+    opcional: new FormControl(false),
+    descricao: new FormControl('')
   });
   loading = false;
   arrItems: any;
@@ -159,10 +169,11 @@ export class ItemComponent implements OnInit {
     );
   }
 
-  openEdit(id, item, altera_uso, etiqueta_oleo, opcional) {
+  openEdit(id, item, descricao, altera_uso, etiqueta_oleo, opcional) {
     const modalRef = this.modalService.open(ModalManualItemEditComponent);
     modalRef.componentInstance.item = item;
     modalRef.componentInstance.id = id;
+    modalRef.componentInstance.descricao = descricao;
     modalRef.componentInstance.altera_uso = altera_uso;
     modalRef.componentInstance.etiqueta_oleo = etiqueta_oleo;
     modalRef.componentInstance.opcional = opcional;
