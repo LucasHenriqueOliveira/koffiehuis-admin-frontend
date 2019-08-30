@@ -7,6 +7,7 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 import { TituloService } from 'src/app/services/titulo.service';
 import { FluidoService } from 'src/app/services/fluido.service';
+import { StatusService } from 'src/app/services/status.service';
 
 @Component({
   selector: 'app-manual-fluido-edit-modal',
@@ -109,6 +110,7 @@ export class ManualComponent implements OnInit {
   arrTitulos: any = [];
   arrFluidos: any = [];
   arrFluidosAdd: any = [];
+  arrStatus: any = [];
   manualForm: any;
   id: any;
   options: any;
@@ -143,13 +145,16 @@ export class ManualComponent implements OnInit {
   observacao_fluido: any;
   tipo_fluido: any = 0;
   index_fluido: any;
+  misto: any;
+  severo: any;
 
   constructor(private Veiculo: VeiculoService,
     private notify: SnotifyService,
     private Manual: ManualService,
     private modalService: NgbModal,
     private Titulo: TituloService,
-    private Fluido: FluidoService) {
+    private Fluido: FluidoService,
+    private Status: StatusService) {
       this.getForm();
   }
 
@@ -205,6 +210,23 @@ export class ManualComponent implements OnInit {
       }
     );
 
+    this.Status.status().subscribe(
+      result => {
+        this.arrStatus = result;
+        for (let i = 0; i < this.arrStatus.length; i++) {
+          if (this.arrStatus[i]['nome'] === 'Misto') {
+            this.misto = this.arrStatus[i]['porcentagem'];
+          } else if (this.arrStatus[i]['nome'] === 'Severo') {
+            this.severo = this.arrStatus[i]['porcentagem'];
+          }
+        }
+      },
+      error => {
+        this.loading = false;
+        this.notify.error('Erro ao retornar o status', {timeout: 3000, showProgressBar: false });
+      }
+    );
+
     this.Manual.itensManualFixo().subscribe(
       result => {
         this.arrItemsFixo = result;
@@ -215,6 +237,16 @@ export class ManualComponent implements OnInit {
         this.notify.error('Erro ao retornar os itens do manual fixo', {timeout: 3000, showProgressBar: false });
       }
     );
+  }
+
+  getKmMistoSevero() {
+    this.km_misto = this.km_ideal * (this.misto / 100 );
+    this.km_severo = this.km_ideal * (this.severo / 100 );
+  }
+
+  getMesesMistoSevero() {
+    this.meses_misto = this.meses_ideal * (this.misto / 100 );
+    this.meses_severo = this.meses_ideal * (this.severo / 100 );
   }
 
   resetFormFluido() {

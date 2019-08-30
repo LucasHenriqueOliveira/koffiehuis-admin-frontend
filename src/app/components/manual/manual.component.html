@@ -331,10 +331,10 @@
 		<p>Ideal <br /></p>
 		<div class="form-row">
 			<div class="form-group col-sm-6">
-				<input type="number" class="form-control" ngbAutofocus [(ngModel)]="km_ideal" [ngModelOptions]="{standalone: true}" name="km_ideal" value="" placeholder="Km">
+				<input type="number" class="form-control" ngbAutofocus [(ngModel)]="km_ideal" [ngModelOptions]="{standalone: true}" name="km_ideal" value="" placeholder="Km" (blur)="getKmMistoSevero()">
 			</div>
 			<div class="form-group col-sm-6">
-				<input type="number" class="form-control" [(ngModel)]="meses_ideal" [ngModelOptions]="{standalone: true}" name="meses_ideal" value="" placeholder="Meses">
+				<input type="number" class="form-control" [(ngModel)]="meses_ideal" [ngModelOptions]="{standalone: true}" name="meses_ideal" value="" placeholder="Meses" (blur)="getMesesMistoSevero()">
 			</div>
 			<div class="form-group col-sm-12">
 				<textarea class="form-control" rows="3" [(ngModel)]="observacao_ideal" [ngModelOptions]="{standalone: true}" placeholder="Observação"></textarea>

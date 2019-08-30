@@ -68,6 +68,10 @@ export class ManualService {
     return this.http.get(`${this.constants.api}/manual-itens/${id}`);
   }
 
+  itensManualTituloSevero(id) {
+    return this.http.get(`${this.constants.api}/manual-itens-severo/${id}`);
+  }
+
   saveItensManual(data) {
     return this.http.post(`${this.constants.api}/manual-itens`, data);
   }
