@@ -33,7 +33,7 @@ import { ManualService } from 'src/app/services/manual.service';
         <option value="Severo">Severo</option>
       </select>
     </div>
-    <div class="form-group col-md-12" *ngIf="condicao === 'Severo'">
+    <div class="form-group col-md-12" *ngIf="condicao === 'Misto' ||  condicao === 'Severo'">
       <p>Itens <button type="button" class="btn btn-primary btn-sm" (click)="add()">+</button></p>
       <div class="form-group col-sm-12" *ngIf="showItem">
         <select id="inputTitulo" class="form-control" [(ngModel)]="selectedTitulo"

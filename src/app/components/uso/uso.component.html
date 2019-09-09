@@ -135,7 +135,7 @@
 				<option value="Severo">Severo</option>
 			</select>
 		</div>
-		<div class="form-group col-sm-12" *ngIf="condicao === 'Severo'">
+		<div class="form-group col-sm-12" *ngIf="condicao === 'Misto' || condicao === 'Severo'">
 			<select id="inputTitulo" class="form-control" [(ngModel)]="selectedTitulo" [ngModelOptions]="{standalone: true}" (change)="onChangeTitulo($event)">
 				<option selected value="0">Selecione o título</option>
 				<option *ngFor="let titulo of arrTitulos" [value]="titulo.id">{{titulo.titulo}}</option>
