@@ -10,7 +10,7 @@ const appRoutes: Routes = [
     path: '',
     redirectTo: '/login',
     pathMatch: 'full',
-    canActivate: [AfterLoginService]
+    canActivate: [BeforeLoginService]
   },
   {
     path: 'login',
