@@ -12,12 +12,13 @@ export class TokenService {
 
   constructor() { }
 
-  handle(token) {
-    this.set(token);
+  handle(token, user) {
+    this.set(token, user);
   }
 
-  set(token) {
+  set(token, user) {
     localStorage.setItem('token', token);
+    localStorage.setItem('user', JSON.stringify(user));
   }
 
   get() {
@@ -26,6 +27,7 @@ export class TokenService {
 
   remove() {
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
   }
 
   isValid() {
@@ -33,9 +35,12 @@ export class TokenService {
     if (token) {
       const payload = this.payload(token);
       if (payload) {
-        let url = payload.iss.split(':');
-        url = 'https:' + url[1];
-        return Object.values(this.iss).indexOf(url) > -1 ? true : false;
+        // let url = payload.iss.split(':');
+        // url = 'https:' + url[1];
+        // url = 'http:' + url[1];
+        // console.log(this.iss);
+        // return Object.values(this.iss).indexOf(url) > -1 ? true : false;
+        return Object.values(this.iss).indexOf(payload.iss) > -1 ? true : false;
       }
     }
     return false;

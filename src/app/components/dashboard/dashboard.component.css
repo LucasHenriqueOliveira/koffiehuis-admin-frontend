@@ -74,3 +74,12 @@
 .text-card {
     font-size: 12px;
 }
+
+i {
+    cursor: pointer;
+    font-size: 20px;
+}
+
+i:hover {
+    color: red;
+}

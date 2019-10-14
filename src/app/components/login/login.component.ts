@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
 
   public error = null;
   loading = false;
+  ngZone: any;
 
   constructor(private User: UserService, private Token: TokenService, private router: Router, private Auth: AuthService) { }
 
@@ -33,7 +34,7 @@ export class LoginComponent implements OnInit {
   }
 
   handleResponse(data) {
-    this.Token.handle(data.access_token);
+    this.Token.handle(data.access_token, data.user);
     this.Auth.changeAuthStatus(true);
     this.router.navigateByUrl('/dashboard');
   }

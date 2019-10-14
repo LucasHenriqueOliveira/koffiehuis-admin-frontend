@@ -12,18 +12,6 @@
     border-left:2px solid green;
 }
 
-.bg-herbie {
-    background-color: #0590c6;
-    background-image: -moz-radial-gradient(center, ellipse cover, #dee2e6 1%, #e9ecef 100%);
-    background-image: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(1%,#dee2e6), color-stop(100%,#e9ecef));
-    background-image: -webkit-radial-gradient(center, ellipse cover, #dee2e6 1%,#e9ecef 100%);
-    background-image: -o-radial-gradient(center, ellipse cover, #dee2e6 1%,#e9ecef 100%);
-    background-image: -ms-radial-gradient(center, ellipse cover, #dee2e6 1%,#e9ecef 100%);
-    background-image: radial-gradient(ellipse at center, #dee2e6 1%,#e9ecef 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dee2e6', endColorstr='#e9ecef',GradientType=1 );
-    color: #0590c6;
-}
-
 .navbar-toggler i {
     color: #0590c6;
 }

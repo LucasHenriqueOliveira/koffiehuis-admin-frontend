@@ -11,23 +11,7 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  signup(data) {
-    return this.http.post(`${this.constants.api}/signup`, data);
-  }
-
   login(data) {
     return this.http.post(`${this.constants.api}/login`, data);
-  }
-
-  sendPasswordResetLink(data) {
-    return this.http.post(`${this.constants.api}/sendPasswordResetLink`, data);
-  }
-
-  changePassword(data) {
-    return this.http.post(`${this.constants.api}/resetPassword`, data);
-  }
-
-  getUsers() {
-    return this.http.get(`${this.constants.api}/user`);
   }
 }

@@ -1,96 +1,52 @@
 <div class="row">
-	<div class="col-lg-3 col-md-6">
-		<div class="panel panel-primary">
-			<div class="panel-heading">
-				<div class="row">
-					<div class="col-3">
-						<i class="fa fa-users fa-5x"></i>
-					</div>
-					<div class="col-9 text-right">
-						<div class="huge">{{ arrData.usuarios }}</div>
-						<div class="text-card">Usuários</div>
-					</div>
-				</div>
-			</div>
-			<a routerLink="/usuarios">
-				<div class="panel-footer">
-					<span class="pull-left details">Veja Detalhes</span>
-					<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-
-					<div class="clearfix"></div>
-				</div>
-			</a>
-		</div>
+	<div class="col-lg-6 col-md-6 col-sm-12">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Produto</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let produto of arrData.produtos">
+					<td>{{produto.name}}</td>
+					<td><span (click)="removeProduct(content, produto.id_product)"><i class="fa fa-minus-circle"></i></span></td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
-	<div class="col-lg-3 col-md-6">
-		<div class="panel panel-green">
-			<div class="panel-heading">
-				<div class="row">
-					<div class="col-3">
-						<i class="fa fa-car fa-5x"></i>
-					</div>
-					<div class="col-9 text-right">
-						<div class="huge">{{ arrData.carros }}</div>
-						<div class="text-card">Veículos</div>
-					</div>
-				</div>
-			</div>
-			<a routerLink="/carros">
-				<div class="panel-footer">
-					<span class="pull-left details">Veja Detalhes</span>
-					<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-
-					<div class="clearfix"></div>
-				</div>
-			</a>
-		</div>
-	</div>
-	<div class="col-lg-3 col-md-6">
-		<div class="panel panel-yellow">
-			<div class="panel-heading">
-				<div class="row">
-					<div class="col-3">
-						<i class="fa fa-tasks fa-5x"></i>
-					</div>
-					<div class="col-9 text-right">
-						<div class="huge">{{ arrData.condicoes_uso }}</div>
-						<div class="text-card">Condições de uso</div>
-					</div>
-				</div>
-			</div>
-			<a routerLink="/uso">
-				<div class="panel-footer">
-					<span class="pull-left details">Veja Detalhes</span>
-					<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-
-					<div class="clearfix"></div>
-				</div>
-			</a>
-		</div>
-	</div>
-	<div class="col-lg-3 col-md-6">
-		<div class="panel panel-red">
-			<div class="panel-heading">
-				<div class="row">
-					<div class="col-3">
-						<i class="fa fa-wrench fa-5x"></i>
-					</div>
-					<div class="col-9 text-right">
-						<div class="huge">{{ arrData.manual }}</div>
-						<div class="text-card">Manuais criados</div>
-					</div>
-				</div>
-			</div>
-			<a routerLink="/pesquisa-manual">
-				<div class="panel-footer">
-					<span class="pull-left details">Veja Detalhes</span>
-					<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-
-					<div class="clearfix"></div>
-				</div>
-			</a>
-		</div>
+	<div class="col-lg-6 col-md-6 col-sm-12">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Histórico</th>
+					<th>Data</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let produto of arrData.estoque">
+					<td>{{produto.name}}</td>
+					<td>{{produto.date}}</td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
 </div>
 
 <div [ngClass]="{'loading': loading}"></div>
+
+<ng-template #content let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title">Vendeu mesmo?</h4>
+		<button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+		<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	<div class="modal-body">
+		<p>Você deseja diminuir este produto do estoque? <br />
+			<b>Essa operação não poderá ser desfeita.</b></p>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-danger" ngbAutofocus (click)="remove()">Sim</button>
+	</div>
+</ng-template>

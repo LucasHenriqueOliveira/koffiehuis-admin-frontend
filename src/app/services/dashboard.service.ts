@@ -14,4 +14,8 @@ export class DashboardService {
   get() {
     return this.http.get(`${this.constants.api}/dashboard`);
   }
+
+  removeProduct(data) {
+    return this.http.post(`${this.constants.api}/remove`, data);
+  }
 }
