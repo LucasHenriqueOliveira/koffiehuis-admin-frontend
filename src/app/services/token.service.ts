@@ -35,12 +35,11 @@ export class TokenService {
     if (token) {
       const payload = this.payload(token);
       if (payload) {
-        // let url = payload.iss.split(':');
-        // url = 'https:' + url[1];
+        let url = payload.iss.split(':');
+        url = 'https:' + url[1];
         // url = 'http:' + url[1];
-        // console.log(this.iss);
-        // return Object.values(this.iss).indexOf(url) > -1 ? true : false;
-        return Object.values(this.iss).indexOf(payload.iss) > -1 ? true : false;
+        return Object.values(this.iss).indexOf(url) > -1 ? true : false;
+        // return Object.values(this.iss).indexOf(payload.iss) > -1 ? true : false;
       }
     }
     return false;

@@ -8,7 +8,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 const appRoutes: Routes = [
   {
     path: '',
-    redirectTo: '/dashboard',
+    redirectTo: '/login',
     pathMatch: 'full',
     canActivate: [AfterLoginService]
   },
